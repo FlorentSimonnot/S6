@@ -1,0 +1,4 @@
+digraph graphe { 
+	1;
+	1 -> 1;
+}

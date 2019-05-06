@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Tour.kml</name>
+	<open>1</open>
+	<Style id="sn_wht-blank3">
+		<IconStyle>
+			<color>ff6ecbfd</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+	<StyleMap id="msn_wht-blank1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_wht-blank</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_wht-blank3</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_wht-blank2">
+		<IconStyle>
+			<color>ff5570e9</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+	<Style id="sh_wht-blank">
+		<IconStyle>
+			<color>ff00ff00</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>2</scale>
+		</LabelStyle>
+	</Style>
+	<Style id="sh_wht-blank0">
+		<IconStyle>
+			<color>ff96ad41</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>2</scale>
+		</LabelStyle>
+	</Style>
+	<Style id="sn_Dunkerque">
+		<IconStyle>
+			<color>ff94b800</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+	<StyleMap id="msn_wht-blank3">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_wht-blank2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_wht-blank</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_wht-blank1">
+		<IconStyle>
+			<color>ff3130d6</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+	<Style id="sn_wht-blank0">
+		<IconStyle>
+			<color>ff96ad41</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+	<Style id="sh_wht-blank1">
+		<IconStyle>
+			<color>ff3130d6</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>2</scale>
+		</LabelStyle>
+	</Style>
+	<Style id="sh_wht-blank2">
+		<IconStyle>
+			<color>ff6ecbfd</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>2</scale>
+		</LabelStyle>
+	</Style>
+	<StyleMap id="msn_wht-blank2">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_wht-blank0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_wht-blank0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_wht-blank">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_wht-blank3</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_wht-blank2</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_wht-blank3">
+		<IconStyle>
+			<color>fffe9ba2</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>2</scale>
+		</LabelStyle>
+	</Style>
+	<Style id="sn_wht-blank">
+		<IconStyle>
+			<color>fffe9ba2</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>0</scale>
+		</LabelStyle>
+	</Style>
+	<Style id="sh_Dunkerque">
+		<IconStyle>
+			<color>ff94b800</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<LabelStyle>
+			<scale>2</scale>
+		</LabelStyle>
+	</Style>
+	<StyleMap id="msn_wht-blank0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_wht-blank1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_wht-blank1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="sm_Dunkerque">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_Dunkerque</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_Dunkerque</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark>
+		<name>1. Dunkerque</name>
+		<description><![CDATA[<a href ="https://www.ville-dunkerque.fr/"> Notre site ! </a><br>]]></description>
+		<LookAt>
+			<gx:TimeStamp><when>2019-02-22T15:22:00Z</when>
+</gx:TimeStamp>
+			<longitude>2.354329588772928</longitude>
+			<latitude>51.02958085318326</latitude>
+			<altitude>130000</altitude>
+			<heading>-0.01872825941789632</heading>
+			<tilt>1.291045307443741</tilt>
+			<range>16528.11252542353</range>
+			<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+		</LookAt>
+		<styleUrl>#sm_Dunkerque</styleUrl>
+		<Point>
+			<gx:drawOrder>1</gx:drawOrder>
+			<coordinates>2.378418600000014,51.0377556,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<name>2. Brest</name>
+		<description><![CDATA[<a href ="https://www.brest.fr/brestfr-accueil-1575.html"> Notre site ! </a><br>]]></description>
+		<LookAt>
+			<gx:TimeStamp><when>2019-02-22T15:23:00Z</when>
+</gx:TimeStamp>
+			<longitude>-4.486053190429942</longitude>
+			<latitude>48.39040302251684</latitude>
+			<altitude>130000</altitude>
+			<heading>7.288441748754619e-06</heading>
+			<tilt>0</tilt>
+			<range>23876.5251302747</range>
+			<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+		</LookAt>
+		<styleUrl>#msn_wht-blank1</styleUrl>
+		<Point>
+			<gx:drawOrder>1</gx:drawOrder>
+			<coordinates>-4.486053190429943,48.39040302251684,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<name>3. Biarritz</name>
+		<description><![CDATA[<a href ="https://www.biarritz.fr/"> Notre site ! </a><br>]]></description>
+		<LookAt>
+			<gx:TimeStamp><when>2019-02-22T15:24:00Z</when>
+</gx:TimeStamp>
+			<longitude>-1.558669362697665</longitude>
+			<latitude>43.48322769719928</latitude>
+			<altitude>130000</altitude>
+			<heading>7.288441748754619e-06</heading>
+			<tilt>0</tilt>
+			<range>23876.5251302747</range>
+			<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+		</LookAt>
+		<styleUrl>#msn_wht-blank0</styleUrl>
+		<Point>
+			<gx:drawOrder>1</gx:drawOrder>
+			<coordinates>-1.558669362697674,43.48322769719928,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<name>4. Perpignan</name>
+		<description><![CDATA[<a href ="https://www.perpignantourisme.com/"> Notre site !</a><br>]]></description>
+		<LookAt>
+			<gx:TimeStamp><when>2019-02-22T15:25:00Z</when>
+</gx:TimeStamp>
+			<longitude>2.894065317018029</longitude>
+			<latitude>42.6887969039925</latitude>
+			<altitude>130000</altitude>
+			<heading>7.288441748754619e-06</heading>
+			<tilt>0</tilt>
+			<range>23876.5251302747</range>
+			<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+		</LookAt>
+		<styleUrl>#msn_wht-blank3</styleUrl>
+		<Point>
+			<gx:drawOrder>1</gx:drawOrder>
+			<coordinates>2.894065317018049,42.68879690399252,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<name>5. Nice</name>
+		<description><![CDATA[<a href ="http://www.nice.fr/fr/"> Notre site !</a><br>]]></description>
+		<LookAt>
+			<gx:TimeStamp><when>2019-02-22T15:26:00Z</when>
+</gx:TimeStamp>
+			<longitude>7.261928925922491</longitude>
+			<latitude>43.7101671726022</latitude>
+			<altitude>130000</altitude>
+			<heading>-2.968335788223813e-07</heading>
+			<tilt>0</tilt>
+			<range>21714.23916700695</range>
+			<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+		</LookAt>
+		<styleUrl>#msn_wht-blank</styleUrl>
+		<Point>
+			<gx:drawOrder>1</gx:drawOrder>
+			<coordinates>7.26192892592249,43.7101671726022,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<name>6. Strasbourg</name>
+		<description><![CDATA[<a href ="http://www.otstrasbourg.fr/fr/"> Notre site ! </a><br>]]></description>
+		<LookAt>
+			<gx:TimeStamp><when>2019-02-22T15:27:00Z</when>
+</gx:TimeStamp>
+			<longitude>7.751966024858326</longitude>
+			<latitude>48.57202925447998</latitude>
+			<altitude>130000</altitude>
+			<heading>-8.893024607416009e-06</heading>
+			<tilt>0</tilt>
+			<range>22592.59574779106</range>
+			<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+		</LookAt>
+		<styleUrl>#msn_wht-blank2</styleUrl>
+		<Point>
+			<gx:drawOrder>1</gx:drawOrder>
+			<coordinates>7.751966024858326,48.57202925447998,0</coordinates>
+		</Point>
+	</Placemark>
+	<GroundOverlay>
+		<name>Calage de l’image Lambert 93</name>
+		<color>faffffff</color>
+		<Icon>
+			<href>/home/1ini3/nsam/Documents/S6/Globe/TD3_Nensy_SAM/france_ign_1000000_100m.jpg</href>
+			<viewBoundScale>0.75</viewBoundScale>
+		</Icon>
+		<LatLonBox>
+			<north>51.14870075402506</north>
+			<south>42.16100938058376</south>
+			<east>8.816052878953512</east>
+			<west>-5.624678970267803</west>
+		</LatLonBox>
+	</GroundOverlay>
+</Document>
+</kml>

@@ -1,0 +1,28 @@
+Exercice 1 : 
+
+Question 1 :
+
+==> Voir les vues : SELECT * FROM information_schema.triggers; 
+==> Activation / Désactivation : ALTER TABLE table_name ENABLE/DISABLE TRIGGER trigger_name; 
+==> Suppression : DROP TRIGGER [IF EXISTS] trigger_name ON table_name;
+
+Question 3 : 
+
+Avant une insertion dans la table contient on appelle la fonction verif_stock() sur chaque ligne. 
+Cette fonction regarde si il y a une facture lié à l'insertion puis regarde si le produit est indisponible 
+et enfin si le stock est plus petit que le chiffre donnée dans l'insertion, on ajuste le chiffre dans l'insertion. 
+
+Exmeples : 
+
+bdd=# INSERT INTO contient VALUES (1000, 55, 50.5, 10);
+ERROR:  facture manquante!!
+CONTEXT:  PL/pgSQL function verif_stock() line 5 at RAISE
+On voit ici qu'il y a un problème. La facture 1000 n'existe pas. 
+
+bdd=# INSERT INTO contient VALUES (100, 55, 50.5, 10);
+ERROR:  Produit indisponible dans le magasin
+CONTEXT:  PL/pgSQL function verif_stock() line 8 at RAISE
+On voit ici que le produit recherché n'est pas en stocke dans le magasin. 
+
+INSERT INTO contient VALUES (997, 5, 50.5, 10);
+

@@ -1,0 +1,13 @@
+
+CREATE OR REPLACE FUNCTION display_message() RETURNS trigger AS $$
+	BEGIN
+		RAISE NOTICE 'ALTER TABLE ! %', TG_OP;
+		RETURN NULL;
+	END
+	$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER t_test_avant
+	BEFORE INSERT or UPDATE or DELETE 
+	ON produit 
+	FOR EACH STATEMENT
+	EXECUTE PROCEDURE display_message();

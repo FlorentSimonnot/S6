@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+	<Document>
+		<LookAt>
+			<longitude>-24.36995029449463</longitude>
+			<latitude>14.450047016143799</latitude>
+			<altitude>0.0</altitude>
+			<heading>0.0</heading>
+			<tilt>0.0</tilt>
+			<range>406785.2034608387</range>
+			<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+		</LookAt>
+		<NetworkLink>
+			<visibility>1</visibility>
+			<Link>
+				<href>https://visioterra.org:443/VtWeb/servlet/KmlServlet?MODULEID=VtUsgsLandsat&amp;DATASETID=LANDSAT8/OLI-TIRS&amp;GRANULEID=LC82100502014328LGN01&amp;STYLE=rgb(sta(QT_OT7,HT_OT7,0.02,0.02),sta(QT_OT5,HT_OT5,0.02,0.02),sta(QT_OT4,HT_OT4,0.02,0.02))&amp;Z=0&amp;X=0&amp;Y=0</href>
+				<viewRefreshMode>onRequest</viewRefreshMode>
+			</Link>
+		</NetworkLink>
+	</Document>
+</kml>

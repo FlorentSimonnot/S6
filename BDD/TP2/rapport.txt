@@ -1,0 +1,3 @@
+Si on utilise une exception dans un trigger de type each row à la première erreur
+le triger va s'arreter. 
+En utilisant Notice on affichera simplement un message et continuera d'exécuter les autres lignes. 

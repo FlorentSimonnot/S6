@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<GroundOverlay>
+	<name>Carte 2</name>
+	<Icon>
+		<href>http://www-igm.univ-mlv.fr/~riazano/enseignement/SR-TIG-TP/france_ign_1000000_100m.map-geo.jpg</href>
+		<viewBoundScale>0.75</viewBoundScale>
+	</Icon>
+	<LatLonBox>
+		<north>50.92966461078169</north>
+		<south>41.93429453193008</south>
+		<east>9.337286886470334</east>
+		<west>-6.22978055977313</west>
+	</LatLonBox>
+</GroundOverlay>
+</kml>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>FLORENT_SIMONNOT.kmz</name>
+	<Style id="s_ylw-pushpin">
+		<IconStyle>
+			<scale>1.8</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/volcano.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl">
+		<IconStyle>
+			<scale>2.12727</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/volcano.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<StyleMap id="m_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Folder>
+		<name>FLORENT_SIMONNOT</name>
+		<open>1</open>
+		<Document>
+			<name>[Sentinel1A_CSAR_IW]_[S1A_IW_GRDH_1SSV_20141202T073035_20141202T073048_003537_0042A3_75CA].kml</name>
+			<LookAt>
+				<longitude>-24.99709367752075</longitude>
+				<latitude>14.83195066452026</latitude>
+				<altitude>0</altitude>
+				<heading>0</heading>
+				<tilt>0</tilt>
+				<range>494848.826509782</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<NetworkLink>
+				<Link>
+					<href>https://visioterra.org:443/VtWeb/servlet/KmlServlet?MODULEID=VtSentinelCsarDhus&amp;DATASETID=Sentinel1A/CSAR/IW&amp;GRANULEID=S1A_IW_GRDH_1SSV_20141202T073035_20141202T073048_003537_0042A3_75CA&amp;STYLE=sta(QT_vv_Ortho,HT_vv,0.2,0.001)&amp;Z=0&amp;X=0&amp;Y=0&amp;</href>
+					<viewRefreshMode>onRequest</viewRefreshMode>
+				</Link>
+			</NetworkLink>
+		</Document>
+		<Placemark>
+			<name>Cratère central</name>
+			<LookAt>
+				<longitude>-24.33833829415159</longitude>
+				<latitude>14.94924376194905</latitude>
+				<altitude>0</altitude>
+				<heading>6.385613922110045</heading>
+				<tilt>0</tilt>
+				<range>11127.10052609582</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-24.34008302648713,14.94848250190082,0</coordinates>
+			</Point>
+		</Placemark>
+		<GroundOverlay>
+			<name>Fogo</name>
+			<color>a3ffffff</color>
+			<Icon>
+				<href>https://p1.storage.canalblog.com/29/74/1433095/109097670_o.jpg</href>
+				<viewBoundScale>0.75</viewBoundScale>
+			</Icon>
+			<LatLonBox>
+				<north>15.07739387028879</north>
+				<south>14.7993061309912</south>
+				<east>-24.25999301875735</east>
+				<west>-24.53689343743229</west>
+			</LatLonBox>
+		</GroundOverlay>
+	</Folder>
+</Document>
+</kml>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Folder>
+	<name>Visite</name>
+	<open>1</open>
+	<GroundOverlay>
+		<name>Carte 1</name>
+		<color>96ffffff</color>
+		<Icon>
+			<href>https://media.nouvelobs.com/ext/uri/sreferentiel.nouvelobs.com/file/rue89/b97db30a2a22d2f87a4015c0cd6b19a7.jpg</href>
+			<viewBoundScale>0.75</viewBoundScale>
+		</Icon>
+		<LatLonBox>
+			<north>12.44814838792451</north>
+			<south>3.102391386489222</south>
+			<east>36.53884587127704</east>
+			<west>23.75459909766588</west>
+		</LatLonBox>
+	</GroundOverlay>
+	<GroundOverlay>
+		<name>Carte 2</name>
+		<Icon>
+			<href>http://orientalreview.org/wp-content/uploads/2017/03/SouthSudan-Map.jpg</href>
+			<viewBoundScale>0.75</viewBoundScale>
+		</Icon>
+		<LatLonBox>
+			<north>13.21802373720274</north>
+			<south>2.355322262650563</south>
+			<east>37.11879266371667</east>
+			<west>22.48080711133994</west>
+		</LatLonBox>
+	</GroundOverlay>
+	<gx:Tour>
+		<name>Visite</name>
+		<gx:Playlist>
+			<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>28.25462658308572</longitude>
+					<latitude>4.281861568035406</latitude>
+					<altitude>0</altitude>
+					<heading>-1.624949918859478</heading>
+					<tilt>0</tilt>
+					<range>13155613.69373306</range>
+					<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>
+			<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>30.14672248447146</longitude>
+					<latitude>7.775269887206866</latitude>
+					<altitude>0</altitude>
+					<heading>0</heading>
+					<tilt>0</tilt>
+					<range>1709028.465222418</range>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>
+			<!--<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>29.7997998875283</longitude>
+					<latitude>7.786672999926652</latitude>
+					<altitude>0</altitude>
+					<heading>0</heading>
+					<tilt>0</tilt>
+					<range>1980646.707679832</range>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>-->
+			<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>32.05938905408784</longitude>
+					<latitude>8.439501571600692</latitude>
+					<altitude>0</altitude>
+					<heading>-1.705613674087473</heading>
+					<tilt>0</tilt>
+					<range>2041352.744572181</range>
+					<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>
+			<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>33.88564488673957</longitude>
+					<latitude>5.286527483116801</latitude>
+					<altitude>0</altitude>
+					<heading>-1.70561367408746</heading>
+					<tilt>0</tilt>
+					<range>523416.2693057538</range>
+					<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>
+			<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>31.2882797592797</longitude>
+					<latitude>4.516917558358465</latitude>
+					<altitude>0</altitude>
+					<heading>-1.845136924622177</heading>
+					<tilt>0</tilt>
+					<range>601572.1761801693</range>
+					<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>
+			<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>29.0345282059898</longitude>
+					<latitude>5.642088928499738</latitude>
+					<altitude>0</altitude>
+					<heading>-1.794495716555152</heading>
+					<tilt>0</tilt>
+					<range>621086.5778660196</range>
+					<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>
+			<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>26.33410216533455</longitude>
+					<latitude>9.061695404961863</latitude>
+					<altitude>0</altitude>
+					<heading>-1.648001829775704</heading>
+					<tilt>0</tilt>
+					<range>626739.7583111388</range>
+					<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>
+			<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>29.91335695923364</longitude>
+					<latitude>8.107848996062218</latitude>
+					<altitude>0</altitude>
+					<heading>-1.302166156006383</heading>
+					<tilt>0</tilt>
+					<range>635236.398846701</range>
+					<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>
+			<gx:FlyTo>
+				<gx:duration>2</gx:duration>
+				<LookAt>
+					<longitude>33.34946388629531</longitude>
+					<latitude>8.831735926710186</latitude>
+					<altitude>0</altitude>
+					<heading>-1.323811857027117</heading>
+					<tilt>0</tilt>
+					<range>634604.3428622468</range>
+					<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+				</LookAt>
+			</gx:FlyTo>
+			<gx:Wait><gx:duration>1</gx:duration>
+</gx:Wait>
+		</gx:Playlist>
+	</gx:Tour>
+</Folder>
+</kml>

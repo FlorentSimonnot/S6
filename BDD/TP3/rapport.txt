@@ -1,0 +1,18 @@
+Lecture sale :
+
+Une transaction lit des données écrites par une transaction concurrente non validée (dirty read).
+Tant que pas validé on peut pas voir les changements dans une transaction concurrente.
+
+Lecture Non reproductible
+
+Une transaction relit des données qu'elle a lu précédemment et trouve que les données ont été modifiées par une autre transaction (validée depuis la lecture initiale) (non repeatable read).
+
+Si on fait un select puis un commit dans une transaction concurrente et que l'on refait un select on ne doit pas avoir la même requete puisqu'elle aura changé. 
+
+Lecture fantôme : 
+
+Une transaction ré-exécute une requête renvoyant un ensemble de lignes satisfaisant une condition de recherche et trouve que l'ensemble des lignes satisfaisant la condition a changé du fait d'une autre transaction récemment validée (phantom read). 
+
+Question 4
+
+show transaction_isolation;
