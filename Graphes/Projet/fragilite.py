@@ -145,3 +145,39 @@ def foret(G) :
 	debut, parent, ancetre = numerotation(G)
 	creer_arcs_retours(G, parent)
 
+def ppi(G, depart, deja_visites=None) : 
+	res = list()
+	if deja_visites == None : 
+		deja_visites = dict()
+		for i in range(G.sommets()) : 
+			deja_visites[i] = False
+	a_traite = list()
+	a_traite.append(depart)
+
+	while len(a_traite) > 0 : 
+		s = a_traite[len(a_traite)-1]
+		del a_traite[len(a_traite)-1]	
+		if not deja_visites[s] : 
+			res.append(s)
+			deja_visites[s] = True
+		for v in sorted(G.voisins(s), reverse=True) : 
+			if not deja_visites[v] : 
+				a_traite.append(v)
+	return res
+
+
+def amelioration_ponts(G) : 
+  	print(ppi(G, 'd'))
+
+def main() : 
+	G = Graphe()
+	G.ajouter_sommets(zip('abcdefghijkl', [None] * 12))
+	G.ajouter_aretes(
+    [('a', 'b', None), ('b', 'c', None), ('c', 'a', None), ('c', 'd', None), ('d', 'e', None),
+      ('e', 'f', None), ('f', 'd', None), ('a', 'g', None), ('g', 'h', None), ('h', 'a', None),
+      ('h', 'i', None), ('i', 'j', None), ('j', 'h', None), ('j', 'k', None), ('k', 'i', None),
+      ('i', 'l', None), ('k', 'h', None)])
+	amelioration_ponts(G)
+
+if __name__ == "__main__":
+    main()
