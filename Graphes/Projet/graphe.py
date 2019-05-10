@@ -90,17 +90,20 @@ def charger_donnees(graphe, nom_fichier) :
 
 def export_dot(graphe):
     """Renvoie une chaîne encodant le graphe au format dot."""
-    string = "digraph graphe { "
+    string = "graph graphe { "
 
     sommets = "\n"
     for sommet in graphe.sommets() : 
         sommets += "\t" + str(sommet) + ";\n"
 
-    arcs = "" 
-    for u, v in graphe.arcs() : 
-        arcs += "\t" + str(u) + " -> " + str(v) + ";\n"
+    aretes = "" 
+    for u, v, nom in graphe.aretes() : 
+    	if nom != None :
+        	aretes += "\t" + str(u) + " -- " + str(v) + " [" + "label=" + nom + "] " + ";\n"
+    	else : 
+    		aretes += "\t" + str(u) + " -- " + str(v) + " [" + "label=None" + "] " + ";\n"
 
-    return string + sommets + arcs + "}"
+    return string + sommets + aretes + "}"
 
 def creer_dot(graphe, fichier): 
 	string = export_dot(graphe)

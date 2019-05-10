@@ -1,6 +1,7 @@
 
 from graphe import *
 from grapheOriente import *
+from random import *
 import math 
 
 def numerotation(G) : 
@@ -9,7 +10,7 @@ def numerotation(G) :
 	parent = dict()
 	ancetre = dict()
 
-	for i in G.sommets() : 
+	for i in sorted(G.sommets()) : 
 		debut[i] = 0
 		parent[i] = None
 		ancetre[i] = math.inf
@@ -145,39 +146,176 @@ def foret(G) :
 	debut, parent, ancetre = numerotation(G)
 	creer_arcs_retours(G, parent)
 
-def ppi(G, depart, deja_visites=None) : 
-	res = list()
-	if deja_visites == None : 
-		deja_visites = dict()
-		for i in range(G.sommets()) : 
-			deja_visites[i] = False
-	a_traite = list()
-	a_traite.append(depart)
+def extremite_ponts(G, sommet) : 
 
-	while len(a_traite) > 0 : 
-		s = a_traite[len(a_traite)-1]
-		del a_traite[len(a_traite)-1]	
-		if not deja_visites[s] : 
-			res.append(s)
-			deja_visites[s] = True
-		for v in sorted(G.voisins(s), reverse=True) : 
-			if not deja_visites[v] : 
-				a_traite.append(v)
+	for u, v in ponts(G) : 
+		if u == sommet or v == sommet : 
+			return True
+	return False
+
+def deuxieme_extremite(G, sommet) : 
+    for u, v in ponts(G) : 
+        if u == sommet : 
+            return v 
+        if v == sommet : 
+            return u
+    return None
+
+def est_deuxieme_extremite(G, sommet, sommet2) :
+	for u, v in ponts(G) : 
+		if u == sommet and v == sommet2 or v == sommet and u == sommet2 : 
+			return True
+	return False
+
+def sommet_dans_composante(G, sommet, composante) : 
+    sommet2 = deuxieme_extremite(G, sommet)
+    if sommet2 != None : 
+        if sommet2 in composante : 
+            return True
+    return False
+
+def chercher_composantes(G, depart, composante, extremite_deux, deja_visites=None):
+    resultat = list()
+
+    if deja_visites == None:
+        deja_visites = dict()
+        for s in G.sommets():
+            deja_visites[s] = False
+
+    a_traiter = []
+    a_traiter.append(depart)
+
+    if not depart in composante :
+    	composante.append(depart)
+
+    while len(a_traiter) > 0:
+        dernier = len(a_traiter) - 1
+        sommet = a_traiter[dernier]
+        a_traiter.pop()
+
+        if deja_visites[sommet] == False:
+
+            if sommet != extremite_deux and not est_deuxieme_extremite(G, depart, sommet):
+                resultat.append(sommet)
+                deja_visites[sommet] = True
+                for v in sorted(G.voisins(sommet)):
+                    if extremite_ponts(G, v):
+                        if not sommet_dans_composante(G, v, composante) and not v in composante and not est_deuxieme_extremite(G, sommet, v):
+                            composante.append(v)
+                            if deja_visites[v] == False:
+                                a_traiter.append(v)
+                    else : 
+                        if not v in composante : 
+                        	composante.append(v)
+                        if deja_visites[v] == False:
+                            a_traiter.append(v)
+
+    return resultat
+
+def composantes(G):
+    composantes = dict()
+    res = []
+
+    for (u, v) in ponts(G):
+        composantes[u] = list()
+        composantes[v] = list()
+        chercher_composantes(G, u, composantes[u], v)
+        chercher_composantes(G, v, composantes[v], u)
+
+    #On enlève les doublons
+    for u in composantes:
+        if composantes[u] not in res:
+            res.append(composantes[u])
+                    
+    return res
+
+def est_feuille(G, composante):
+    res = 0
+
+    for s in composante:
+        if extremite_ponts(G, s):
+            res += 1
+    return res == 1
+
+def feuilles(G):
+    res = list()
+
+    for c in composantes(G):
+        if est_feuille(G, c):
+            res.append(c)
+    
+    return res
+
+def relier_feuilles(G, f1, f2):
+    x = randint(0, len(f1) - 1)
+    y = randint(0, len(f2) - 1)
+
+    return (f1[x], f2[y])
+
+def parcours_largeur_iteratif(G, depart, deja_visites=None):
+    resultat = list()
+
+    if deja_visites == None:
+        deja_visites = dict()
+        for s in G.sommets():
+            deja_visites[s] = False
+
+    a_traiter = []
+    a_traiter.append(depart)
+
+    while a_traiter != []:
+        dernier = len(a_traiter) - 1
+        sommet = a_traiter[dernier]
+        a_traiter.pop()
+
+        if deja_visites[sommet] == False:
+
+            resultat.append(sommet)
+            deja_visites[sommet] = True
+            for v in sorted(G.voisins(sommet)):
+                if deja_visites[v] == False:
+                    a_traiter.append(v)
+
+    return resultat
+
+def est_connexe(G):
+	if G.nombre_sommets() == 0:
+		return True
+
+	depart = G.sommets()[0]
+	return len(parcours_largeur_iteratif(G, depart)) == G.nombre_sommets() 
+
+def amelioration_ponts(G):
+	collection = feuilles(G)
+	res = []
+	print("feuilles", collection)
+	print("composantes", composantes(G))
+	if est_connexe(G): 
+		i = 0
+		while i < len(collection) :
+			if i == len(collection) - 1 : 
+				j = 0
+			else : 
+				j = i+1
+			x = collection[i]
+			y = collection[j]
+			res.append(relier_feuilles(G, x, y))
+			i+=1
+
 	return res
-
-
-def amelioration_ponts(G) : 
-  	print(ppi(G, 'd'))
 
 def main() : 
 	G = Graphe()
-	G.ajouter_sommets(zip('abcdefghijkl', [None] * 12))
+	G.ajouter_sommets(zip('abcdefghijklmn', [None] * 14))
 	G.ajouter_aretes(
-    [('a', 'b', None), ('b', 'c', None), ('c', 'a', None), ('c', 'd', None), ('d', 'e', None),
-      ('e', 'f', None), ('f', 'd', None), ('a', 'g', None), ('g', 'h', None), ('h', 'a', None),
-      ('h', 'i', None), ('i', 'j', None), ('j', 'h', None), ('j', 'k', None), ('k', 'i', None),
-      ('i', 'l', None), ('k', 'h', None)])
-	amelioration_ponts(G)
+     [('a', 'b', None), ('b', 'c', None), ('c', 'd', None), ('d', 'a', None), ('c', 'e', None),
+     ('e', 'f', None), ('f', 'g', None), ('g', 'i', None), ('g', 'm', None),
+     ('i', 'j', None), ('i', 'k', None), ('k', 'l', None), ('l', 'm', None), ('m', 'n', None),
+     ('n', 'l', None)])
+	for u, v in amelioration_ponts(G) : 
+		G.ajouter_arete(u, v, None)
+	creer_dot(G, "res.dot")
+	print(ponts(G))
 
 if __name__ == "__main__":
     main()

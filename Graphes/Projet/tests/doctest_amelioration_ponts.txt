@@ -41,8 +41,7 @@ Exemple de Wikipedia:
 ...     [('a', 'b', None), ('b', 'c', None), ('c', 'd', None), ('d', 'a', None), ('c', 'e', None),
 ...      ('e', 'f', None), ('f', 'g', None), ('g', 'h', None), ('g', 'i', None), ('g', 'm', None),
 ...      ('i', 'j', None), ('i', 'k', None), ('k', 'l', None), ('l', 'm', None), ('m', 'n', None),
-...      ('n', 'l', None)]
-... )
+...      ('n', 'l', None)])
 >>> for u, v in amelioration_ponts(G):
 ...     G.ajouter_arete(u, v, None)
 >>> len(ponts(G))
