@@ -23,8 +23,9 @@ class Graphe(object) :
 			self.ajouter_arete(u, v, nom_ligne)
 
 	def ajouter_sommet(self, sommet, identifiant):
-		self.dictionnaire[sommet] = list()
-		self.tableau.append([sommet, identifiant])
+		if not sommet in self.dictionnaire.keys() :
+			self.dictionnaire[sommet] = list()
+			self.tableau.append([sommet, identifiant])
 
 	def ajouter_sommets(self, iterable):
 		for sommet, identifiant in iterable:
@@ -65,8 +66,8 @@ class Graphe(object) :
 
 	def voisins(self, sommet) : 
 		res = [] 
-		for s, identifiant in self.dictionnaire[sommet] : 
-			res.append(s)
+		for sommet in self.dictionnaire[sommet] : 
+			res.append(sommet[0])
 		return sorted(res)
 
 	def degre(self, sommet) : 

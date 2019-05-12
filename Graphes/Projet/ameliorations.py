@@ -19,12 +19,8 @@ def main() :
 	args = parser.parse_args()
 
 	G = Graphe()
-	for m in METROS : 
-		charger_donnees(G, "données/METRO_"+str(m)+".txt")
-	
-	G.debug()
 
-	"""if args.metro != None: 
+	if args.metro != None: 
 		if len(args.metro) == 0: 
 			metros = METROS
 		else :
@@ -74,7 +70,7 @@ def main() :
 		print("Il y a", len(ponts(G)), "ponts")
 		for u, v in amelioration_ponts(G):
 			G.ajouter_arete(u, v, None)
-		print("Après amélioration il y a", len(ponts(G)), "pont(s)")"""
+		print("Après amélioration il y a", len(ponts(G)), "pont(s)")
 
 
 if __name__ == "__main__":
