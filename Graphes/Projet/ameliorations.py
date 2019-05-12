@@ -2,6 +2,7 @@ from graphe import *
 from fragilite import *
 import argparse
 import operator
+import os
 
 METROS = ["1", "2", "3", "3b", "4", "5", "6", "7", "7b", "8", "9", "10", "11", "12", "13", "14"]
 RER = ["A", "B"]
@@ -15,7 +16,7 @@ def main() :
 	parser.add_argument("--ponts", action="store_true", help="affiche les ponts")
 	parser.add_argument("--ameliorer-ponts", action="store_true", help="améliore les ponts")
 	parser.add_argument("--ameliorer-points", action="store_true", help="améliore les points d'articulation")
-
+	parser.add_argument("--visualise", action="store_true", help="permet de visualiser le graphe de base")
 	args = parser.parse_args()
 
 	G = Graphe()
@@ -39,6 +40,9 @@ def main() :
 			print("Chargement de la ligne "+str(rer)+" réussi")
 		print("Le réseau contient "+str(len(G.sommets()))+" sommets et "+str(len(G.aretes()))+" aretes\n")
 
+	if args.visualise : 
+		creer_dot(G, "visualise.dot")
+		os.system("dot -Tpdf visualise.dot -o visualise.pdf") #Convertit directement
 
 	if args.liste_stations : 
 		for station, identifiant in G.sommets_et_identifiants(operator.itemgetter(1)) : 

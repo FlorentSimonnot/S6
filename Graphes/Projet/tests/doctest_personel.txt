@@ -1,13 +1,27 @@
 >>> from graphe import *
 >>> from fragilite import *
+>>> import operator
 
 >>> G = Graphe()
 >>> charger_donnees(G, "données/METRO_1.txt")
->>> print(G.dictionnaire)
 >>> charger_donnees(G, "données/METRO_4.txt")
->>> print(G.dictionnaire)
 >>> charger_donnees(G, "données/METRO_7.txt")
->>> print(G.dictionnaire)
 >>> print(G.rechercher_id_station("Châtelet"))
 1964
->>> print(G.voisins(1964))
+>>> print([G.rechercher_sommet(s) for s in G.voisins(1964)])
+['Pont Marie (Cité des Arts)', 'Pont Neuf', 'Les Halles', 'Louvre-Rivoli', 'Hôtel de Ville', 'Cité']
+>>> print(G.degre(1964))
+6
+>>> print(G.nombre_sommets())
+86
+>>> G2 = Graphe()
+>>> charger_donnees(G2, "données/METRO_3b.txt")
+>>> print(G2.nombre_sommets())
+4
+>>> print(G2.sommets_et_identifiants(operator.itemgetter(0)))
+[[1659, 'Gambetta'], [1718, 'Saint-Fargeau'], [1752, 'Porte des Lilas'], [1783, 'Pelleport']]
+>>> lst = []
+>>> for s1, s2, ligne in G2.aretes() : 
+...    lst.append((G2.rechercher_sommet(s1), G2.rechercher_sommet(s2), ligne))
+>>> print(lst)
+[('Gambetta', 'Pelleport', 'METRO_3b'), ('Saint-Fargeau', 'Porte des Lilas', 'METRO_3b'), ('Saint-Fargeau', 'Pelleport', 'METRO_3b')]
