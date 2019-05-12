@@ -1,0 +1,11 @@
+>>> from graphe import *
+>>> from fragilite import *
+
+>>> G = Graphe()
+>>> charger_donnees(G, "données/METRO_1.txt")
+>>> print(G.dictionnaire)
+>>> charger_donnees(G, "données/METRO_4.txt")
+>>> charger_donnees(G, "données/METRO_7.txt")
+>>> print(G.rechercher_id_station("Châtelet"))
+1964
+>>> print(G.voisins(1964))

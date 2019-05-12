@@ -11,9 +11,9 @@ class Graphe(object) :
 				return nom
 
 	def ajouter_arete(self, u, v, nom_ligne) : 
-		if u not in self.dictionnaire:
+		if not u in self.dictionnaire:
 			self.dictionnaire[u] = list()
-		if v not in self.dictionnaire:
+		if not v in self.dictionnaire:
 			self.dictionnaire[v] = list()
 		self.dictionnaire[u].append((v, nom_ligne))
 		self.dictionnaire[v].append((u, nom_ligne))
@@ -35,7 +35,7 @@ class Graphe(object) :
 
 		for u in sorted(self.dictionnaire.keys()) : 
 			for (v, nom_ligne) in sorted(self.dictionnaire[u]) : 
-				if not (u, v, nom_ligne) in res and not (v, u, nom_ligne) in res: 
+				if not (v, u, nom_ligne) in res: 
 					res.append((u,v,nom_ligne))
 		return res
 
@@ -43,13 +43,19 @@ class Graphe(object) :
 		res = []
 		for s in self.dictionnaire.keys() :
 			res.append(s)
-		return res
+		return sorted(res)
 
 	def rechercher_sommet(self, s) : 
 		for sommet, identifiant in self.tableau : 
 			if sommet == s : 
 				return identifiant
 		return None
+
+	def rechercher_id_station(self, nom) : 
+		for sommet, identifiant in self.tableau : 
+			if identifiant == nom : 
+				return sommet
+		return -1
 
 	def sommets_et_identifiants(self, option) :
 		return sorted(self.tableau, key=option)
@@ -66,6 +72,17 @@ class Graphe(object) :
 	def degre(self, sommet) : 
 		return len(self.voisins(sommet))
 
+	def debug(self) : 
+		fichier = open("debug.txt", "w")
+
+		for s in self.dictionnaire.keys() : 
+			fichier.write(self.rechercher_sommet(s)+"\n")
+			for connexion in self.dictionnaire[s] : 
+				fichier.write("\t"+str(self.rechercher_sommet(connexion[0]))+"\n")
+			fichier.write("\n")
+
+		fichier.close()
+
 
 
 def charger_donnees(graphe, nom_fichier) : 
@@ -81,6 +98,7 @@ def charger_donnees(graphe, nom_fichier) :
 		if line == "# connexions\n" : 
 			flag_station = False
 			flag_connexions = True
+			
 		if flag_station == True and line != "# stations\n": 
 			graphe.ajouter_sommet(int(line.split(':')[0]), (line.split(':')[1]).strip('\n'))
 		if flag_connexions == True and line != "# connexions\n": 

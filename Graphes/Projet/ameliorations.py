@@ -17,11 +17,14 @@ def main() :
 	parser.add_argument("--ameliorer-points", action="store_true", help="améliore les points d'articulation")
 
 	args = parser.parse_args()
+
 	G = Graphe()
+	for m in METROS : 
+		charger_donnees(G, "données/METRO_"+str(m)+".txt")
+	
+	G.debug()
 
-	print(args)
-
-	if args.metro != None: 
+	"""if args.metro != None: 
 		if len(args.metro) == 0: 
 			metros = METROS
 		else :
@@ -60,15 +63,19 @@ def main() :
 			print(G.rechercher_sommet(sommet))
 		print("\n")
 
-	if args.ameliorer-points : 
-		apoints = amelioration_points_articulation(G)
+	if args.ameliorer_points : 
+		print("Il y a", len(points_articulation(G)), "points d'articulations")
+		for u, v in amelioration_points_articulation(G):
+			G.ajouter_arete(u, v, None)
+		print("Après amélioration il y a", len(ponts(G)), "point(s) d'articulation")
 
-	if args.ameliorer-ponts : 
-		ap = ameliorer_ponts(G)
-
-
+	if args.ameliorer_ponts : 
+		creer_dot(G, "resultat.dot")
+		print("Il y a", len(ponts(G)), "ponts")
+		for u, v in amelioration_ponts(G):
+			G.ajouter_arete(u, v, None)
+		print("Après amélioration il y a", len(ponts(G)), "pont(s)")"""
 
 
 if __name__ == "__main__":
     main()
-

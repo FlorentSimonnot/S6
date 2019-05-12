@@ -1,0 +1,1187 @@
+Argentine
+	Charles de Gaulle-Etoile
+	Porte Maillot
+
+Pont de Neuilly
+	Les Sablons (Jardin d'acclimatation)
+	Esplanade de la Défense
+
+Esplanade de la Défense
+	Pont de Neuilly
+	La Défense (Grande Arche)
+
+Bastille
+	Ledru-Rollin
+	Chemin Vert
+
+Bérault
+	Saint-Mandé
+	Château de Vincennes
+
+Tuileries
+	Concorde
+	Palais-Royal (Musée du Louvre)
+
+Franklin-Roosevelt
+	Alma-Marceau
+	Saint-Philippe du Roule
+
+Reuilly-Diderot
+	Montgallet
+	Faidherbe-Chaligny
+
+Gare de Lyon
+	Bercy
+	Châtelet
+
+George V
+	Charles de Gaulle-Etoile
+	Franklin-Roosevelt
+
+Châtelet
+	Pyramides
+	Gare de Lyon
+
+Concorde
+	Madeleine
+	Assemblée Nationale
+
+Saint-Mandé
+	Bérault
+	Porte de Vincennes
+
+Les Sablons (Jardin d'acclimatation)
+	Pont de Neuilly
+	Porte Maillot
+
+Louvre-Rivoli
+	Châtelet
+	Palais-Royal (Musée du Louvre)
+
+Porte de Vincennes
+	Nation
+	Saint-Mandé
+
+Porte Maillot
+	Les Sablons (Jardin d'acclimatation)
+	Argentine
+
+La Défense (Grande Arche)
+	Esplanade de la Défense
+
+Hôtel de Ville
+	Rambuteau
+	Châtelet
+
+Champs-Elysées-Clémenceau
+	Miromesnil
+	Invalides
+
+Saint-Paul (Le Marais)
+	Bastille
+	Hôtel de Ville
+
+Charles de Gaulle-Etoile
+	Kléber
+
+Palais-Royal (Musée du Louvre)
+	Pont Neuf
+	Pyramides
+
+Nation
+	Buzenval
+	Rue des Boulets
+
+Château de Vincennes
+	Bérault
+
+Place de Clichy
+	Liège
+	La Fourche
+
+Avron
+	Alexandre-Dumas
+	Nation
+
+Stalingrad
+	Louis Blanc
+	Riquet
+
+Barbès-Rochechouart
+	Château Rouge
+	Gare du Nord
+
+Belleville
+	Pyrénées
+	Goncourt (Hôpital Saint-Louis)
+
+Ternes
+	Courcelles
+	Charles de Gaulle-Etoile
+
+Ménilmontant
+	Père-Lachaise
+	Couronnes
+
+Blanche
+	Pigalle
+	Place de Clichy
+
+Victor Hugo
+	Porte Dauphine (Maréchal de Lattre de Tassigny)
+	Charles de Gaulle-Etoile
+
+Monceau
+	Courcelles
+	Villiers
+
+Couronnes
+	Belleville
+	Ménilmontant
+
+Rome
+	Villiers
+	Place de Clichy
+
+Colonel Fabien
+	Belleville
+	Jaurès
+
+Courcelles
+	Ternes
+	Monceau
+
+Porte Dauphine (Maréchal de Lattre de Tassigny)
+	Victor Hugo
+
+Villiers
+	Malesherbes
+	Europe
+
+Jaurès
+	Louis Blanc
+	Bolivar
+
+La Chapelle
+	Barbès-Rochechouart
+	Stalingrad
+
+Père-Lachaise
+	Rue Saint-Maur
+	Gambetta
+
+Alexandre-Dumas
+	Avron
+	Philippe Auguste
+
+Philippe Auguste
+	Alexandre-Dumas
+	Père-Lachaise
+
+Anvers
+	Barbès-Rochechouart
+	Pigalle
+
+Pigalle
+	Saint-Georges
+	Abbesses
+
+Arts-et-Métiers
+	Rambuteau
+	République
+
+Pont de Levallois-Bécon
+	Anatole-France
+
+Europe
+	Saint-Lazare
+	Villiers
+
+Temple
+	Arts-et-Métiers
+	République
+
+Gallieni (Parc de Bagnolet)
+	Porte de Bagnolet
+
+Opéra
+	Richelieu-Drouot
+	Madeleine
+
+Saint-Lazare
+	Madeleine
+
+Rue Saint-Maur
+	Père-Lachaise
+	Parmentier
+
+Louise Michel
+	Anatole-France
+	Porte de Champerret
+
+Porte de Bagnolet
+	Gambetta
+	Gallieni (Parc de Bagnolet)
+
+Porte de Champerret
+	Louise Michel
+	Pereire
+
+Bourse
+	Quatre Septembre
+	Sentier
+
+Malesherbes
+	Villiers
+	Wagram
+
+Quatre Septembre
+	Opéra
+	Bourse
+
+Havre-Caumartin
+	Saint-Augustin
+	Chaussée d'Antin (La Fayette)
+
+Wagram
+	Malesherbes
+	Pereire
+
+Réaumur-Sébastopol
+	Etienne Marcel
+	Strasbourg-Saint-Denis
+
+République
+	Arts-et-Métiers
+	Goncourt (Hôpital Saint-Louis)
+
+Parmentier
+	République
+	Rue Saint-Maur
+
+Pereire
+	Porte de Champerret
+	Wagram
+
+Gambetta
+	Pelleport
+
+Anatole-France
+	Louise Michel
+	Pont de Levallois-Bécon
+
+Sentier
+	Bourse
+	Réaumur-Sébastopol
+
+Porte des Lilas
+	Mairie des Lilas
+	Télégraphe
+
+Saint-Fargeau
+	Pelleport
+	Porte des Lilas
+
+Pelleport
+	Gambetta
+	Saint-Fargeau
+
+Simplon
+	Marcadet-Poissonniers
+	Porte de Clignancourt
+
+Strasbourg-Saint-Denis
+	Bonne Nouvelle
+	République
+
+Etienne Marcel
+	Réaumur-Sébastopol
+	Les Halles
+
+Vavin
+	Montparnasse-Bienvenue
+	Raspail
+
+Montparnasse-Bienvenue
+	Duroc
+	Gaîté
+
+Gare de l'Est (Verdun)
+	Poissonnière
+	Château Landon
+
+Mouton-Duvernet
+	Alésia
+	Denfert-Rochereau
+
+Gare du Nord
+	Stalingrad
+	Gare de l'Est (Verdun)
+
+Mairie de Montrouge
+	Porte d'Orléans (Général Leclerc)
+
+Cité
+	Saint-Michel
+	Châtelet
+
+Saint-Germain des Prés
+	Saint-Sulpice
+	Odéon
+
+Les Halles
+	Etienne Marcel
+	Châtelet
+
+Saint-Michel
+	Cité
+	Odéon
+
+Saint-Placide
+	Montparnasse-Bienvenue
+	Saint-Sulpice
+
+Saint-Sulpice
+	Saint-Germain des Prés
+	Saint-Placide
+
+Porte d'Orléans (Général Leclerc)
+	Mairie de Montrouge
+	Alésia
+
+Denfert-Rochereau
+	Raspail
+	Saint-Jacques
+
+Porte de Clignancourt
+	Simplon
+
+Raspail
+	Denfert-Rochereau
+	Edgar-Quinet
+
+Château Rouge
+	Marcadet-Poissonniers
+	Barbès-Rochechouart
+
+Château d'Eau
+	Strasbourg-Saint-Denis
+	Gare de l'Est (Verdun)
+
+Odéon
+	Mabillon
+	Cluny-La Sorbonne
+
+Marcadet-Poissonniers
+	Marx-Dormoy
+	Jules Joffrin
+
+Alésia
+	Mouton-Duvernet
+	Porte d'Orléans (Général Leclerc)
+
+Laumière
+	Jaurès
+	Ourcq
+
+Eglise de Pantin
+	Hoche
+	Bobigny-Pantin (Raymond Queneau)
+
+Bobigny-Pantin (Raymond Queneau)
+	Bobigny-Pablo-Picasso
+	Eglise de Pantin
+
+Gare d'Austerlitz
+	Jussieu
+
+Richard-Lenoir
+	Bréguet-Sabin
+	Oberkampf
+
+Bobigny-Pablo-Picasso
+	Bobigny-Pantin (Raymond Queneau)
+
+Oberkampf
+	République
+	Saint-Ambroise
+
+Porte de Pantin
+	Hoche
+	Ourcq
+
+Bréguet-Sabin
+	Richard-Lenoir
+	Bastille
+
+Quai de la Rapée
+	Gare d'Austerlitz
+	Bastille
+
+Campo-Formio
+	Saint-Marcel
+	Place d'Italie
+
+Hoche
+	Eglise de Pantin
+	Porte de Pantin
+
+Saint-Marcel
+	Gare d'Austerlitz
+	Campo-Formio
+
+Jacques-Bonsergent
+	République
+	Gare de l'Est (Verdun)
+
+Ourcq
+	Laumière
+	Porte de Pantin
+
+Place d'Italie
+	Tolbiac
+	Les Gobelins
+
+Sèvres-Lecourbe
+	Cambronne
+	Pasteur
+
+Dupleix
+	Bir-Hakeim (Grenelle)
+	La Motte-Picquet-Grenelle
+
+Edgar-Quinet
+	Raspail
+	Montparnasse-Bienvenue
+
+Bel-Air
+	Daumesnil (Félix Eboué)
+	Picpus
+
+Bercy
+	Gare de Lyon
+	Cour Saint-Emilion
+
+Bir-Hakeim (Grenelle)
+	Passy
+	Dupleix
+
+Boissière
+	Kléber
+	Trocadéro
+
+Daumesnil (Félix Eboué)
+	Michel Bizot
+	Montgallet
+
+Dugommier
+	Daumesnil (Félix Eboué)
+	Bercy
+
+Glacière
+	Corvisart
+	Saint-Jacques
+
+Nationale
+	Place d'Italie
+	Chevaleret
+
+Chevaleret
+	Quai de la Gare
+	Nationale
+
+Corvisart
+	Glacière
+	Place d'Italie
+
+Cambronne
+	Sèvres-Lecourbe
+	La Motte-Picquet-Grenelle
+
+Trocadéro
+	Iéna
+	Rue de la Pompe (Avenue Georges Mandel)
+
+Saint-Jacques
+	Glacière
+	Denfert-Rochereau
+
+Quai de la Gare
+	Bercy
+	Chevaleret
+
+Passy
+	Trocadéro
+	Bir-Hakeim (Grenelle)
+
+Kléber
+	Boissière
+	Charles de Gaulle-Etoile
+
+Pasteur
+	Falguière
+	Volontaires
+
+La Motte-Picquet-Grenelle
+	Ségur
+	Avenue Emile-Zola
+
+Picpus
+	Nation
+	Bel-Air
+
+Le Kremlin-Bicêtre
+	Maison Blanche
+	Villejuif-Léo Lagrange
+
+Aubervilliers Pantin (4 Chemins)
+	Fort d'Aubervilliers
+	Porte de la Villette
+
+Poissonnière
+	Cadet
+	Gare de l'Est (Verdun)
+
+Pont Marie (Cité des Arts)
+	Châtelet
+	Sully-Morland
+
+Pont Neuf
+	Palais-Royal (Musée du Louvre)
+	Châtelet
+
+Porte d'Italie
+	Porte de Choisy
+	Maison Blanche
+
+Sully-Morland
+	Jussieu
+	Pont Marie (Cité des Arts)
+
+Tolbiac
+	Place d'Italie
+	Maison Blanche
+
+Fort d'Aubervilliers
+	Aubervilliers Pantin (4 Chemins)
+	La Courneuve-8-Mai-1945
+
+Villejuif-Louis Aragon
+	Villejuif-Paul Vaillant Couturier (Hôpital Paul Brousse)
+
+Crimée
+	Riquet
+	Corentin-Cariou
+
+Villejuif-Paul Vaillant Couturier (Hôpital Paul Brousse)
+	Villejuif-Louis Aragon
+	Villejuif-Léo Lagrange
+
+Château Landon
+	Louis Blanc
+	Gare de l'Est (Verdun)
+
+Riquet
+	Crimée
+	Stalingrad
+
+Chaussée d'Antin (La Fayette)
+	Havre-Caumartin
+	Richelieu-Drouot
+
+Le Peletier
+	Chaussée d'Antin (La Fayette)
+	Cadet
+
+Les Gobelins
+	Censier-Daubenton
+	Place d'Italie
+
+Corentin-Cariou
+	Porte de la Villette
+	Crimée
+
+Louis Blanc
+	Jaurès
+
+Porte d'Ivry
+	Porte de Choisy
+	Pierre et Marie Curie
+
+Porte de Choisy
+	Porte d'Italie
+	Porte d'Ivry
+
+Mairie d'Ivry
+	Pierre et Marie Curie
+
+Porte de la Villette
+	Corentin-Cariou
+	Aubervilliers Pantin (4 Chemins)
+
+Maison Blanche
+	Le Kremlin-Bicêtre
+	Tolbiac
+	Porte d'Italie
+
+Pyramides
+	Madeleine
+	Châtelet
+
+Cadet
+	Poissonnière
+	Le Peletier
+
+Censier-Daubenton
+	Les Gobelins
+	Place Monge (Jardin des Plantes)
+
+Villejuif-Léo Lagrange
+	Le Kremlin-Bicêtre
+	Villejuif-Paul Vaillant Couturier (Hôpital Paul Brousse)
+
+Place Monge (Jardin des Plantes)
+	Censier-Daubenton
+	Jussieu
+
+Jussieu
+	Cardinal-Lemoine
+	Gare d'Austerlitz
+
+La Courneuve-8-Mai-1945
+	Fort d'Aubervilliers
+
+Pierre et Marie Curie
+	Mairie d'Ivry
+	Porte d'Ivry
+
+Danube
+	Pré-Saint-Gervais
+	Botzaris
+
+Place des Fêtes
+	Télégraphe
+	Jourdain
+
+Botzaris
+	Place des Fêtes
+	Buttes-Chaumont
+	Danube
+
+Bolivar
+	Buttes-Chaumont
+	Jaurès
+
+Pré-Saint-Gervais
+	Danube
+	Place des Fêtes
+
+Buttes-Chaumont
+	Bolivar
+	Botzaris
+
+Félix Faure
+	Commerce
+	Boucicaut
+
+Commerce
+	Félix Faure
+	La Motte-Picquet-Grenelle
+
+Ecole Militaire
+	La Motte-Picquet-Grenelle
+	La Tour-Maubourg
+
+La Tour-Maubourg
+	Ecole Militaire
+	Invalides
+
+Filles du Calvaire
+	Saint-Sébastien-Froissart
+	République
+
+Saint-Sébastien-Froissart
+	Filles du Calvaire
+	Chemin Vert
+
+Richelieu-Drouot
+	Grands Boulevards
+	Chaussée d'Antin (La Fayette)
+
+Chemin Vert
+	Bastille
+	Saint-Sébastien-Froissart
+
+Ledru-Rollin
+	Bastille
+	Faidherbe-Chaligny
+
+Faidherbe-Chaligny
+	Ledru-Rollin
+	Reuilly-Diderot
+
+Grands Boulevards
+	Bonne Nouvelle
+	Richelieu-Drouot
+
+Montgallet
+	Daumesnil (Félix Eboué)
+	Reuilly-Diderot
+
+Michel Bizot
+	Daumesnil (Félix Eboué)
+	Porte Dorée
+
+Porte Dorée
+	Michel Bizot
+	Porte de Charenton
+
+Porte de Charenton
+	Liberté
+	Porte Dorée
+
+Liberté
+	Porte de Charenton
+	Charenton-Ecoles
+
+Charenton-Ecoles
+	Ecole Vétérinaire de Maisons-Alfort
+	Liberté
+
+Ecole Vétérinaire de Maisons-Alfort
+	Maisons-Alfort-Stade
+	Charenton-Ecoles
+
+Maisons-Alfort-Stade
+	Ecole Vétérinaire de Maisons-Alfort
+	Maisons-Alfort-Les Juilliottes
+
+Maisons-Alfort-Les Juilliottes
+	Créteil-L'Echat (Hôpital Henri Mondor)
+	Maisons-Alfort-Stade
+
+Créteil-L'Echat (Hôpital Henri Mondor)
+	Créteil-Université
+	Maisons-Alfort-Les Juilliottes
+
+Créteil-Université
+	Créteil-L'Echat (Hôpital Henri Mondor)
+	Créteil-Préfecture (Hôtel de Ville)
+
+Créteil-Préfecture (Hôtel de Ville)
+	Pointe du Lac
+	Créteil-Université
+
+Pointe du Lac
+	Créteil-Préfecture (Hôtel de Ville)
+
+Madeleine
+	Saint-Lazare
+	Pyramides
+
+Bonne Nouvelle
+	Grands Boulevards
+	Strasbourg-Saint-Denis
+
+Balard
+	Lourmel
+
+Lourmel
+	Boucicaut
+	Balard
+
+Invalides
+	Varenne
+	Champs-Elysées-Clémenceau
+
+Boucicaut
+	Lourmel
+	Félix Faure
+
+Pont de Sèvres
+	Billancourt
+
+Exelmans
+	Michel-Ange-Molitor
+	Porte de Saint-Cloud
+
+Michel-Ange-Auteuil
+	Porte d'Auteuil
+	Eglise d'Auteuil
+
+Michel-Ange-Molitor
+	Porte d'Auteuil
+	Boulogne-Jean-Jaurès
+	Chardon-Lagache
+
+Miromesnil
+	Champs-Elysées-Clémenceau
+	Saint-Lazare
+
+Billancourt
+	Pont de Sèvres
+	Marcel Sembat
+
+Robespierre
+	Porte de Montreuil
+	Croix-de-Chavaux (Jacques Duclos)
+
+Rue de la Pompe (Avenue Georges Mandel)
+	La Muette
+	Trocadéro
+
+Rue des Boulets
+	Charonne
+	Nation
+
+Saint-Ambroise
+	Oberkampf
+	Voltaire (Léon Blum)
+
+Saint-Augustin
+	Havre-Caumartin
+	Miromesnil
+
+Saint-Philippe du Roule
+	Miromesnil
+	Franklin-Roosevelt
+
+Croix-de-Chavaux (Jacques Duclos)
+	Mairie de Montreuil
+	Robespierre
+
+Mairie de Montreuil
+	Croix-de-Chavaux (Jacques Duclos)
+
+Porte de Montreuil
+	Robespierre
+	Maraîchers
+
+Porte de Saint-Cloud
+	Marcel Sembat
+	Exelmans
+
+Maraîchers
+	Buzenval
+	Porte de Montreuil
+
+Marcel Sembat
+	Porte de Saint-Cloud
+	Billancourt
+
+Buzenval
+	Nation
+	Maraîchers
+
+Voltaire (Léon Blum)
+	Charonne
+	Saint-Ambroise
+
+Ranelagh
+	La Muette
+	Jasmin
+
+Iéna
+	Alma-Marceau
+	Trocadéro
+
+Jasmin
+	Ranelagh
+	Michel-Ange-Auteuil
+
+Charonne
+	Voltaire (Léon Blum)
+	Rue des Boulets
+
+Alma-Marceau
+	Franklin-Roosevelt
+	Iéna
+
+La Muette
+	Ranelagh
+	Rue de la Pompe (Avenue Georges Mandel)
+
+Sèvres-Babylone
+	Rue du Bac
+	Rennes
+
+Duroc
+	Montparnasse-Bienvenue
+	Saint-François-Xavier
+
+Avenue Emile-Zola
+	Charles Michels
+	La Motte-Picquet-Grenelle
+
+Maubert-Mutualité
+	Cardinal-Lemoine
+	Cluny-La Sorbonne
+
+Vaneau
+	Duroc
+	Sèvres-Babylone
+
+Mirabeau
+	Javel-André-Citroen
+	Chardon-Lagache
+
+Porte d'Auteuil
+	Michel-Ange-Auteuil
+	Michel-Ange-Molitor
+	Boulogne-Jean-Jaurès
+
+Cluny-La Sorbonne
+	Maubert-Mutualité
+	Odéon
+
+Mabillon
+	Odéon
+	Sèvres-Babylone
+
+Eglise d'Auteuil
+	Javel-André-Citroen
+	Michel-Ange-Auteuil
+
+Boulogne-Jean-Jaurès
+	Porte d'Auteuil
+	Michel-Ange-Molitor
+	Boulogne Pont de Saint-Cloud
+
+Boulogne Pont de Saint-Cloud
+	Boulogne-Jean-Jaurès
+
+Cardinal-Lemoine
+	Maubert-Mutualité
+	Jussieu
+
+Chardon-Lagache
+	Mirabeau
+	Michel-Ange-Molitor
+
+Javel-André-Citroen
+	Mirabeau
+	Charles Michels
+	Eglise d'Auteuil
+
+Charles Michels
+	Avenue Emile-Zola
+	Javel-André-Citroen
+
+Ségur
+	Duroc
+	La Motte-Picquet-Grenelle
+
+Rambuteau
+	Hôtel de Ville
+	Arts-et-Métiers
+
+Goncourt (Hôpital Saint-Louis)
+	République
+	Belleville
+
+Jourdain
+	Place des Fêtes
+	Pyrénées
+
+Télégraphe
+	Place des Fêtes
+	Porte des Lilas
+
+Mairie des Lilas
+	Porte des Lilas
+
+Pyrénées
+	Jourdain
+	Belleville
+
+Lamarck-Caulaincourt
+	Jules Joffrin
+	Abbesses
+
+Assemblée Nationale
+	Solférino
+	Concorde
+
+Solférino
+	Assemblée Nationale
+	Rue du Bac
+
+Falguière
+	Montparnasse-Bienvenue
+	Pasteur
+
+Trinité-d'Estienne d'Orves
+	Notre-Dame de Lorette
+	Saint-Lazare
+
+Vaugirard (Adolphe Chérioux)
+	Volontaires
+	Convention
+
+Rue du Bac
+	Sèvres-Babylone
+	Solférino
+
+Notre-Dame de Lorette
+	Trinité-d'Estienne d'Orves
+	Saint-Georges
+
+Notre-Dame des Champs
+	Rennes
+	Montparnasse-Bienvenue
+
+Saint-Georges
+	Pigalle
+	Notre-Dame de Lorette
+
+Convention
+	Porte de Versailles
+	Vaugirard (Adolphe Chérioux)
+
+Corentin-Celton
+	Mairie d'Issy
+	Porte de Versailles
+
+Mairie d'Issy
+	Corentin-Celton
+
+Porte de la Chapelle
+	Marx-Dormoy
+	Front Populaire
+
+Porte de Versailles
+	Convention
+	Corentin-Celton
+
+Marx-Dormoy
+	Marcadet-Poissonniers
+	Porte de la Chapelle
+
+Volontaires
+	Vaugirard (Adolphe Chérioux)
+	Pasteur
+
+Front Populaire
+	Porte de la Chapelle
+
+Rennes
+	Sèvres-Babylone
+	Notre-Dame des Champs
+
+Jules Joffrin
+	Lamarck-Caulaincourt
+	Marcadet-Poissonniers
+
+Abbesses
+	Lamarck-Caulaincourt
+	Pigalle
+
+Plaisance
+	Pernety
+	Porte de Vanves
+
+Gabriel-Péri
+	Les Agnettes
+	Mairie de Clichy
+
+Gaîté
+	Pernety
+	Montparnasse-Bienvenue
+
+Carrefour-Pleyel
+	Saint-Denis-Porte de Paris
+	Mairie de Saint-Ouen
+
+Garibaldi
+	Porte de Saint-Ouen
+	Mairie de Saint-Ouen
+
+Saint-Denis-Université
+	Basilique de Saint-Denis
+
+Châtillon Montrouge
+	Malakoff-Rue Etienne Dolet
+
+Basilique de Saint-Denis
+	Saint-Denis-Université
+	Saint-Denis-Porte de Paris
+
+Saint-Denis-Porte de Paris
+	Basilique de Saint-Denis
+	Carrefour-Pleyel
+
+Saint-François-Xavier
+	Varenne
+	Duroc
+
+Liège
+	Saint-Lazare
+	Place de Clichy
+
+Les Agnettes
+	Gabriel-Péri
+	Asnières-Gennevilliers Les Courtilles
+
+Asnières-Gennevilliers Les Courtilles
+	Les Agnettes
+
+Porte de Clichy
+	Brochant
+	Mairie de Clichy
+
+Mairie de Clichy
+	Porte de Clichy
+	Gabriel-Péri
+
+Mairie de Saint-Ouen
+	Garibaldi
+	Carrefour-Pleyel
+
+Porte de Saint-Ouen
+	Garibaldi
+	Guy-Môquet
+
+Porte de Vanves
+	Malakoff-Plateau de Vanves
+	Plaisance
+
+Malakoff-Plateau de Vanves
+	Malakoff-Rue Etienne Dolet
+	Porte de Vanves
+
+Malakoff-Rue Etienne Dolet
+	Malakoff-Plateau de Vanves
+	Châtillon Montrouge
+
+Brochant
+	La Fourche
+	Porte de Clichy
+
+Guy-Môquet
+	La Fourche
+	Porte de Saint-Ouen
+
+Varenne
+	Saint-François-Xavier
+	Invalides
+
+La Fourche
+	Guy-Môquet
+	Brochant
+	Place de Clichy
+
+Pernety
+	Gaîté
+	Plaisance
+
+Olympiades
+	Bibliothèque-François Mitterrand
+
+Bibliothèque-François Mitterrand
+	Olympiades
+	Cour Saint-Emilion
+
+Cour Saint-Emilion
+	Bibliothèque-François Mitterrand
+	Bercy
+

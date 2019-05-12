@@ -18,10 +18,15 @@ graph graphe {
 	b -- c [label=None] ;
 	c -- d [label=None] ;
 	c -- e [label=None] ;
+	d -- e [label=None] ;
+	d -- j [label=None] ;
 	e -- f [label=None] ;
 	f -- g [label=None] ;
+	f -- h [label=None] ;
+	g -- h [label=None] ;
 	g -- i [label=None] ;
 	g -- m [label=None] ;
+	h -- j [label=None] ;
 	i -- j [label=None] ;
 	i -- k [label=None] ;
 	k -- l [label=None] ;

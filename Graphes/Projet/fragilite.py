@@ -246,76 +246,107 @@ def feuilles(G):
     
     return res
 
-def relier_feuilles(G, f1, f2):
-    x = randint(0, len(f1) - 1)
-    y = randint(0, len(f2) - 1)
+def sont_dans_meme_composantes(a, b, composantes_connexes) : 
+	index_a = 0
+	index_b = 0
+	for i in range(len(composantes_connexes)) : 
+		if a in composantes_connexes[i] : 
+			index_a = i
+		if b in composantes_connexes[i] : 
+			index_b = i
+	return index_a == index_b
 
-    return (f1[x], f2[y])
+def relier_feuilles(G, f1, f2, composantes_connexes):
+	x = randint(0, len(f1) - 1)
+	y = randint(0, len(f2) - 1)
+	if composantes_connexes == None : 
+		return (f1[x], f2[y])
+	else : 
+		if sont_dans_meme_composantes(x, y, composantes_connexes) : 
+			return (f1[x], f2[y])
 
 def parcours_largeur_iteratif(G, depart, deja_visites=None):
-    resultat = list()
+	resultat = list()
 
-    if deja_visites == None:
-        deja_visites = dict()
-        for s in G.sommets():
-            deja_visites[s] = False
+	if deja_visites == None:
+		deja_visites = dict()
+		for s in G.sommets():
+			deja_visites[s] = False
 
-    a_traiter = []
-    a_traiter.append(depart)
+	a_traiter = []
+	a_traiter.append(depart)
 
-    while a_traiter != []:
-        dernier = len(a_traiter) - 1
-        sommet = a_traiter[dernier]
-        a_traiter.pop()
+	while len(a_traiter) > 0:
+		sommet = a_traiter[0]
+		del a_traiter[0]
 
-        if deja_visites[sommet] == False:
+		if not deja_visites[sommet]:
+			resultat.append(sommet)
+			deja_visites[sommet] = True
+			for v in sorted(G.voisins(sommet)):
+				if not deja_visites[v]:
+					a_traiter.append(v)
 
-            resultat.append(sommet)
-            deja_visites[sommet] = True
-            for v in sorted(G.voisins(sommet)):
-                if deja_visites[v] == False:
-                    a_traiter.append(v)
+	return resultat
 
-    return resultat
+def parcours_profondeur_iteratif(G, depart, deja_visites=None):
+	resultat = list()
+
+	if deja_visites == None:
+		deja_visites = dict()
+		for s in G.sommets():
+			deja_visites[s] = False
+
+	a_traiter = []
+	a_traiter.append(depart)
+
+	while len(a_traiter) > 0:
+		sommet = a_traiter[-1]
+		del a_traiter[-1]
+
+		if not deja_visites[sommet]:
+			resultat.append(sommet)
+			deja_visites[sommet] = True
+			for v in sorted(G.voisins(sommet)):
+				if not deja_visites[v]:
+					a_traiter.append(v)
+
+	return resultat
 
 def est_connexe(G):
 	if G.nombre_sommets() == 0:
 		return True
 
 	depart = G.sommets()[0]
+	print(parcours_largeur_iteratif(G, depart))
 	return len(parcours_largeur_iteratif(G, depart)) == G.nombre_sommets() 
+
+def composantes_connexes(G) : 
+
+	res = list()
+	deja_visites = dict()
+	for s in G.sommets():
+		deja_visites[s] = False
+	for s in G.sommets() : 
+		if not deja_visites[s] : 
+			res.append(parcours_largeur_iteratif(G, s, deja_visites))
+	return res
 
 def amelioration_ponts(G):
 	collection = feuilles(G)
 	res = []
-	print("feuilles", collection)
-	print("composantes", composantes(G))
-	if est_connexe(G): 
-		i = 0
-		while i < len(collection) :
-			if i == len(collection) - 1 : 
-				j = 0
-			else : 
-				j = i+1
-			x = collection[i]
-			y = collection[j]
-			res.append(relier_feuilles(G, x, y))
-			i+=1
-
+	if est_connexe(G) : 
+		cc = None
+	else : 
+		cc = composantes_connexes(G)
+	i = 0
+	while i < len(collection) :
+		if i == len(collection) - 1 : 
+			j = 0
+		else : 
+			j = i+1
+		x = collection[i]
+		y = collection[j]
+		res.append(relier_feuilles(G, x, y, cc))
+		i+=1
 	return res
-
-def main() : 
-	G = Graphe()
-	G.ajouter_sommets(zip('abcdefghijklmn', [None] * 14))
-	G.ajouter_aretes(
-     [('a', 'b', None), ('b', 'c', None), ('c', 'd', None), ('d', 'a', None), ('c', 'e', None),
-     ('e', 'f', None), ('f', 'g', None), ('g', 'i', None), ('g', 'm', None),
-     ('i', 'j', None), ('i', 'k', None), ('k', 'l', None), ('l', 'm', None), ('m', 'n', None),
-     ('n', 'l', None)])
-	for u, v in amelioration_ponts(G) : 
-		G.ajouter_arete(u, v, None)
-	creer_dot(G, "res.dot")
-	print(ponts(G))
-
-if __name__ == "__main__":
-    main()
