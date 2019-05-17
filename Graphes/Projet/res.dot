@@ -1,0 +1,29 @@
+graph graphe { 
+	a;
+	b;
+	c;
+	d;
+	e;
+	f;
+	g;
+	h;
+	i;
+	j;
+	k;
+	l;
+	m;
+	n;
+	a -- b [label=None] ;
+	a -- d [label=None] ;
+	b -- c [label=None] ;
+	c -- d [label=None] ;
+	c -- e [label=None] ;
+	e -- f [label=None] ;
+	f -- g [label=None] ;
+	g -- h [label=None] ;
+	g -- i [label=None] ;
+	g -- m [label=None] ;
+	l -- m [label=None] ;
+	l -- n [label=None] ;
+	m -- n [label=None] ;
+}

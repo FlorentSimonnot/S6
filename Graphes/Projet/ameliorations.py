@@ -20,8 +20,16 @@ def main() :
 	args = parser.parse_args()
 
 	G = Graphe()
-
-	if args.metro != None: 
+	G.ajouter_sommets(zip('ABC', [None]*3))
+	G.ajouter_arete('A', 'B', 'Ligne AB')
+	G.ajouter_arete('A', 'C', 'Ligne AC')
+	print(ponts(G))
+	print(amelioration_ponts(G))
+	for u, v in amelioration_ponts(G) : 
+		G.ajouter_arete(u, v, 'None')
+	print(G.aretes())
+	print(ponts(G))
+	"""if args.metro != None: 
 		if len(args.metro) == 0: 
 			metros = METROS
 		else :
@@ -75,7 +83,7 @@ def main() :
 		for u, v in amelioration_ponts(G):
 			G.ajouter_arete(u, v, None)
 		print("Après amélioration il y a", len(ponts(G)), "pont(s)")
-
+	"""
 
 if __name__ == "__main__":
     main()

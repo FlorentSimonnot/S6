@@ -25,7 +25,7 @@ CREATE TABLE unicode_sans (
 
 
 -- 1/
--- uppercase donne le codepoint du caractère en minuscule si c'est une majuscule
+-- uppercase donne le codepoint du caractère en majuscule si c'est une minuscule
 
 -- 2/
 
@@ -130,14 +130,23 @@ CREATE INDEX charname_hash_both_seq ON unicode_both USING hash (charname);
 CREATE INDEX numeric_hash_both_seq ON unicode_both USING hash (numeric);
 
 \copy unicode_both FROM UnicodeData.txt DELIMITER ';' NULL ''
-
+NULL
 -- 5/
 
+ANALYZE unicode_sans; 
+ANALYZE unicode_btree; 
+ANALYZE unicode_hash; 
+ANALYZE unicode_both; 
 EXPLAIN SELECT * FROM unicode_sans WHERE numeric='1';
+EXPLAIN SELECT * FROM unicode_both WHERE numeric='1';
+EXPLAIN SELECT * FROM unicode_btree WHERE numeric='1';
+EXPLAIN SELECT * FROM unicode_hash WHERE numeric='1';
 
 -- cost : temps avant le renvoi du premier enregistrement puis temps total pour tout renvoyer
 -- rows : nombres de lignes renvoyées
 -- width : largeur (nombre de caractères) par ligne
+
+-- Pour la table unicode_both il utilise la méthode de hash car moins couteux. 
 
 -- 7/
 
@@ -148,6 +157,9 @@ EXPLAIN SELECT * FROM unicode_sans;
 EXPLAIN SELECT * FROM unicode_btree;
 EXPLAIN SELECT * FROM unicode_hash;
 
+-- C'est les mêmes temps. 
+-- Il n'utilise pas les indexs pour un select *
+
 -- 8.1/
 
 SELECT count(*) FROM unicode_sans WHERE charname='NABLA';
@@ -157,6 +169,8 @@ EXPLAIN SELECT * FROM unicode_sans WHERE charname='NABLA';
 EXPLAIN SELECT * FROM unicode_btree WHERE charname='NABLA';
 EXPLAIN SELECT * FROM unicode_hash WHERE charname='NABLA';
 
+-- Il y a qu'un tuple correspondant à cette requete donc pas de méthode spéciale. 
+
 -- 9.1/
 
 SELECT count(*) FROM unicode_sans WHERE numeric<'12';
@@ -165,6 +179,8 @@ EXPLAIN SELECT * FROM unicode_both WHERE numeric<'12';
 EXPLAIN SELECT * FROM unicode_sans WHERE numeric<'12';
 EXPLAIN SELECT * FROM unicode_btree WHERE numeric<'12';
 EXPLAIN SELECT * FROM unicode_hash WHERE numeric<'12';
+
+-- unicod_both utilise un index scan btree car plus rapide que de chercher les valeurs dans la HashTable
 
 -- 8.2/
 

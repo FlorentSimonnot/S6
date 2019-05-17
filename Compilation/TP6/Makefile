@@ -3,7 +3,7 @@ NASM=nasm
 CFLAGS=-Wall -no-pie
 UTILS=utils.o
 
-EXEC=exo3
+EXEC=exo1
 #$(EXEC).c
 #enlever "-nostartfiles" quand compiler pour du C
 

@@ -61,14 +61,14 @@ class Graphe(object) :
 	def sommets_et_identifiants(self, option) :
 		return sorted(self.tableau, key=option)
 
+	def nombre_aretes(self) : 
+		return len(self.aretes())
+
 	def nombre_sommets(self) : 
-		return len(self.dictionnaire)
+		return len(self.sommets())
 
 	def voisins(self, sommet) : 
-		res = [] 
-		for sommet in self.dictionnaire[sommet] : 
-			res.append(sommet[0])
-		return sorted(res)
+		return sorted([s for s, nom in self.dictionnaire[sommet]])
 
 	def degre(self, sommet) : 
 		return len(self.voisins(sommet))

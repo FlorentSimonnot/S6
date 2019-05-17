@@ -8,6 +8,8 @@
 >>> charger_donnees(G, "données/METRO_7.txt")
 >>> print(G.rechercher_id_station("Châtelet"))
 1964
+>>> print(G.voisins(1964))
+[1805, 1806, 1855, 1864, 1892, 1975]
 >>> print([G.rechercher_sommet(s) for s in G.voisins(1964)])
 ['Pont Marie (Cité des Arts)', 'Pont Neuf', 'Les Halles', 'Louvre-Rivoli', 'Hôtel de Ville', 'Cité']
 >>> print(G.degre(1964))
@@ -25,3 +27,26 @@
 ...    lst.append((G2.rechercher_sommet(s1), G2.rechercher_sommet(s2), ligne))
 >>> print(lst)
 [('Gambetta', 'Pelleport', 'METRO_3b'), ('Saint-Fargeau', 'Porte des Lilas', 'METRO_3b'), ('Saint-Fargeau', 'Pelleport', 'METRO_3b')]
+>>> G = Graphe()
+>>> G.ajouter_sommets(zip('abcdefghijklmn', [None] * 14))
+>>> G.ajouter_aretes(
+...     [('a', 'b', None), ('b', 'c', None), ('c', 'd', None), ('d', 'a', None), ('c', 'e', None),
+...      ('e', 'f', None), ('f', 'g', None), ('g', 'h', None), ('g', 'i', None), ('g', 'm', None),
+...      ('l', 'm', None), ('m', 'n', None),
+...      ('n', 'l', None)]
+... )
+>>> creer_dot(G, "res.dot")
+>>> print(points_articulation(G))
+['c', 'e', 'f', 'g', 'm']
+>>> for u, v in amelioration_points_articulation(G) : 
+...     G.ajouter_arete(u, v, None)
+>>> G = Graphe()
+>>> G.ajouter_sommets(zip('ab', [None]*2))
+>>> G.ajouter_arete('a', 'b', None)
+>>> print(ponts(G))
+[('a', 'b')]
+>>> print(amelioration_ponts(G))
+[('a', 'b'), ('b', 'a')]
+>>> for u, v in amelioration_ponts(G) : 
+...     G.ajouter_arete(u, v, None)
+>>> print(G.aretes())

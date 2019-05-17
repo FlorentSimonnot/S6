@@ -1,6 +1,5 @@
 
 from graphe import *
-from grapheOriente import *
 from random import *
 import math 
 
@@ -23,7 +22,7 @@ def numerotation(G) :
 		debut[s] = ancetre[s] = instant
 
 		for t in G.voisins(s) : 
-			if debut[t] > 0 :
+			if debut[t] :
 				if parent[s] != t : 
 					ancetre[s] = min(ancetre[s], debut[t])
 			else : 
@@ -112,7 +111,6 @@ def amelioration_points_articulation(G) :
 	copie = G
 	debut, parent, ancetre = numerotation(copie)
 	points = sorted(points_articulation(copie), reverse=True)
-	sommets = G.sommets()
 
 	
 	racines = []
@@ -141,10 +139,6 @@ def amelioration_points_articulation(G) :
 		points = sorted(points_articulation(copie), reverse=True)
 
 	return res
-
-def foret(G) : 
-	debut, parent, ancetre = numerotation(G)
-	creer_arcs_retours(G, parent)
 
 def extremite_ponts(G, sommet) : 
 
@@ -289,36 +283,12 @@ def parcours_largeur_iteratif(G, depart, deja_visites=None):
 
 	return resultat
 
-def parcours_profondeur_iteratif(G, depart, deja_visites=None):
-	resultat = list()
-
-	if deja_visites == None:
-		deja_visites = dict()
-		for s in G.sommets():
-			deja_visites[s] = False
-
-	a_traiter = []
-	a_traiter.append(depart)
-
-	while len(a_traiter) > 0:
-		sommet = a_traiter[-1]
-		del a_traiter[-1]
-
-		if not deja_visites[sommet]:
-			resultat.append(sommet)
-			deja_visites[sommet] = True
-			for v in sorted(G.voisins(sommet)):
-				if not deja_visites[v]:
-					a_traiter.append(v)
-
-	return resultat
 
 def est_connexe(G):
 	if G.nombre_sommets() == 0:
 		return True
 
 	depart = G.sommets()[0]
-	print(parcours_largeur_iteratif(G, depart))
 	return len(parcours_largeur_iteratif(G, depart)) == G.nombre_sommets() 
 
 def composantes_connexes(G) : 

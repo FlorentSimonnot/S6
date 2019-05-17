@@ -2,9 +2,31 @@ section .data
 
 section .text                   
         
-global  _doubleX, _tripleXPlus1, _seizeXPlus2, _pos_or_neg, _pair_or_impair
+global  _int_cmp, _int_cmp64, _swap, _doubleX, _tripleXPlus1, _seizeXPlus2, _pos_or_neg, _pair_or_impair
                                                 
 extern print_registers  
+
+_int_cmp:
+
+        mov eax, edi
+        mov ebx, esi
+        sub eax, ebx
+
+        ret
+
+_int_cmp64:
+        mov rax, rdi
+        mov rbx, rsi 
+        sub rax, rbx
+        ret
+
+_swap:
+        mov eax, dword[rsi]
+        mov edx, dword[rdi]
+        mov [rsi], edx
+        mov [rdi], eax
+
+
 
 
 _doubleX:    
@@ -51,6 +73,6 @@ impair:
         ret
 
 _start:
-        mov rax, 1
+        mov rax, 0
         mov rbx, 0
         int 80h
