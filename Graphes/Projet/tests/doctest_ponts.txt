@@ -14,6 +14,7 @@ Rajoutez éventuellement ci-dessous les imports nécessaires:
 ...      ('e', 'f', None), ('f', 'd', None), ('a', 'g', None), ('g', 'h', None), ('h', 'a', None),
 ...      ('h', 'i', None), ('i', 'j', None), ('j', 'h', None), ('j', 'k', None), ('k', 'i', None),
 ...      ('i', 'l', None), ('k', 'h', None)])
+>>> print(numerotation(G))
 >>> sorted(map(sorted, ponts(G)))
 [['c', 'd'], ['i', 'l']]
 

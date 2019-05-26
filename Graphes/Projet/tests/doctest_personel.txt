@@ -35,18 +35,39 @@
 ...      ('l', 'm', None), ('m', 'n', None),
 ...      ('n', 'l', None)]
 ... )
->>> creer_dot(G, "res.dot")
 >>> print(points_articulation(G))
 ['c', 'e', 'f', 'g', 'm']
 >>> for u, v in amelioration_points_articulation(G) : 
 ...     G.ajouter_arete(u, v, None)
+>>> G5 = Graphe()
+>>> G5.ajouter_sommets(zip('abcdefghijklmn', [None] * 14))
+>>> G5.ajouter_aretes(
+...     [('a', 'b', None), ('b', 'c', None), ('c', 'd', None), ('d', 'a', None), ('c', 'e', None),
+...      ('e', 'f', None), ('f', 'g', None), ('g', 'h', None), ('g', 'i', None), ('g', 'm', None),
+...      ('l', 'm', None), ('m', 'n', None),
+...      ('n', 'l', None)]
+... )
+>>> parcours_largeur_iteratif(G5, 'a')
+['a', 'b', 'd', 'c', 'e', 'f', 'g', 'h', 'i', 'm', 'l', 'n']
+>>> print(est_connexe(G))
+True
+>>> print(ponts(G5))
+[('c', 'e'), ('e', 'f'), ('f', 'g'), ('g', 'h'), ('g', 'i'), ('g', 'm')]
+>>> print(composantes(G5))
+[['c', 'b', 'd', 'a'], ['e'], ['f'], ['g'], ['h'], ['i'], ['m', 'l', 'n']]
+>>> print(feuilles(G5))
+[['c', 'b', 'd', 'a'], ['e'], ['f'], ['g'], ['h'], ['i'], ['m', 'l', 'n']]
+>>> for (u, v) in amelioration_ponts(G5) :
+...     G5.ajouter_arete(u, v, None)
+>>> print(len(ponts(G5)))
+0
 >>> G = Graphe()
->>> G.ajouter_sommets(zip('ab', [None]*2))
->>> G.ajouter_arete('a', 'b', None)
->>> print(ponts(G))
-[('a', 'b')]
->>> print(amelioration_ponts(G))
-[('a', 'b'), ('b', 'a')]
->>> for u, v in amelioration_ponts(G) : 
-...     G.ajouter_arete(u, v, None)
->>> print(G.aretes())
+>>> G.ajouter_sommets(zip('abc', [None] * 3))
+>>> G.ajouter_aretes([('a', 'b', None)])
+>>> est_connexe(G)
+False
+>>> cc = composantes_connexes(G)
+>>> print(cc)
+[['a', 'b'], ['c']]
+>>> sont_dans_meme_composantes('a', 'c', cc)
+False

@@ -8,7 +8,7 @@ EXEC=exo1
 #enlever "-nostartfiles" quand compiler pour du C
 
 $(EXEC) : $(EXEC).o utils.o
-	gcc $(CFLAGS) $(EXEC).c $(EXEC).o $(UTILS) -o $(EXEC)
+	$(CC) $(CFLAGS) $(EXEC).c $(EXEC).o $(UTILS) -o $(EXEC)
 
 $(EXEC).o : $(EXEC).asm
 	$(NASM) -f elf64 -o $(EXEC).o $(EXEC).asm

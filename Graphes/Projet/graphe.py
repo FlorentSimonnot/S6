@@ -108,7 +108,6 @@ def charger_donnees(graphe, nom_fichier) :
 	fichier.close()
 
 def export_dot(graphe):
-    """Renvoie une chaîne encodant le graphe au format dot."""
     string = "graph graphe { "
 
     sommets = "\n"

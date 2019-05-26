@@ -26,7 +26,11 @@ _swap:
         mov [rsi], edx
         mov [rdi], eax
 
-
+_swap64: 
+        mov rax, [rsi]
+        mov rdx, [sdi]
+        mov [rsi], rdx
+        mov [rdi], rax
 
 
 _doubleX:    
@@ -71,6 +75,7 @@ pair:
 impair: 
         mov rax, 0
         ret
+
 
 _start:
         mov rax, 0

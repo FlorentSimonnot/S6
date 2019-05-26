@@ -1,6 +1,6 @@
-
 from graphe import *
 from random import *
+from operator import itemgetter
 import math 
 
 def numerotation(G) : 
@@ -74,12 +74,14 @@ def points_articulation(G) :
 
 	return sorted(articulation)
 
+def getKey(item):
+    return item[0]
+
 def ponts(G) : 
 	debut, parent, ancetre = numerotation(G)
 	ponts = []
-
 	for v in parent : 
-		if parent[v] != None : 
+		if parent[v] != None: 
 			if ancetre[v] > debut[parent[v]] : 
 				ponts.append((parent[v], v))
 
@@ -112,7 +114,6 @@ def amelioration_points_articulation(G) :
 	debut, parent, ancetre = numerotation(copie)
 	points = sorted(points_articulation(copie), reverse=True)
 
-	
 	racines = []
 	for v in G.sommets() : 
 		if parent[v] == None : 
@@ -147,14 +148,6 @@ def extremite_ponts(G, sommet) :
 			return True
 	return False
 
-def deuxieme_extremite(G, sommet) : 
-    for u, v in ponts(G) : 
-        if u == sommet : 
-            return v 
-        if v == sommet : 
-            return u
-    return None
-
 def est_deuxieme_extremite(G, sommet, sommet2) :
 	for u, v in ponts(G) : 
 		if u == sommet and v == sommet2 or v == sommet and u == sommet2 : 
@@ -162,66 +155,64 @@ def est_deuxieme_extremite(G, sommet, sommet2) :
 	return False
 
 def sommet_dans_composante(G, sommet, composante) : 
-    sommet2 = deuxieme_extremite(G, sommet)
-    if sommet2 != None : 
-        if sommet2 in composante : 
-            return True
-    return False
+	for s in deuxieme_extremite(G, sommet) : 
+		if s in composante : 
+			return True
+	return False
 
 def chercher_composantes(G, depart, composante, extremite_deux, deja_visites=None):
-    resultat = list()
+	resultat = list()
 
-    if deja_visites == None:
-        deja_visites = dict()
-        for s in G.sommets():
-            deja_visites[s] = False
+	if deja_visites == None:
+		deja_visites = dict()
+	for s in G.sommets():
+		deja_visites[s] = False
 
-    a_traiter = []
-    a_traiter.append(depart)
+	a_traiter = []
+	a_traiter.append(depart)
 
-    if not depart in composante :
-    	composante.append(depart)
+	if not depart in composante :
+		composante.append(depart)
 
-    while len(a_traiter) > 0:
-        dernier = len(a_traiter) - 1
-        sommet = a_traiter[dernier]
-        a_traiter.pop()
+	while len(a_traiter) > 0:
+		dernier = len(a_traiter) - 1
+		sommet = a_traiter[dernier]
+		a_traiter.pop()
 
-        if deja_visites[sommet] == False:
+		if deja_visites[sommet] == False:
 
-            if sommet != extremite_deux and not est_deuxieme_extremite(G, depart, sommet):
-                resultat.append(sommet)
-                deja_visites[sommet] = True
-                for v in sorted(G.voisins(sommet)):
-                    if extremite_ponts(G, v):
-                        if not sommet_dans_composante(G, v, composante) and not v in composante and not est_deuxieme_extremite(G, sommet, v):
-                            composante.append(v)
-                            if deja_visites[v] == False:
-                                a_traiter.append(v)
-                    else : 
-                        if not v in composante : 
-                        	composante.append(v)
-                        if deja_visites[v] == False:
-                            a_traiter.append(v)
+			if sommet != extremite_deux :
+				resultat.append(sommet)
+				deja_visites[sommet] = True
+    
+				for v in sorted(G.voisins(sommet)):
+					if extremite_ponts(G, v):
+						if not sommet_dans_composante(G, v, composante) :
+							composante.append(v)
+							if not deja_visites[v]:
+								a_traiter.append(v)
+					else : 
+						composante.append(v)
+						if not deja_visites[v] : 
+							a_traiter.append(v)
 
-    return resultat
+	return resultat
 
-def composantes(G):
-    composantes = dict()
-    res = []
+def composantes(G) : 
+	composantes = dict()
+	res = []
 
-    for (u, v) in ponts(G):
-        composantes[u] = list()
-        composantes[v] = list()
-        chercher_composantes(G, u, composantes[u], v)
-        chercher_composantes(G, v, composantes[v], u)
+	for (u, v) in ponts(G) : 
+		composantes[u] = list() 
+		composantes[v] = list()
+		chercher_composantes(G, u, composantes[u], v)
+		chercher_composantes(G, v, composantes[v], u)
 
-    #On enlève les doublons
-    for u in composantes:
-        if composantes[u] not in res:
-            res.append(composantes[u])
-                    
-    return res
+	for u in composantes : 
+		if composantes[u] not in res : 
+			res.append(composantes[u])
+
+	return res
 
 def est_feuille(G, composante):
     res = 0
@@ -231,10 +222,41 @@ def est_feuille(G, composante):
             res += 1
     return res == 1
 
+
+def csp(G) : 
+	res = set()
+	deja_visite = dict()
+
+	def csp_aux(depart, extremite):
+
+		deja_visite[depart] = True
+		save.add(depart)
+
+		for voisin in sorted(G.voisins(depart)) :
+			if not deja_visite[voisin] and voisin != extremite : 
+				if not extremite_ponts(G, voisin) : 
+					csp_aux(voisin, extremite)
+				else : 
+					save.add(voisin)
+
+	for u, v in sorted(ponts(G)) : 
+		for i in range(2) :
+			save = set()
+			for s in G.sommets() : 
+				deja_visite[s] = False
+			csp_aux(u, v)
+			res.add(tuple(save))
+   
+			tmp = u 
+			u = v
+			v = tmp
+
+	return res
+
 def feuilles(G):
     res = list()
-
-    for c in composantes(G):
+	
+    for c in csp(G):
         if est_feuille(G, c):
             res.append(c)
     
@@ -249,6 +271,12 @@ def sont_dans_meme_composantes(a, b, composantes_connexes) :
 		if b in composantes_connexes[i] : 
 			index_b = i
 	return index_a == index_b
+
+def aretes_existante(G, s1, s2) : 
+	for u, v, ligne in G.aretes() :
+		if u == s1 and v == s2 : 
+			return True 
+	return False
 
 def relier_feuilles(G, f1, f2, composantes_connexes):
 	x = randint(0, len(f1) - 1)
@@ -283,7 +311,6 @@ def parcours_largeur_iteratif(G, depart, deja_visites=None):
 
 	return resultat
 
-
 def est_connexe(G):
 	if G.nombre_sommets() == 0:
 		return True
@@ -293,7 +320,7 @@ def est_connexe(G):
 
 def composantes_connexes(G) : 
 
-	res = list()
+	res = []
 	deja_visites = dict()
 	for s in G.sommets():
 		deja_visites[s] = False
@@ -301,22 +328,21 @@ def composantes_connexes(G) :
 		if not deja_visites[s] : 
 			res.append(parcours_largeur_iteratif(G, s, deja_visites))
 	return res
+					
 
-def amelioration_ponts(G):
-	collection = feuilles(G)
-	res = []
+def amelioration_ponts(G) : 
+	f = feuilles(G)
+	res = list()
+ 
 	if est_connexe(G) : 
 		cc = None
 	else : 
 		cc = composantes_connexes(G)
-	i = 0
-	while i < len(collection) :
-		if i == len(collection) - 1 : 
-			j = 0
-		else : 
-			j = i+1
-		x = collection[i]
-		y = collection[j]
-		res.append(relier_feuilles(G, x, y, cc))
-		i+=1
+  
+	for i in range(len(f) - 1) : 
+		lien = relier_feuilles(G, f[i], f[i+1], cc)
+		if not lien == None : 
+			res.append((lien[0], lien[1]))
+
+        
 	return res

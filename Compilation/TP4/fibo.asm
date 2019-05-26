@@ -1,45 +1,38 @@
 section .data
 
-section .text			
-	
-global _start			
-						
-extern print_registers	
-extern print_stacks
+section .text           
+    
+global _start, _int_cmp, _swap
 
+extern print_registers
+                        
 _start:
 	push rbp
 	mov rbp, rsp
-	sub rsp, 240 ;pour 30 variables de 8 octets
+	
+	sub rsp, 8
+	mov rdi, rsp
 
-	xor rax, rax
-	xor	rbx, rbx
-	xor rcx, rcx
-	xor rdx, rdx
+	sub rsp, 8
+	mov rsi, rsp
+	
+	mov rax, rdi
+	mov rbx, rsi
 
-	mov qword [rbp - 8], 0
-	mov qword [rbp - 16], 1
-	mov rax, -3
-	mov rbx, -1
-	mov rcx, -2
+	call _swap
 
-	_loop:
-		mov rdx, [rbp + rbx * 8]
-		add rdx, [rbp + rcx * 8]
-		mov [rbp + rax * 8], rdx
-		call print_registers
-		dec rax
-		dec rbx
-		dec rcx
-		cmp rax, -30
-		je _exit
-		jmp _loop
-
-
-_exit:
-	mov rsp , rbp
+	mov rsp, rbp
 	pop rbp
-	mov rax,1			
-	mov rbx,0			
-	int 80h				
 
+	mov rax, 0
+	mov rbx, 0 
+	int 80h
+
+_swap:
+	push rdi
+	push rsi
+	
+	pop rax
+	pop rbx
+	mov rdi, rax
+	mov rsi, rbx

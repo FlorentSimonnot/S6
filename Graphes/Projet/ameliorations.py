@@ -20,16 +20,7 @@ def main() :
 	args = parser.parse_args()
 
 	G = Graphe()
-	G.ajouter_sommets(zip('ABC', [None]*3))
-	G.ajouter_arete('A', 'B', 'Ligne AB')
-	G.ajouter_arete('A', 'C', 'Ligne AC')
-	print(ponts(G))
-	print(amelioration_ponts(G))
-	for u, v in amelioration_ponts(G) : 
-		G.ajouter_arete(u, v, 'None')
-	print(G.aretes())
-	print(ponts(G))
-	"""if args.metro != None: 
+	if args.metro != None: 
 		if len(args.metro) == 0: 
 			metros = METROS
 		else :
@@ -60,7 +51,7 @@ def main() :
 	if args.ponts : 
 		pont = ponts(G)
 		print("Le réseau contient les "+str(len(pont))+" ponts suivants :")
-		for s1, s2 in pont : 
+		for s1, s2 in sorted(ponts(G), key=G.rechercher_sommet(itemgetter(0))) : 
 			print(G.rechercher_sommet(s1) + " -- "+ G.rechercher_sommet(s2))
 		print("\n")
 
@@ -78,12 +69,13 @@ def main() :
 		print("Après amélioration il y a", len(ponts(G)), "point(s) d'articulation")
 
 	if args.ameliorer_ponts : 
-		creer_dot(G, "resultat.dot")
-		print("Il y a", len(ponts(G)), "ponts")
+		print(feuilles(G))
 		for u, v in amelioration_ponts(G):
-			G.ajouter_arete(u, v, None)
+			print(G.rechercher_sommet(u), " -- ", G.rechercher_sommet(v))
+			G.ajouter_arete(u, v, "Réparer_ponts")
 		print("Après amélioration il y a", len(ponts(G)), "pont(s)")
-	"""
+		creer_dot(G, "res.dot")
+	
 
 if __name__ == "__main__":
     main()
