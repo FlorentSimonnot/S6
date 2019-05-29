@@ -1,4 +1,9 @@
 from graphe import *
+import argparse
+import operator
+import os
+
+from graphe import *
 from random import *
 from operator import itemgetter
 import math 
@@ -154,65 +159,6 @@ def est_deuxieme_extremite(G, sommet, sommet2) :
 			return True
 	return False
 
-def sommet_dans_composante(G, sommet, composante) : 
-	for s in deuxieme_extremite(G, sommet) : 
-		if s in composante : 
-			return True
-	return False
-
-def chercher_composantes(G, depart, composante, extremite_deux, deja_visites=None):
-	resultat = list()
-
-	if deja_visites == None:
-		deja_visites = dict()
-	for s in G.sommets():
-		deja_visites[s] = False
-
-	a_traiter = []
-	a_traiter.append(depart)
-
-	if not depart in composante :
-		composante.append(depart)
-
-	while len(a_traiter) > 0:
-		dernier = len(a_traiter) - 1
-		sommet = a_traiter[dernier]
-		a_traiter.pop()
-
-		if deja_visites[sommet] == False:
-
-			if sommet != extremite_deux :
-				resultat.append(sommet)
-				deja_visites[sommet] = True
-    
-				for v in sorted(G.voisins(sommet)):
-					if extremite_ponts(G, v):
-						if not sommet_dans_composante(G, v, composante) :
-							composante.append(v)
-							if not deja_visites[v]:
-								a_traiter.append(v)
-					else : 
-						composante.append(v)
-						if not deja_visites[v] : 
-							a_traiter.append(v)
-
-	return resultat
-
-def composantes(G) : 
-	composantes = dict()
-	res = []
-
-	for (u, v) in ponts(G) : 
-		composantes[u] = list() 
-		composantes[v] = list()
-		chercher_composantes(G, u, composantes[u], v)
-		chercher_composantes(G, v, composantes[v], u)
-
-	for u in composantes : 
-		if composantes[u] not in res : 
-			res.append(composantes[u])
-
-	return res
 
 def est_feuille(G, composante):
     res = 0
@@ -346,3 +292,81 @@ def amelioration_ponts(G) :
 
         
 	return res
+
+
+METROS = ["1", "2", "3", "3b", "4", "5", "6", "7", "7b", "8", "9", "10", "11", "12", "13", "14"]
+RER = ["A", "B"]
+
+def main() : 
+	parser = argparse.ArgumentParser()
+	parser.add_argument("--metro", type=str, nargs="*", help="the base")
+	parser.add_argument("--rer", type=str, nargs="*", help="the exponent")
+	parser.add_argument("--liste-stations", action="store_true",  help="affiche la liste des stations")
+	parser.add_argument("--articulations", action="store_true", help="affiche les points d'articulations")
+	parser.add_argument("--ponts", action="store_true", help="affiche les ponts")
+	parser.add_argument("--ameliorer-ponts", action="store_true", help="améliore les ponts")
+	parser.add_argument("--ameliorer-points", action="store_true", help="améliore les points d'articulation")
+	parser.add_argument("--visualise", action="store_true", help="permet de visualiser le graphe de base")
+	args = parser.parse_args()
+
+	G = Graphe()
+	if args.metro != None: 
+		if len(args.metro) == 0: 
+			metros = METROS
+		else :
+			metros = args.metro
+		for metro in metros : 
+			charger_donnees(G, "données/METRO_"+str(metro)+".txt")
+			print("Chargement de la ligne "+str(metro)+" réussi")
+		print("Le réseau contient "+str(len(G.sommets()))+" sommets et "+str(len(G.aretes()))+" aretes\n")
+	elif args.rer != None or len(args.rer) == 0 : 
+		if len(args.rer) == 0: 
+			rers = RER
+		else :
+			rers = args.rer
+		for rer in rers : 
+			charger_donnees(G, "données/RER_"+str(rer)+".txt")
+			print("Chargement de la ligne "+str(rer)+" réussi")
+		print("Le réseau contient "+str(len(G.sommets()))+" sommets et "+str(len(G.aretes()))+" aretes\n")
+	else : 
+		print("Erreur")
+	if args.visualise : 
+		creer_dot(G, "visualise.dot")
+		os.system("dot -Tpdf visualise.dot -o visualise.pdf") #Convertit directement
+
+	if args.liste_stations : 
+		for station, identifiant in G.sommets_et_identifiants(operator.itemgetter(1)) : 
+			print(identifiant+" ("+str(station)+")")
+		print("\n")
+
+	if args.ponts : 
+		pont = ponts(G)
+		print("Le réseau contient les "+str(len(pont))+" ponts suivants :")
+		for s1, s2 in sorted(ponts(G), key=G.rechercher_sommet(itemgetter(0))) : 
+			print(G.rechercher_sommet(s1) + " -- "+ G.rechercher_sommet(s2))
+		print("\n")
+
+	if args.articulations : 
+		arti = points_articulation(G)
+		print("Le réseau contient les "+str(len(arti))+" points d'articulations suivants :")
+		for sommet in arti : 
+			print(G.rechercher_sommet(sommet))
+		print("\n")
+
+	if args.ameliorer_points : 
+		print("Il y a", len(points_articulation(G)), "points d'articulations")
+		for u, v in amelioration_points_articulation(G):
+			G.ajouter_arete(u, v, None)
+		print("Après amélioration il y a", len(ponts(G)), "point(s) d'articulation")
+
+	if args.ameliorer_ponts : 
+		print(feuilles(G))
+		for u, v in amelioration_ponts(G):
+			print(G.rechercher_sommet(u), " -- ", G.rechercher_sommet(v))
+			G.ajouter_arete(u, v, "Réparer_ponts")
+		print("Après amélioration il y a", len(ponts(G)), "pont(s)")
+		creer_dot(G, "res.dot")
+	
+
+if __name__ == "__main__":
+    main()

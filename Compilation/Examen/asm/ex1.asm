@@ -2,18 +2,16 @@ section .data
 
 section .text                   
         
-global   _int_cmp, _swap
+global   _int_cmp
 
 extern print_registers 
 
 _int_cmp:
-        xor rax, rax
-        xor rbx, rbx
-        push rsi
-        push rdi 
-        pop rax 
-        pop rbx 
-        sub rax, rbx
+        xor eax, eax
+        xor ebx, ebx
+        mov eax, DWORD[rdi]
+        mov ebx, DWORD[rsi]
+        sub eax, ebx
 
         ret
 
@@ -21,20 +19,15 @@ _start :
     push rbp 
     mov rbp, rsp
 
-    mov rax, 8
-    mov rbx, 3
-
     sub rsp, 8
-    push rax
+    mov rsp, 0
     mov rdi, rsp 
 
     sub rsp, 8
-    push rbx
+    mov rsp, 3
     mov rsi, rsp
 
     call _int_cmp
-
-    call print_registers
 
     mov rsp, rbp
     pop rbp

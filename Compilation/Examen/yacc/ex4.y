@@ -1,3 +1,12 @@
+/*
+
+---------QUESTION 1--------
+La notation polonaise inversé à les avantages suivants :
+- Écriture raccourcie car par de parenthèsage. 
+- Détection des erreurs plus facile grâce aux calculs intermédiaire. 
+- Calcul intermédiaire gérés dans une pile. 
+
+ */
 %{
 #include <stdio.h>
 #include <string.h>
@@ -6,6 +15,13 @@
 int yylex(void);
 void yyerror(char* s);
 extern int line_num;
+int getOffset(char *ident);
+
+/*Juste pour tester. Ne pas écrire*/
+int getOffset(char *ident){
+    return 8; 
+}
+
 %}
 
 %union{
@@ -53,9 +69,11 @@ E   :   E T ADDSUB
                     {    
                         if($3 == '+'){
                             $$ = $1 + $2; 
+                            fprintf(stdout, "    pop rcx\n    pop rax\n    add rax, rcx\n    push rax\n");
                         }
                         if($3 == '-'){
                             $$ = $1 - $2; 
+                            fprintf(stdout, "    pop rcx\n    pop rax\n    sub rax, rcx\n    push rax\n");
                         }
                     }
     |   T   {$$ = $1;}
@@ -63,21 +81,31 @@ E   :   E T ADDSUB
 
 T   :   T F DIVSTAR 
                     {   
+                        fprintf(stdout, "    pop rcx\n    pop rax\n");
                         if($3 == '*'){
                             $$ = $1 * $2; 
+                            fprintf(stdout, "    imul rcx\n    push rax\n"); break;
                         }
                         if($3 == '/'){
                             $$ = $1 / $2; 
+                            fprintf(stdout, "    mov rdx,0\n    idiv rcx\n    push rax\n");
                         }
                     }
     |   F   {$$ = $1;}
     ; 
 
-F   :   NUM {$$ = $1;}
-    |   Const 
+F   :   NUM {$$ = $1; fprintf(stdout, "    push QWORD %d\n", $1);}
+    |   Const       {   int offset; 
+                        if ((offset = getOffset($1)) >= 0){
+                            fprintf(stderr, "Variable undeclared\n");
+                        }
+                        else{
+                            fprintf(stdout, "   push QWORD [rbp-%d]\n", offset);
+                        }
+                    }
     ;
 
-Const   :   IDENT
+Const   :   IDENT   
         ;
 
 %%

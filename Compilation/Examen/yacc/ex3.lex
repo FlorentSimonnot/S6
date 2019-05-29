@@ -38,11 +38,25 @@ nombre {chiffre}+
 				return TOURNER_A_DROITE;
 			}
 
-"COULEUR" 	{
+"COULEUR"	{
 				if((yylval.instruction = malloc(sizeof(char) * strlen(yytext))) == NULL)
 					exit(EXIT_FAILURE); 
 				strcpy(yylval.instruction, yytext);
 				return COULEUR;
+			}
+
+"DECOLLER"	{
+				if((yylval.instruction = malloc(sizeof(char) * strlen(yytext))) == NULL)
+					exit(EXIT_FAILURE); 
+				strcpy(yylval.instruction, yytext);
+				return DECOLLER;
+			}
+
+"ATTERRIR"	{
+				if((yylval.instruction = malloc(sizeof(char) * strlen(yytext))) == NULL)
+					exit(EXIT_FAILURE); 
+				strcpy(yylval.instruction, yytext);
+				return ATTERRIR;
 			}
 
 [ \t] {;}

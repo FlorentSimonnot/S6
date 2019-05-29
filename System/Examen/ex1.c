@@ -15,7 +15,9 @@ int main(void){
         case 0 : 
             sleep(5); 
             printf("Mon pid est : %d\n", getpid());
+            exit(EXIT_SUCCESS); 
         default : 
+            wait(NULL);
             printf("Mon fils vient de terminer\n");
     }
 }

@@ -62,23 +62,25 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 10 "yacc/ex4.y" /* yacc.c:339  */
+#line 1 "yacc/ex3.y" /* yacc.c:339  */
 
 #include <stdio.h>
 #include <string.h>
 
+#define RIGHT 0
+#define DOWN 1
+#define LEFT 2
+#define UP 3
 
 int yylex(void);
 void yyerror(char* s);
+void print_position(int tab[5]); 
+void move(int num, int tab[5]); 
+void changer_direction(int nouvelle, int tab[5]);
+void copier_tab(int dest[5], int src[5]);
 extern int line_num;
-int getOffset(char *ident);
 
-int getOffset(char *ident){
-    return 8; 
-}
-
-
-#line 82 "bin/ex4.tab.c" /* yacc.c:339  */
+#line 84 "bin/ex3.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -97,9 +99,9 @@ int getOffset(char *ident){
 #endif
 
 /* In a future release of Bison, this section will be replaced
-   by #include "ex4.tab.h".  */
-#ifndef YY_YY_BIN_EX4_TAB_H_INCLUDED
-# define YY_YY_BIN_EX4_TAB_H_INCLUDED
+   by #include "ex3.tab.h".  */
+#ifndef YY_YY_BIN_EX3_TAB_H_INCLUDED
+# define YY_YY_BIN_EX3_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -114,32 +116,35 @@ extern int yydebug;
   enum yytokentype
   {
     NUM = 258,
-    ADDSUB = 259,
-    DIVSTAR = 260,
-    IDENT = 261,
-    CONST = 262
+    TOURNER_A_DROITE = 259,
+    TOURNER_A_GAUCHE = 260,
+    AVANCER = 261,
+    COULEUR = 262,
+    DECOLLER = 263,
+    ATTERRIR = 264
   };
 #endif
 /* Tokens.  */
 #define NUM 258
-#define ADDSUB 259
-#define DIVSTAR 260
-#define IDENT 261
-#define CONST 262
+#define TOURNER_A_DROITE 259
+#define TOURNER_A_GAUCHE 260
+#define AVANCER 261
+#define COULEUR 262
+#define DECOLLER 263
+#define ATTERRIR 264
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 26 "yacc/ex4.y" /* yacc.c:355  */
+#line 19 "yacc/ex3.y" /* yacc.c:355  */
 
+    char *instruction; 
     int num; 
-    char operatoradd;
-    char operatordiv;
-    char ident[64];
+    int position[5];
 
-#line 143 "bin/ex4.tab.c" /* yacc.c:355  */
+#line 148 "bin/ex3.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -152,11 +157,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_BIN_EX4_TAB_H_INCLUDED  */
+#endif /* !YY_YY_BIN_EX3_TAB_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 160 "bin/ex4.tab.c" /* yacc.c:358  */
+#line 165 "bin/ex3.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -396,23 +401,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  3
+#define YYFINAL  12
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   30
+#define YYLAST   9
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  11
+#define YYNTOKENS  10
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  10
+#define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  18
+#define YYNRULES  10
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  32
+#define YYNSTATES  14
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   262
+#define YYMAXUTOK   264
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -425,9 +430,9 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     9,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     8,
-       2,    10,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -447,15 +452,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7
+       5,     6,     7,     8,     9
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    42,    42,    46,    47,    48,    49,    53,    54,    58,
-      62,    63,    67,    78,    81,    93,    96,    97,   107
+       0,    32,    32,    34,    35,    39,    40,    41,    42,    43,
+      44
 };
 #endif
 
@@ -464,9 +469,9 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NUM", "ADDSUB", "DIVSTAR", "IDENT",
-  "CONST", "';'", "','", "'='", "$accept", "S", "DeclConsts", "ListConst",
-  "Litteral", "NombreSigne", "E", "T", "F", "Const", YY_NULLPTR
+  "$end", "error", "$undefined", "NUM", "TOURNER_A_DROITE",
+  "TOURNER_A_GAUCHE", "AVANCER", "COULEUR", "DECOLLER", "ATTERRIR",
+  "$accept", "S", "suiteD", "D", YY_NULLPTR
 };
 #endif
 
@@ -475,15 +480,14 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261,   262,    59,    44,
-      61
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264
 };
 # endif
 
-#define YYPACT_NINF -8
+#define YYPACT_NINF -5
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-8)))
+  (!!((Yystate) == (-5)))
 
 #define YYTABLE_NINF -1
 
@@ -494,10 +498,8 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -8,    16,     3,    -8,    -3,    -8,    -8,    -3,    11,    11,
-      -8,    -8,    10,    -7,    -1,     9,    17,    15,    -8,    18,
-      -8,    -8,    -8,    -8,    -8,    20,    -8,    -8,    19,    -8,
-      15,    -8
+      -4,    -5,    -5,     3,     4,    -5,    -5,     8,    -4,    -5,
+      -5,    -5,    -5,    -5
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -505,22 +507,20 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       6,     0,     0,     1,     0,    16,    18,     0,     2,    13,
-      15,    17,     0,     0,     0,     0,     0,     0,     4,     0,
-       5,     3,    12,    14,    10,     0,     8,     9,     0,    11,
-       0,     7
+       0,     8,     7,     0,     0,    10,     9,     0,     2,     4,
+       5,     6,     1,     3
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -8,    -8,    -8,    14,    -5,    -8,    -8,    22,    -4,    -8
+      -5,    -5,    -5,     1
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     2,    13,    26,    27,     8,     9,    10,    11
+      -1,     7,     8,     9
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -528,42 +528,34 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      20,    18,    19,    12,     4,    16,     5,    21,    19,     6,
-       7,    16,     5,    22,     5,     6,     3,     6,    24,    25,
-      17,    14,    23,    29,    28,    31,     0,     0,     0,    30,
-      15
+       1,     2,     3,     4,     5,     6,    10,    11,    12,    13
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       1,     8,     9,     6,     1,     9,     3,     8,     9,     6,
-       7,    15,     3,     4,     3,     6,     0,     6,     3,     4,
-      10,     7,     5,     3,     6,    30,    -1,    -1,    -1,    10,
-       8
+       4,     5,     6,     7,     8,     9,     3,     3,     0,     8
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    12,    13,     0,     1,     3,     6,     7,    17,    18,
-      19,    20,     6,    14,    14,    18,    19,    10,     8,     9,
-       1,     8,     4,     5,     3,     4,    15,    16,     6,     3,
-      10,    15
+       0,     4,     5,     6,     7,     8,     9,    11,    12,    13,
+       3,     3,     0,    13
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    11,    12,    13,    13,    13,    13,    14,    14,    15,
-      16,    16,    17,    17,    18,    18,    19,    19,    20
+       0,    10,    11,    12,    12,    13,    13,    13,    13,    13,
+      13
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     4,     4,     4,     0,     5,     3,     1,
-       1,     2,     3,     1,     3,     1,     1,     1,     1
+       0,     2,     1,     2,     1,     2,     2,     1,     1,     1,
+       1
 };
 
 
@@ -1240,87 +1232,61 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 42 "yacc/ex4.y" /* yacc.c:1646  */
-    {(yyval.num) = (yyvsp[0].num); printf("%d\n", (yyval.num));}
-#line 1246 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 32 "yacc/ex3.y" /* yacc.c:1646  */
+    {(yyval.position)[0] = (yyval.position)[1] = (yyval.position)[2] = (yyval.position)[3] = (yyval.position)[4] = RIGHT;}
+#line 1238 "bin/ex3.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 3:
+#line 34 "yacc/ex3.y" /* yacc.c:1646  */
+    {copier_tab((yyval.position), (yyvsp[0].position));}
+#line 1244 "bin/ex3.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 35 "yacc/ex3.y" /* yacc.c:1646  */
+    {copier_tab((yyval.position), (yyvsp[0].position));}
+#line 1250 "bin/ex3.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 39 "yacc/ex3.y" /* yacc.c:1646  */
+    {copier_tab((yyval.position), (yyvsp[-2].position)); move((yyvsp[0].num), (yyval.position));}
+#line 1256 "bin/ex3.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 6:
+#line 40 "yacc/ex3.y" /* yacc.c:1646  */
+    {copier_tab((yyval.position), (yyvsp[-2].position)); (yyval.position)[3] = (yyvsp[0].num);}
+#line 1262 "bin/ex3.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 41 "yacc/ex3.y" /* yacc.c:1646  */
+    {copier_tab((yyval.position), (yyvsp[-1].position)); changer_direction(LEFT, (yyval.position)); }
+#line 1268 "bin/ex3.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 42 "yacc/ex3.y" /* yacc.c:1646  */
+    {copier_tab((yyval.position), (yyvsp[-1].position)); changer_direction(RIGHT, (yyval.position)); }
+#line 1274 "bin/ex3.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 43 "yacc/ex3.y" /* yacc.c:1646  */
+    {copier_tab((yyval.position), (yyvsp[-1].position)); (yyval.position)[4] = 0;}
+#line 1280 "bin/ex3.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 62 "yacc/ex4.y" /* yacc.c:1646  */
-    {(yyval.num) = (yyvsp[0].num);}
-#line 1252 "bin/ex4.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 11:
-#line 63 "yacc/ex4.y" /* yacc.c:1646  */
-    {if((yyvsp[-1].operatoradd) == '-'){(yyval.num) = -((yyvsp[0].num));}}
-#line 1258 "bin/ex4.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 12:
-#line 68 "yacc/ex4.y" /* yacc.c:1646  */
-    {    
-                        if((yyvsp[0].operatoradd) == '+'){
-                            (yyval.num) = (yyvsp[-2].num) + (yyvsp[-1].num); 
-                            fprintf(stdout, "    pop rcx\n    pop rax\n    add rax, rcx\n    push rax\n");
-                        }
-                        if((yyvsp[0].operatoradd) == '-'){
-                            (yyval.num) = (yyvsp[-2].num) - (yyvsp[-1].num); 
-                            fprintf(stdout, "    pop rcx\n    pop rax\n    sub rax, rcx\n    push rax\n");
-                        }
-                    }
-#line 1273 "bin/ex4.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 13:
-#line 78 "yacc/ex4.y" /* yacc.c:1646  */
-    {(yyval.num) = (yyvsp[0].num);}
-#line 1279 "bin/ex4.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 14:
-#line 82 "yacc/ex4.y" /* yacc.c:1646  */
-    {   
-                        fprintf(stdout, "    pop rcx\n    pop rax\n");
-                        if((yyvsp[0].operatordiv) == '*'){
-                            (yyval.num) = (yyvsp[-2].num) * (yyvsp[-1].num); 
-                            fprintf(stdout, "    imul rcx\n    push rax\n"); break;
-                        }
-                        if((yyvsp[0].operatordiv) == '/'){
-                            (yyval.num) = (yyvsp[-2].num) / (yyvsp[-1].num); 
-                            fprintf(stdout, "    mov rdx,0\n    idiv rcx\n    push rax\n");
-                        }
-                    }
-#line 1295 "bin/ex4.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 15:
-#line 93 "yacc/ex4.y" /* yacc.c:1646  */
-    {(yyval.num) = (yyvsp[0].num);}
-#line 1301 "bin/ex4.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 16:
-#line 96 "yacc/ex4.y" /* yacc.c:1646  */
-    {(yyval.num) = (yyvsp[0].num); fprintf(stdout, "    push QWORD %d\n", (yyvsp[0].num));}
-#line 1307 "bin/ex4.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 17:
-#line 97 "yacc/ex4.y" /* yacc.c:1646  */
-    {   int offset; 
-                        if ((offset = getOffset((yyvsp[0].ident))) >= 0){
-                            fprintf(stderr, "Variable undeclared\n");
-                        }
-                        else{
-                            fprintf(stdout, "   push QWORD [rbp-%d]\n", offset);
-                        }
-                    }
-#line 1320 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 44 "yacc/ex3.y" /* yacc.c:1646  */
+    {copier_tab((yyval.position), (yyvsp[-1].position)); (yyval.position)[4] = 1;}
+#line 1286 "bin/ex3.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1324 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1290 "bin/ex3.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1548,13 +1514,57 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 110 "yacc/ex4.y" /* yacc.c:1906  */
+#line 47 "yacc/ex3.y" /* yacc.c:1906  */
 
 void yyerror(char *s){
     printf("Erreur %s near line %d \n", s, line_num);
 }
 
+void print_position(int tab[5]){
+    printf("x = %d | y = %d | direction = %d | couleur = %d \n", tab[0], tab[1], tab[2], tab[3]); 
+}
 
+void move(int num, int tab[5]){
+    int old_coords[2]; 
+    old_coords[0] = tab[0]; 
+    old_coords[1] = tab[1];
+
+    switch(tab[2]){
+        case 3 : tab[1] += num; break; 
+        case 0 : tab[0] += num; break; 
+        case 1 : tab[1] -= num; break; 
+        case 2 : tab[0] -= num; break; 
+        default :  break; 
+    }
+    if(tab[4] != 1)
+        printf("TRACE_TRAIT  %d %d %d %d %d\n", old_coords[0], old_coords[1], tab[0], tab[1], tab[3]);
+}
+
+void changer_direction(int nouvelle, int tab[5]){
+    switch(tab[2]){
+        case UP :   if(nouvelle == LEFT){tab[2] = LEFT;} 
+                    else if(nouvelle == RIGHT){tab[2] = RIGHT;}
+                    break; 
+        case RIGHT : if(nouvelle == LEFT){tab[2] = UP;} 
+                    else if(nouvelle == RIGHT){tab[2] = DOWN;}
+                    break; 
+        case DOWN : if(nouvelle == LEFT){tab[2] = RIGHT;} 
+                    else if(nouvelle == RIGHT){tab[2] = LEFT;}
+                    break; 
+        case LEFT : if(nouvelle == LEFT){tab[2] = DOWN;} 
+                    else if(nouvelle == RIGHT){tab[2] = UP;}
+                    break; 
+        default : break; 
+    }
+}
+
+void copier_tab(int dest[5], int src[5]){
+    int i; 
+
+    for(i = 0; i < 5; i++)
+        dest[i] = src[i];
+}
+ 
 int main(){
     return yyparse();
 }

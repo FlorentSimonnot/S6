@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_BIN_EX4_TAB_H_INCLUDED
-# define YY_YY_BIN_EX4_TAB_H_INCLUDED
+#ifndef YY_YY_BIN_EX5_TAB_H_INCLUDED
+# define YY_YY_BIN_EX5_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -45,33 +45,22 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    NUM = 258,
-    ADDSUB = 259,
-    DIVSTAR = 260,
-    IDENT = 261,
-    CONST = 262
+    ID = 258
   };
 #endif
 /* Tokens.  */
-#define NUM 258
-#define ADDSUB 259
-#define DIVSTAR 260
-#define IDENT 261
-#define CONST 262
+#define ID 258
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 26 "yacc/ex4.y" /* yacc.c:1909  */
+#line 11 "yacc/ex5.y" /* yacc.c:1909  */
 
-    int num; 
-    char operatoradd;
-    char operatordiv;
-    char ident[64];
+    char ident;
 
-#line 75 "bin/ex4.tab.h" /* yacc.c:1909  */
+#line 64 "bin/ex5.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -84,4 +73,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_BIN_EX4_TAB_H_INCLUDED  */
+#endif /* !YY_YY_BIN_EX5_TAB_H_INCLUDED  */
