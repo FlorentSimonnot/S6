@@ -64,7 +64,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 26 "yacc/ex4.y" /* yacc.c:1909  */
+#line 27 "yacc/ex4.y" /* yacc.c:1909  */
 
     int num; 
     char operatoradd;

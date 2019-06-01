@@ -73,12 +73,13 @@ void yyerror(char* s);
 extern int line_num;
 int getOffset(char *ident);
 
+/*Juste pour tester. Ne pas écrire*/
 int getOffset(char *ident){
     return 8; 
 }
 
 
-#line 82 "bin/ex4.tab.c" /* yacc.c:339  */
+#line 83 "bin/ex4.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -132,14 +133,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 26 "yacc/ex4.y" /* yacc.c:355  */
+#line 27 "yacc/ex4.y" /* yacc.c:355  */
 
     int num; 
     char operatoradd;
     char operatordiv;
     char ident[64];
 
-#line 143 "bin/ex4.tab.c" /* yacc.c:355  */
+#line 144 "bin/ex4.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -156,7 +157,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 160 "bin/ex4.tab.c" /* yacc.c:358  */
+#line 161 "bin/ex4.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -454,8 +455,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    42,    42,    46,    47,    48,    49,    53,    54,    58,
-      62,    63,    67,    78,    81,    93,    96,    97,   107
+       0,    43,    43,    47,    48,    49,    50,    54,    55,    59,
+      63,    64,    68,    79,    82,    94,    97,    98,   108
 };
 #endif
 
@@ -1240,25 +1241,25 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 42 "yacc/ex4.y" /* yacc.c:1646  */
+#line 43 "yacc/ex4.y" /* yacc.c:1646  */
     {(yyval.num) = (yyvsp[0].num); printf("%d\n", (yyval.num));}
-#line 1246 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1247 "bin/ex4.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 62 "yacc/ex4.y" /* yacc.c:1646  */
+#line 63 "yacc/ex4.y" /* yacc.c:1646  */
     {(yyval.num) = (yyvsp[0].num);}
-#line 1252 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1253 "bin/ex4.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 63 "yacc/ex4.y" /* yacc.c:1646  */
+#line 64 "yacc/ex4.y" /* yacc.c:1646  */
     {if((yyvsp[-1].operatoradd) == '-'){(yyval.num) = -((yyvsp[0].num));}}
-#line 1258 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1259 "bin/ex4.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 68 "yacc/ex4.y" /* yacc.c:1646  */
+#line 69 "yacc/ex4.y" /* yacc.c:1646  */
     {    
                         if((yyvsp[0].operatoradd) == '+'){
                             (yyval.num) = (yyvsp[-2].num) + (yyvsp[-1].num); 
@@ -1269,17 +1270,17 @@ yyreduce:
                             fprintf(stdout, "    pop rcx\n    pop rax\n    sub rax, rcx\n    push rax\n");
                         }
                     }
-#line 1273 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1274 "bin/ex4.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 78 "yacc/ex4.y" /* yacc.c:1646  */
+#line 79 "yacc/ex4.y" /* yacc.c:1646  */
     {(yyval.num) = (yyvsp[0].num);}
-#line 1279 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1280 "bin/ex4.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 82 "yacc/ex4.y" /* yacc.c:1646  */
+#line 83 "yacc/ex4.y" /* yacc.c:1646  */
     {   
                         fprintf(stdout, "    pop rcx\n    pop rax\n");
                         if((yyvsp[0].operatordiv) == '*'){
@@ -1291,23 +1292,23 @@ yyreduce:
                             fprintf(stdout, "    mov rdx,0\n    idiv rcx\n    push rax\n");
                         }
                     }
-#line 1295 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1296 "bin/ex4.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 93 "yacc/ex4.y" /* yacc.c:1646  */
+#line 94 "yacc/ex4.y" /* yacc.c:1646  */
     {(yyval.num) = (yyvsp[0].num);}
-#line 1301 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1302 "bin/ex4.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 96 "yacc/ex4.y" /* yacc.c:1646  */
+#line 97 "yacc/ex4.y" /* yacc.c:1646  */
     {(yyval.num) = (yyvsp[0].num); fprintf(stdout, "    push QWORD %d\n", (yyvsp[0].num));}
-#line 1307 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1308 "bin/ex4.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 97 "yacc/ex4.y" /* yacc.c:1646  */
+#line 98 "yacc/ex4.y" /* yacc.c:1646  */
     {   int offset; 
                         if ((offset = getOffset((yyvsp[0].ident))) >= 0){
                             fprintf(stderr, "Variable undeclared\n");
@@ -1316,11 +1317,11 @@ yyreduce:
                             fprintf(stdout, "   push QWORD [rbp-%d]\n", offset);
                         }
                     }
-#line 1320 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1321 "bin/ex4.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1324 "bin/ex4.tab.c" /* yacc.c:1646  */
+#line 1325 "bin/ex4.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1548,7 +1549,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 110 "yacc/ex4.y" /* yacc.c:1906  */
+#line 111 "yacc/ex4.y" /* yacc.c:1906  */
 
 void yyerror(char *s){
     printf("Erreur %s near line %d \n", s, line_num);
