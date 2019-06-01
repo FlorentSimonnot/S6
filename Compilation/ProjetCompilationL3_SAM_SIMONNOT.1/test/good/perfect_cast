@@ -1,0 +1,6 @@
+int main(void){
+	
+	char letter = 5;
+
+	return 0;
+}

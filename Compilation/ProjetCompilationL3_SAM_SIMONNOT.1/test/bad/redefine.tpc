@@ -1,0 +1,11 @@
+int func1(void){
+	int a, b; 
+}
+
+int main(void){
+	
+	int a = 3, b; 
+	char a;
+
+	return 0;
+}
