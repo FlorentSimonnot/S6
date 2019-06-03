@@ -1,6 +1,0 @@
-int main(){
-	const un = 1;
-	int a, b = 2, c; 
-
-	un = b;
-}

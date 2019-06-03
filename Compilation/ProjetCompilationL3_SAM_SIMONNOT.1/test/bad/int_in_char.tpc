@@ -1,9 +1,0 @@
-int main(void){
-	
-	int un = 1;
-	char letter; 
-
-	letter = un; 
-
-	return 0;
-}
