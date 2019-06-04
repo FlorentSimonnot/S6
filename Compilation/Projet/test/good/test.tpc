@@ -1,0 +1,31 @@
+#define MACRO 5
+#define MACRODEUX 'c'
+#define MACROTROIS 5.3
+
+int a = 10;
+
+int main(void){
+	const constante = -89899;
+	const constanteChar = 'c';
+	const reel = -3.14;
+	int a = -2; 
+	int b = 3; 
+	int c = 4; 
+	int z = 1, y = 2, x = 3;
+	char car = 'c'; 
+	char car2 = 'a';
+	int add, azae = 0, div;
+	long dix_huit = 18, treize = 13;
+
+	if(a < MACRO){
+		print(a);
+	}
+
+	a = 'c'; /*implicit cast*/
+	b = (int) 'a'; /*explicit cast*/
+	add = a + b;
+	div = a / b;
+	/*c = 3.1;*/
+
+	return 1;
+}

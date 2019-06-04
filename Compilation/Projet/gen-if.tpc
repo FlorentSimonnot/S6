@@ -1,0 +1,11 @@
+/* gen-if.tpc */
+
+/* Test file for TPC */
+    int count,limit ;
+    
+int main(void)  {
+   count=11;
+   limit=25;
+   print(count);
+   return 0;
+}

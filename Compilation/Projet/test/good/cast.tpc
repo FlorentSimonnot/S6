@@ -1,0 +1,13 @@
+int main(void){
+	
+	int a, b, c; 
+	char un, deux, trois; 
+
+	a = 1; 
+	un = 'a'; 
+
+	a = (int) un;
+	un = (char) a; 
+
+	return 0; 
+}

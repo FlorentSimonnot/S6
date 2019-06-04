@@ -1,0 +1,11 @@
+int main(void){
+	int a = 2; 
+	char b = 'b'; 
+	long c = 200000;
+
+	int res = a + b; 
+	long res2 = c + a; 
+
+
+	return 0; 
+}
