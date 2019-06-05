@@ -491,7 +491,7 @@ int get_globals_size(){
 
 void remove_st_cell() {
     int i, j;
-    
+    //printf("%d\n", symbol_table->STsize);
     for (i = 0; i < symbol_table->STsize && symbol_table->next != NULL; i++){
         for (j = 0; j < symbol_table->STtable[i].size; j++){
             fprintf(stdout, "    pop rbx\n");

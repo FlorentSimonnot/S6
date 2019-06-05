@@ -43,25 +43,6 @@ _start:
     call main
     jmp _end
 
-sum:
-    push rbp
-    mov rbp, rsp
-    push QWORD [rbp+24]
-    push QWORD [rbp+16]
-    push QWORD [rbp-8]
-    push QWORD [rbp-16]
-    pop rcx
-    pop rax
-    add rax, rcx
-    push rax
-    pop rax
-    jmp fin_sum
-fin_sum:
-    pop rbx
-    pop rbx
-    pop rbp
-    ret
-
 test:
     push rbp
     mov rbp, rsp
@@ -82,24 +63,12 @@ fin_test:
 main:
     push rbp
     mov rbp, rsp
-   push QWORD 10
-   push QWORD 20
+    push QWORD 10
+     push QWORD 0
     push QWORD 16
     pop rsi
     call _print_ent
     push QWORD [rbp-8]
-    push QWORD 10
-    call sum
-    pop rbx
-    pop rbx
-    push rax
-    pop QWORD [rbp-24]
-    push QWORD [rbp-24]
-    pop rcx
-    push QWORD [rbp-24]
-    pop rsi
-    call _print_ent
-    push QWORD [rbp-16]
     push QWORD 20
     call test
     pop rbx
@@ -110,7 +79,7 @@ main:
 fin_main:
     pop rbx
     pop rbx
-    pop rbx
+    pop rbp
     ret
 
 _end:

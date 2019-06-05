@@ -506,10 +506,10 @@ static const yytype_uint16 yyrline[] =
        0,    93,    93,    97,    98,   102,   105,   106,   107,   108,
      112,   113,   115,   119,   120,   121,   122,   126,   131,   137,
      142,   150,   151,   155,   156,   160,   161,   165,   166,   167,
-     168,   169,   173,   174,   175,   179,   184,   185,   189,   190,
-     191,   195,   199,   200,   207,   208,   214,   221,   222,   223,
-     224,   228,   229,   233,   234,   239,   238,   258,   257,   276,
-     277,   278,   279,   283,   284,   285,   289,   293,   297,   298,
+     168,   169,   173,   174,   175,   179,   185,   186,   190,   191,
+     192,   196,   200,   201,   208,   209,   215,   222,   223,   224,
+     225,   229,   230,   234,   235,   240,   239,   259,   258,   277,
+     278,   279,   280,   284,   285,   286,   289,   293,   297,   298,
      299,   302,   311,   312,   315,   319,   320,   331,   341,   357,
      373,   380,   381,   382,   383,   384,   385,   386,   387,   388,
      389,   390,   391,   392,   393,   396,   411,   418,   425,   429,
@@ -1631,56 +1631,57 @@ yyreduce:
 					if(addVar((yyvsp[0].identval), type_var, 0, 0, .0) == 0){
 						flag_error = 1;
 					}
+                    fprintf(stdout, "     push QWORD 0\n");
 				}
-#line 1636 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1637 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 199 "yacc/compil.y" /* yacc.c:1646  */
-    {addVar((yyvsp[(-1) - (1)].identval), type_var, 0, (yyvsp[0].intval), .0); fprintf(stdout, "   push QWORD %d\n", (yyval.intval));}
-#line 1642 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 200 "yacc/compil.y" /* yacc.c:1646  */
+    {addVar((yyvsp[(-1) - (1)].identval), type_var, 0, (yyvsp[0].intval), .0); fprintf(stdout, "    push QWORD %d\n", (yyval.intval));}
+#line 1643 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 200 "yacc/compil.y" /* yacc.c:1646  */
+#line 201 "yacc/compil.y" /* yacc.c:1646  */
     {
 					if((yyvsp[-1].addsubval) == '-'){
 						(yyval.intval) = -((yyvsp[0].intval));
 					}
 					addVar((yyvsp[(-1) - (2)].identval), type_var, 0, (yyval.intval), .0);
-                    fprintf(stdout, "   push QWORD %d\n", (yyval.intval));
+                    fprintf(stdout, "    push QWORD %d\n", (yyval.intval));
 				  }
-#line 1654 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1655 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 207 "yacc/compil.y" /* yacc.c:1646  */
+#line 208 "yacc/compil.y" /* yacc.c:1646  */
     {addVar((yyvsp[(-1) - (1)].identval), type_var, 0, 0, (yyvsp[0].reelval));}
-#line 1660 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1661 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 208 "yacc/compil.y" /* yacc.c:1646  */
+#line 209 "yacc/compil.y" /* yacc.c:1646  */
     {
                     if((yyvsp[-1].addsubval) == '-'){
                         (yyval.intval) = -((yyvsp[0].reelval));
                     }
                     addVar((yyvsp[(-1) - (2)].identval), type_var, 0, 0, (yyval.intval));
                   }
-#line 1671 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1672 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 214 "yacc/compil.y" /* yacc.c:1646  */
+#line 215 "yacc/compil.y" /* yacc.c:1646  */
     {
 					addVar((yyvsp[(-1) - (1)].identval), type_var, 0, (yyvsp[0].charval), .0);
-                    fprintf(stdout, "   push QWORD %d\n", (yyvsp[0].charval));
+                    fprintf(stdout, "    push QWORD %d\n", (yyvsp[0].charval));
 				  }
-#line 1680 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1681 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 239 "yacc/compil.y" /* yacc.c:1646  */
+#line 240 "yacc/compil.y" /* yacc.c:1646  */
     {   
                         strcpy(name_function, (yyvsp[-1].identval));
                         flag_return = 0;
@@ -1693,21 +1694,21 @@ yyreduce:
                         createStack();
                         parameters = 0;
                     }
-#line 1697 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1698 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 252 "yacc/compil.y" /* yacc.c:1646  */
+#line 253 "yacc/compil.y" /* yacc.c:1646  */
     {
                         int i;
                         for (i = parameters; i > 0; i--)
                             fprintf(stdout, "    push QWORD [rbp+%d]\n", (i+1) * 8);
                     }
-#line 1707 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1708 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 258 "yacc/compil.y" /* yacc.c:1646  */
+#line 259 "yacc/compil.y" /* yacc.c:1646  */
     {   
                         strcpy(name_function, (yyvsp[-1].identval));
                         addFun((yyvsp[-1].identval), VOIDTYPE);
@@ -1719,17 +1720,17 @@ yyreduce:
                         createStack();
                         parameters = 0;
                     }
-#line 1723 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1724 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 271 "yacc/compil.y" /* yacc.c:1646  */
+#line 272 "yacc/compil.y" /* yacc.c:1646  */
     {
                         int i;
                         for (i = parameters; i > 0; i--)
                             fprintf(stdout, "    push QWORD [rbp+%d]\n", (i+1) * 8);
                     }
-#line 1733 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1734 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
@@ -1738,7 +1739,7 @@ yyreduce:
                                     parameters++; 
                                     addArg(name_function, type_var);
                                  }
-#line 1742 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1743 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
@@ -1747,7 +1748,7 @@ yyreduce:
                                     parameters++; 
                                     addArg(name_function, type_var);
                                  }
-#line 1751 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1752 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
@@ -1758,7 +1759,7 @@ yyreduce:
                                                     fprintf(stdout, "fin_%s:\n", name_function); 
                                                     remove_st_cell();
                                                 }
-#line 1762 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1763 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
@@ -1767,7 +1768,7 @@ yyreduce:
                         if ((yyvsp[-1].intval) != VOIDTYPE) 
                             fprintf(stdout, "    pop rcx\n");
                     }
-#line 1771 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1772 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
@@ -1783,7 +1784,7 @@ yyreduce:
                             flag_return = 1;
                             fprintf(stdout, "    pop rax\n    jmp fin_%s\n", name_function);
                         }
-#line 1787 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1788 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
@@ -1798,7 +1799,7 @@ yyreduce:
                             }
                             fprintf(stdout, "    pop rax\n    jmp fin_%s\n", name_function);
                     }
-#line 1802 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1803 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
@@ -1818,7 +1819,7 @@ yyreduce:
                         }
                         fprintf(stdout, "    call _reade\n");
                     }
-#line 1822 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1823 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
@@ -1838,7 +1839,7 @@ yyreduce:
                         }
                         fprintf(stdout, "    call _reade\n");
                     }
-#line 1842 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1843 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
@@ -1850,7 +1851,7 @@ yyreduce:
                                             case VOIDTYPE: yyerror("Can't print void value"); break;
                                         }
                                     }
-#line 1854 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1855 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 95:
@@ -1870,7 +1871,7 @@ yyreduce:
                             default: yyerror("impossible"); break;
                         }
                     }
-#line 1874 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1875 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 96:
@@ -1882,7 +1883,7 @@ yyreduce:
                         (yyval.intval) = cast_type((yyval.intval), (yyvsp[0].intval), getType((yyvsp[-2].typeval)));
                         if((yyval.intval) == -1){flag_error = 1;}
                     }
-#line 1886 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1887 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 97:
@@ -1894,61 +1895,61 @@ yyreduce:
                                     if(type_macro_assign == -1){flag_error = 1;}
                                     check_types((yyval.intval), type_macro_assign);
                                 }
-#line 1898 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1899 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 98:
 #line 425 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = (yyvsp[0].intval);}
-#line 1904 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1905 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 99:
 #line 429 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = INTEGER;}
-#line 1910 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1911 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 100:
 #line 430 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = (yyvsp[0].intval);}
-#line 1916 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1917 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 101:
 #line 432 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = INTEGER;}
-#line 1922 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1923 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 102:
 #line 433 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = (yyvsp[0].intval);}
-#line 1928 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1929 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 103:
 #line 436 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = INTEGER;}
-#line 1934 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1935 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 104:
 #line 437 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = (yyvsp[0].intval);}
-#line 1940 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1941 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 105:
 #line 439 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = INTEGER;}
-#line 1946 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1947 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 106:
 #line 440 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = (yyvsp[0].intval);}
-#line 1952 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1953 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 107:
@@ -1961,13 +1962,13 @@ yyreduce:
                         }
                         
                     }
-#line 1965 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1966 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 108:
 #line 450 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = (yyvsp[0].intval);}
-#line 1971 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1972 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 109:
@@ -1981,31 +1982,31 @@ yyreduce:
                             case '%': fprintf(stdout, "    mov rdx,0\n    idiv rcx\n    push rdx\n"); break;
                         }
                     }
-#line 1985 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1986 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 110:
 #line 461 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = (yyvsp[0].intval);}
-#line 1991 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1992 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 111:
 #line 464 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = (yyvsp[0].intval);}
-#line 1997 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 1998 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 112:
 #line 465 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = INTEGER;}
-#line 2003 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2004 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 113:
 #line 466 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = (yyvsp[-1].intval);}
-#line 2009 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2010 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 114:
@@ -2026,31 +2027,31 @@ yyreduce:
                     }
 
     			}
-#line 2030 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2031 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 115:
 #line 483 "yacc/compil.y" /* yacc.c:1646  */
     {if(((yyval.intval) = lookup((yyvsp[0].name_defineval), 0)) == -1){flag_error = 1;}}
-#line 2036 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2037 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 116:
 #line 484 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = INTEGER; fprintf(stdout, "    push QWORD %d\n", (yyvsp[0].intval));}
-#line 2042 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2043 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 117:
 #line 485 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = REAL;}
-#line 2048 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2049 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 118:
 #line 486 "yacc/compil.y" /* yacc.c:1646  */
     {(yyval.intval) = CHAR; fprintf(stdout, "    push QWORD %d\n", (yyvsp[0].charval));}
-#line 2054 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2055 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 119:
@@ -2060,7 +2061,7 @@ yyreduce:
                     args = get_func_i_arg();
                     get_func_call_name(name_called_function);
                 }
-#line 2064 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2065 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 120:
@@ -2080,13 +2081,13 @@ yyreduce:
                     args = get_func_i_arg();
                     get_func_call_name(name_called_function);
                 }
-#line 2084 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2085 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 122:
 #line 515 "yacc/compil.y" /* yacc.c:1646  */
     {strcpy((yyval.identval), (yyvsp[-1].identval));}
-#line 2090 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2091 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 128:
@@ -2097,7 +2098,7 @@ yyreduce:
                                 fprintf(stderr, "%d argument type does not match the expected type\n", (*args));
                             (*args)++;
                         }
-#line 2101 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2102 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
   case 129:
@@ -2107,11 +2108,11 @@ yyreduce:
                        fprintf(stderr, "%d argument type does not match the expected type\n", (*args));
                     (*args)++; 
                 }
-#line 2111 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2112 "bin/compil.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2115 "bin/compil.tab.c" /* yacc.c:1646  */
+#line 2116 "bin/compil.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

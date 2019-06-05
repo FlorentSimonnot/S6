@@ -180,6 +180,7 @@ Declarateur:
 					if(addVar($1, type_var, 0, 0, .0) == 0){
 						flag_error = 1;
 					}
+                    fprintf(stdout, "     push QWORD 0\n");
 				}
     |  IDENT DeclarateurTableau
     |  error DeclarateurTableau
@@ -285,8 +286,7 @@ Parametres:
     |
     ;
 
-ListTypVar:
-       ListTypVar ',' TYPE IDENT {  addVar($4, type_var, 1, 0, .0); 
+ListTypVar: ListTypVar ',' TYPE IDENT {  addVar($4, type_var, 1, 0, .0); 
                                     parameters++; 
                                     addArg(name_function, type_var);
                                  }
