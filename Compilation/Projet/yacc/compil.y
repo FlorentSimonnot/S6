@@ -5,7 +5,6 @@
 #include "../header/input-output.h"
 
 /*COMMIT*/
-
 int yylex(void);
 void yyerror(char* s);
 int flag_error = 0;
@@ -197,12 +196,13 @@ DeclInitVar:
 	;
 
 DeclInit:
-	  NUM {addVar($<identval>-1, type_var, 0, $1, .0);}
+	  NUM {addVar($<identval>-1, type_var, 0, $1, .0); fprintf(stdout, "    push QWORD %d\n", $$);}
 	| ADDSUB NUM {
 					if($1 == '-'){
 						$$ = -($2);
 					}
 					addVar($<identval>-1, type_var, 0, $$, .0);
+                    fprintf(stdout, "    push QWORD %d\n", $$);
 				  }
     | FLOAT {addVar($<identval>-1, type_var, 0, 0, $1);}
     | ADDSUB FLOAT {
@@ -213,6 +213,7 @@ DeclInit:
                   }
 	| CARACTERE {
 					addVar($<identval>-1, type_var, 0, $1, .0);
+                    fprintf(stdout, "    push QWORD %d\n", $1);
 				  }
 	;
 
@@ -398,6 +399,14 @@ Exp :  LValue '=' Exp {
                         if($$ == -1){flag_error = 1;} 
                         $$ = cast_type($$, $3, 0);
                         if($$ == -1){flag_error = 1;}
+                        int addr[2]; 
+                        get_address($1, addr);
+                        switch (addr[1]) {
+                            case 0: fprintf(stdout, "    pop QWORD [rbp-%d]\n    push QWORD [rbp-%d]\n", addr[0], addr[0]); break;
+                            case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
+                            case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
+                            default: yyerror("impossible"); break;
+                        }
                     }
     |   LValue '=' '(' TYPE ')' Exp {
                         if(isConstante($1) == 1){flag_error = 1;}
@@ -455,7 +464,7 @@ T   :  T DIVSTAR F  {
 F   :  ADDSUB F {$$ = $2;}
     |  '!' F {$$ = INTEGER;}
     |  '(' Exp ')' {$$ = $2;}
-    |  LValue  {
+    |  IDENT  {
     				$$ = lookup($1, 0);
     				if($$ == -1){
     					flag_error = 1;
@@ -475,13 +484,30 @@ F   :  ADDSUB F {$$ = $2;}
     |  NUM {$$ = INTEGER; fprintf(stdout, "    push QWORD %d\n", $1);}
     |  FLOAT {$$ = REAL;}
     |  CARACTERE {$$ = CHAR; fprintf(stdout, "    push QWORD %d\n", $1);}
-    |  IDENT '(' Arguments  ')' {
-                                    if(($$ = lookupFunction($1)) == -1)
-                                        flag_error = 1;
-                                    add_call_cell($1);
-                                    args = get_func_i_arg();
-                                    get_func_call_name(name_called_function);
-                                }
+    |  IDENT   
+                {
+                    add_call_cell($1);
+                    args = get_func_i_arg();
+                    get_func_call_name(name_called_function);
+                }       
+                '(' 
+    
+                    Arguments  ')' 
+                {
+                    if(($$ = lookupFunction($1)) == -1)
+                        flag_error = 1;
+                    fprintf(stdout, "    call %s\n",$1);
+                    check_nargs($1, *args);
+                    int i;
+                    for (i = 0; i < *args; i++){
+                        fprintf(stdout, "    pop rbx\n");
+                    }
+                    if (lookupFunction(name_called_function) != VOIDTYPE)
+                        fprintf(stdout, "    push rax\n");
+                    remove_call_cell();
+                    args = get_func_i_arg();
+                    get_func_call_name(name_called_function);
+                }
     |  error '(' Arguments ')'
     ;
 
@@ -502,12 +528,15 @@ Arguments:
 
 ListExp:
        ListExp ',' Exp  {
-                            //if (!check_types(get_arg_type(name_called_function, *i_args), $3))
-                            //    fprintf(stderr, "%d argument type does not match the expected type\n", (*i_args)++);
+                            
+                            if (!check_types(get_arg_type(name_called_function, *args), $3))
+                                fprintf(stderr, "%d argument type does not match the expected type\n", (*args));
+                            (*args)++;
                         }
     |  Exp      {
-                    //if (!check_types(get_arg_type(name_called_function, *i_args), $1))
-                     //   fprintf(stderr, "%d argument type does not match the expected type\n", (*i_args)++);
+                    if (!check_types(get_arg_type(name_called_function, *args), $1))
+                       fprintf(stderr, "%d argument type does not match the expected type\n", (*args));
+                    (*args)++; 
                 }
     |  ListExp error Exp
     ;

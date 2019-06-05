@@ -1,11 +1,19 @@
 int sum(int a, int b){
-    return a+b; 
+    return a+b;
 }
 
+void test(int a, int b){
+	print(a);
+	print(b);
+}
+
+
 int main(void){
+    const c = 10;
     int a = 10, b = 20, res; 
     print(16);
-    res = sum(a, b); 
+    res = sum(a, 10);
     print(res);
+    test(b, 20);
     return 0;
 }

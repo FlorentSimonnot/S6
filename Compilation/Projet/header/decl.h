@@ -224,6 +224,8 @@ void get_func_call_name(char name[]);
 
 int * get_func_i_arg();
 
+void check_nargs(const char name[], int nb);
+
 /**
  * \fn void freeStack()
  * \brief free the memory used for the stack

@@ -133,9 +133,9 @@ int addVar(const char name[], int type, int is_parameter, int value, float value
     }
     symbol_table->STsize++;
     
-    if(symbol_table->next != NULL && !is_parameter){
+    /*if(symbol_table->next != NULL && !is_parameter){
         fprintf(stdout, "    push QWORD 0\n");
-    }
+    }*/
     return 1;
 }
 
@@ -555,4 +555,17 @@ int * get_func_i_arg(){
     if (cs != NULL)
         return &(cs->i_arg);
     return NULL;
+}
+
+void check_nargs(const char name[], int nb){
+    int i;
+
+    for (i = 0; i < function_table.Fsize; i++){
+        if (!strcmp(function_table.Ftable[i].name,name)){
+            if (nb != function_table.Ftable[i].Nargs){
+                fprintf(stderr, "%s expected %d arguments but only %d arguments given near line %d\n", name, function_table.Ftable[i].Nargs, nb, line_num);
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
 }
