@@ -2,7 +2,11 @@ extern printf
 
 extern scanf
 
+section .bss
+    globals resb 8
+
 section .data
+    je_suis_un_connard dq 0
     format_ent db "%d", 10, 0
     format_long db "%d", 10, 0
     format_sent db "%d\n", 10, 0
@@ -50,41 +54,43 @@ _start:
     call main
     jmp _end
 
+sum:
+    push rbp
+    mov rbp, rsp
+    push QWORD [rbp+24]
+    push QWORD [rbp+16]
+    push QWORD [rbp-8]
+    push QWORD [rbp-16]
+    pop rcx
+    pop rax
+    add rax, rcx
+    push rax
+    pop rax
+    jmp fin_sum
+fin_sum:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
 main:
     push rbp
     mov rbp, rsp
-     push QWORD 0
-    push QWORD 1
-    pop rax
-    cmp rax,0
-    je go_end0
-    push QWORD 3
-    pop rcx
-    mov rax,rcx
-go_end0:
-    push rax
-    pop QWORD [rbp-8]
-    push QWORD [rbp-8]
-    pop rcx
-    push QWORD [rbp-8]
     push QWORD 0
+    push QWORD 1
+    mov QWORD [je_suis_un_connard], QWORD 1
     pop rcx
-    pop rax
-    cmp rax,rcx
-    mov rax,0
-    je cond_eq1
-    mov rax,1
-cond_eq1:
-    push rax
-    pop rax
-    cmp rax,0
-    je else_no2
-    push QWORD [rbp-8]
+    push QWORD [je_suis_un_connard]
     pop rsi
     call _print_ent
-    jmp fin_if2
-else_no2:
-fin_if2:
+    push QWORD [je_suis_un_connard]
+    push QWORD 10
+    call sum
+    pop rbx
+    pop rbx
+    push rax
+    pop rsi
+    call _print_ent
     push QWORD 0
     pop rax
     jmp fin_main

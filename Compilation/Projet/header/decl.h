@@ -226,6 +226,10 @@ int * get_func_i_arg();
 
 void check_nargs(const char name[], int nb);
 
+int get_globals_var(char vars[64][64], long vals[64]);
+
+int globale_variable(char name[64]);
+
 /**
  * \fn void freeStack()
  * \brief free the memory used for the stack

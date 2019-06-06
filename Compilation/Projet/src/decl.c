@@ -133,9 +133,6 @@ int addVar(const char name[], int type, int is_parameter, int value, float value
     }
     symbol_table->STsize++;
     
-    /*if(symbol_table->next != NULL && !is_parameter){
-        fprintf(stdout, "    push QWORD 0\n");
-    }*/
     return 1;
 }
 
@@ -429,8 +426,9 @@ int get_address(const char *name, int address[2]){
     while (curs != NULL){
         /*Symbol Table*/
         for (i = 0; i < curs->STsize; i++){
-            if (!strcmp(curs->STtable[i].name, name)){
+            if (strcmp(curs->STtable[i].name, name) == 0){
                 address[0] = curs->STtable[i].address;
+                /*Variable globale */
                 if (curs->next == NULL)
                     address[1] = 1;
                 else
@@ -440,7 +438,7 @@ int get_address(const char *name, int address[2]){
         }
         /*Constant Table*/
         for (i = 0; i < curs->Csize; i++){
-            if (!strcmp(curs->Ctable[i].name, name)){
+            if (strcmp(curs->Ctable[i].name, name) == 0){
                 address[0] = curs->Ctable[i].value;
                 address[1] = 2;
                 return 0;
@@ -487,6 +485,21 @@ int get_globals_size(){
         curs = curs->next;
     }
     return curs->current_stack_address;
+}
+
+int get_globals_var(char vars[64][64], long vals[64]){
+    STStackCel * curs = symbol_table;
+    int i = 0;
+    if (curs == NULL)
+        return 0;
+    while (curs->next != NULL){
+        curs = curs->next;
+    }
+    for(i = 0; i < curs->STsize; i++){
+        strcpy(vars[i], curs->STtable[i].name); 
+        vals[i] = curs->STtable[i].value;
+    }
+    return 1;
 }
 
 void remove_st_cell() {
@@ -540,6 +553,21 @@ void addArg(char name[], int type){
     }
     function_table.Ftable[i].args[function_table.Ftable[i].Nargs] = type;
     function_table.Ftable[i].Nargs++;
+}
+
+int globale_variable(char name[64]){
+    STStackCel * curs = symbol_table;
+    int i = 0;
+    if (curs == NULL)
+        return 0;
+    while (curs->next != NULL){
+        curs = curs->next;
+    }
+    for(i = 0; i < curs->STsize; i++){
+        if(strcmp(curs->STtable[i].name, name) == 0)
+            return 1;
+    }
+    return 0; 
 }
 
 void freeStack(){

@@ -31,14 +31,21 @@ void option_parsing(int argc, char **argv){
     }
 }
 
-void print_start(int globals_size){
+void print_start(int globals_size, char vars[64][64], long vals[64]){
+    int i; 
     fprintf(stdout, "extern printf\n\n");
     fprintf(stdout, "extern scanf\n\n");
     if (globals_size > 0){
         fprintf(stdout, "section .bss\n");
         fprintf(stdout, "    globals resb %d\n\n", globals_size);
     }
-    fprintf(stdout, "section .data\n");
+    if (globals_size > 0){
+        fprintf(stdout, "section .data\n");
+        for(i = 0; i < globals_size/8; i++){
+            fprintf(stdout, "    %s dq %ld\n", vars[i], vals[i]);
+        }
+    }
+    //fprintf(stdout, "section .data\n");
     fprintf(stdout, "    format_ent db \"%%d\", 10, 0\n");
     fprintf(stdout, "    format_long db \"%%d\", 10, 0\n");
     fprintf(stdout, "    format_sent db \"%%d\\n\", 10, 0\n\n");

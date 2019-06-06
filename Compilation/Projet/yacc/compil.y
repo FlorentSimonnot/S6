@@ -16,6 +16,8 @@ int type_define = -1;
 int type_macro_assign = -1;
 int jump_label = 0;
 int parameters = 0;
+int size_array = 0;
+int is_global_variable = 1;
 int *args = NULL;
 char name_function[MAXNAME];
 char name_called_function[MAXNAME];
@@ -81,7 +83,7 @@ char name_called_function[MAXNAME];
 %token <name_defineval> NAME_DEFINE
 %token <cast> CAST
 
-%type <intval> F Exp EB TB FB M E T NombreSigne Litteral LitteralDefine ListExp DeclInit TradIF FinTradIF
+%type <intval> F Exp EB TB FB M E T NombreSigne Litteral LitteralDefine ListExp DeclInit TradIF FinTradIF DeclarateurTableau
 %type <identval> LValue
 %type <reelval> ReelSigne LitteralReel
 
@@ -183,7 +185,7 @@ Declarateur:
 					}
                     fprintf(stdout, "     push QWORD 0\n");
 				}
-    |  IDENT DeclarateurTableau
+    |  IDENT DeclarateurTableau {size_array = $2;}
     |  error DeclarateurTableau
     ;
 
@@ -198,32 +200,31 @@ DeclInitVar:
 	;
 
 DeclInit:
-	  NUM {addVar($<identval>-1, type_var, 0, $1, .0); fprintf(stdout, "    push QWORD %d\n", $$);}
+	  NUM   { 
+                addVar($<identval>-1, type_var, 0, $1, .0); 
+                if(is_global_variable == 0)
+                    fprintf(stdout, "    push QWORD %d\n", $$);
+            }
 	| ADDSUB NUM {
 					if($1 == '-'){
 						$$ = -($2);
 					}
 					addVar($<identval>-1, type_var, 0, $$, .0);
-                    fprintf(stdout, "    push QWORD %d\n", $$);
+                    if(is_global_variable == 0)
+                        fprintf(stdout, "    push QWORD %d\n", $$);
 				  }
-    | FLOAT {addVar($<identval>-1, type_var, 0, 0, $1);}
-    | ADDSUB FLOAT {
-                    if($1 == '-'){
-                        $$ = -($2);
-                    }
-                    addVar($<identval>-1, type_var, 0, 0, $$);
-                  }
 	| CARACTERE {
 					addVar($<identval>-1, type_var, 0, $1, .0);
-                    fprintf(stdout, "    push QWORD %d\n", $1);
+                    if(is_global_variable == 0)
+                        fprintf(stdout, "    push QWORD %d\n", $$);
 				  }
 	;
 
 DeclarateurTableau:
-	   '[' NUM ']' 
-    |  '[' error ']' 
-    |   DeclarateurTableau '[' NUM ']'
-	|   DeclarateurTableau '[' error ']' 
+	   '[' NUM ']' {$$ = 1;}
+    |  '[' error ']' {$$ = 0;}
+    |   DeclarateurTableau '[' NUM ']' {$$ = $1 + 1;}
+	|   DeclarateurTableau '[' error ']' {$$ = 0;}
 	;
 
 DeclFoncts:
@@ -243,7 +244,11 @@ EnTeteFonct:
                         flag_return = 0;
                         addFun($2, getType($1));
                         if (flag_start) {
-                            print_start(get_globals_size());
+                            is_global_variable = 0;
+                            char vars[64][64]; 
+                            long vals[64];
+                            get_globals_var(vars, vals);
+                            print_start(get_globals_size(), vars, vals);
                             flag_start = 0;
                         }
                         fprintf(stdout, "%s:\n    push rbp\n    mov rbp, rsp\n", $2);
@@ -261,7 +266,11 @@ EnTeteFonct:
                         strcpy(name_function, $2);
                         addFun($2, VOIDTYPE);
                         if (flag_start) {
-                            print_start(get_globals_size()); 
+                            is_global_variable = 0;
+                            char vars[64][64]; 
+                            long vals[64];
+                            get_globals_var(vars, vals);
+                            print_start(get_globals_size(), vars, vals);
                             flag_start = 0;
                         }
                         fprintf(stdout, "%s:\n    push rbp\n    mov rbp, rsp\n", $2);
@@ -385,7 +394,12 @@ Instr:
         }
         ;
     |  IF '(' Exp TradIF ')' Instr FinTradIF ELSE Instr FinELSE
-    |  WHILE '(' Exp ')' Instr
+    |  WHILE
+            {fprintf(stdout, "debut_while%d:\n", $<intval>$ = jump_label++);} 
+       '(' Exp ')' 
+            {fprintf(stdout, "    pop rax\n    cmp rax, 0\n    je fin_while%d\n", $<intval>2);}
+       Instr 
+            {fprintf(stdout, "    jmp debut_while%d\nfin_while%d:\n", $<intval>2, $<intval>2);}
     |  FOR '(' IDENT '=' NUM ';' Exp ';' Exp ')' Instr
     |  DO '{' SuiteInstr '}' WHILE '(' Exp ')' ';'
     |  '{' SuiteInstr '}' 
@@ -415,13 +429,18 @@ Exp :  LValue '=' Exp {
                         if($$ == -1){flag_error = 1;} 
                         $$ = cast_type($$, $3, 0);
                         if($$ == -1){flag_error = 1;}
-                        int addr[2]; 
-                        get_address($1, addr);
-                        switch (addr[1]) {
-                            case 0: fprintf(stdout, "    pop QWORD [rbp-%d]\n    push QWORD [rbp-%d]\n", addr[0], addr[0]); break;
-                            case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
-                            case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
-                            default: yyerror("impossible"); break;
+                        if(globale_variable($1) == 1){
+                            fprintf(stdout, "    mov QWORD [%s], QWORD %d\n", $1, $3);
+                        }
+                        else{
+                            int addr[2]; 
+                            get_address($1, addr);
+                            switch (addr[1]) {
+                                case 0: fprintf(stdout, "    pop QWORD [rbp-%d]\n    push QWORD [rbp-%d]\n", addr[0], addr[0]); break;
+                                case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
+                                case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
+                                default: yyerror("impossible"); break;
+                            }
                         }
                     }
     |   LValue '=' '(' TYPE ')' Exp {
@@ -547,16 +566,50 @@ T   :  T DIVSTAR F  {
     |  F {$$ = $1;}
     ;
 
-F   :  ADDSUB F {$$ = $2;}
-    |  '!' F {$$ = INTEGER;}
+F   :  ADDSUB F  
+            {
+                if (check_types($2, INTEGER) == 0)
+                    fprintf(stderr, "Can only apply - + to entier values\n"); 
+                $$ = $2;
+                if ($1 == '-')
+                    fprintf(stdout, "    pop rax\n     mov rcx, -1\n    imul rcx\n   push rax\n");
+            }
+    |  '!' F             
+            {
+                if (check_types($2, INTEGER) == 0)
+                    fprintf(stderr, "Can only apply ! to entier values\n"); 
+                $$ = $2;
+                fprintf(stdout,"    pop rax\n    cmp rax, 0\n    mov rax,1\n    je if_no%d\n", jump_label);
+                fprintf(stdout, "    mov rax,0\nif_no%d:\n    push rax\n", jump_label++);
+            }
     |  '(' Exp ')' {$$ = $2;}
     |  IDENT  {
     				$$ = lookup($1, 0);
     				if($$ == -1){
     					flag_error = 1;
                     }
+                    if(globale_variable($1) == 1){
+                            fprintf(stdout, "    push QWORD [%s]\n", $1);
+                    }
+                    else{                       
+                        int address[2]; 
+                        if(get_address($1, address) == -1)
+                            flag_error = 1; 
+                        switch(address[1]){
+                            case 0: fprintf(stdout, "    push QWORD [rbp-%d]\n", address[0]); break;
+                            case 1: fprintf(stdout, "    push QWORD [globals+%d]\n", address[0]); break;
+                            case 2: fprintf(stdout, "    push QWORD %d\n", address[0]); break;
+                        }
+                    }
+
+    			}
+    |  '(' TYPE ')' IDENT  {
+    				$$ = lookup($4, 0);
+    				if($$ == -1){
+    					flag_error = 1;
+                    }
                     int address[2]; 
-                    if(get_address($1, address) == -1)
+                    if(get_address($4, address) == -1)
                         flag_error = 1; 
                     switch(address[1]){
                         case 0: fprintf(stdout, "    push QWORD [rbp-%d]\n", address[0]); break;

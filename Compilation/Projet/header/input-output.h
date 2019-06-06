@@ -5,7 +5,7 @@
 void option_parsing(int argc, char **argv);
 
 /* Ecrit le début du code asm (fonction print, tableau de global ...etc) */
-void print_start(int globals_size);
+void print_start(int globals_size, char vars[64][64], long vals[64]);
 
 /* Ecrit la fin du code asm (return et syscall de fin) */
 void print_end();

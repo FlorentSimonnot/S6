@@ -1,0 +1,19 @@
+long somme(int max){
+	int i = 0;
+	long sum;
+	print(max);
+	while(i < max){
+		print(i);
+		sum = sum + i;
+		print(sum);
+		i = i + 1;
+	}
+	return sum;
+}
+
+int main(void){
+	long s;
+	s = somme(10);
+	print(s);
+	return 0;
+}

@@ -1,0 +1,13 @@
+int je_suis_un_connard = 0; 
+
+int sum(int a, int b){
+    return a + b;
+}
+
+int main(void){
+    int sum = 0;
+    je_suis_un_connard = 1;
+    print(je_suis_un_connard);
+    print(sum(je_suis_un_connard, 10));
+    return 0;
+}
