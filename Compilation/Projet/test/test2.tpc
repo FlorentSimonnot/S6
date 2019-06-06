@@ -1,0 +1,8 @@
+int main(void){
+    int a; 
+    a = 1 && 3; 
+    if(a != 0){
+        print(a);
+    }
+    return 0;
+}

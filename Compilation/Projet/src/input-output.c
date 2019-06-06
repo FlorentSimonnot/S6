@@ -40,6 +40,7 @@ void print_start(int globals_size){
     }
     fprintf(stdout, "section .data\n");
     fprintf(stdout, "    format_ent db \"%%d\", 10, 0\n");
+    fprintf(stdout, "    format_long db \"%%d\", 10, 0\n");
     fprintf(stdout, "    format_sent db \"%%d\\n\", 10, 0\n\n");
     fprintf(stdout, "section .text\n\n");
     fprintf(stdout, "global _start\n\n");
@@ -57,11 +58,16 @@ void print_start(int globals_size){
     fprintf(stdout, "    mov rax, 0\n");
     fprintf(stdout, "    call printf WRT ..plt\n");
     fprintf(stdout, "    ret\n\n");
+    fprintf(stdout, "_print_long:\n");
+    fprintf(stdout, "    mov rdi, format_long\n");
+    fprintf(stdout, "    mov rax, 0\n");
+    fprintf(stdout, "    call printf WRT ..plt\n");
+    fprintf(stdout, "    ret\n\n");
     fprintf(stdout, "_readc:\n");
     fprintf(stdout, "    mov rax, 0\n");
     fprintf(stdout, "    mov rdi, 0\n");
     fprintf(stdout, "    mov rdx, 1\n");
-    fprintf(stdout, "    syscall\n");
+    fprintf(stdout, "    call scanf\n");
     fprintf(stdout, "    ret\n\n");
     fprintf(stdout, "_reade:\n");
     fprintf(stdout, "    mov rax, 0\n");

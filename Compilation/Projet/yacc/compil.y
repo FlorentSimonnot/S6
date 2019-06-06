@@ -14,6 +14,7 @@ int type_const = -1;
 int type_var = -1;
 int type_define = -1;
 int type_macro_assign = -1;
+int jump_label = 0;
 int parameters = 0;
 int *args = NULL;
 char name_function[MAXNAME];
@@ -80,7 +81,7 @@ char name_called_function[MAXNAME];
 %token <name_defineval> NAME_DEFINE
 %token <cast> CAST
 
-%type <intval> F Exp EB TB FB M E T NombreSigne Litteral LitteralDefine ListExp DeclInit
+%type <intval> F Exp EB TB FB M E T NombreSigne Litteral LitteralDefine ListExp DeclInit TradIF FinTradIF
 %type <identval> LValue
 %type <reelval> ReelSigne LitteralReel
 
@@ -373,12 +374,17 @@ Instr:
     |  PRINT '(' Exp ')' ';'  {
                                         switch ($3) {
                                             case INTEGER: fprintf(stdout, "    pop rsi\n    call _print_ent\n"); break;
+                                            case LONG: fprintf(stdout, "    pop rsi\n    call _print_long\n"); break;
                                             case CHAR: fprintf(stdout, "    pop rsi\n    call _print_car\n"); break;
                                             case VOIDTYPE: yyerror("Can't print void value"); break;
                                         }
                                     }
-    |  IF '(' Exp ')' Instr 
-    |  IF '(' Exp ')' Instr ELSE Instr
+    |  IF '(' Exp TradIF ')' Instr FinTradIF
+        {
+            fprintf(stdout, "fin_if%d:\n", $<intval>4);
+        }
+        ;
+    |  IF '(' Exp TradIF ')' Instr FinTradIF ELSE Instr FinELSE
     |  WHILE '(' Exp ')' Instr
     |  FOR '(' IDENT '=' NUM ';' Exp ';' Exp ')' Instr
     |  DO '{' SuiteInstr '}' WHILE '(' Exp ')' ';'
@@ -392,6 +398,16 @@ Instr:
     |  READE '(' error ')' ';'
     |  READC '(' error ')' ';'
     ;
+
+TradIF:
+        {fprintf(stdout, "    pop rax\n    cmp rax,0\n    je else_no%d\n",$<intval>$=jump_label++);};
+
+FinTradIF :
+        {fprintf(stdout, "    jmp fin_if%d\nelse_no%d:\n", $<intval>-2,$<intval>-2);}; 
+
+FinELSE :
+        {fprintf(stdout, "fin_if%d:\n", $<intval>-5);};
+
 
 Exp :  LValue '=' Exp {
                         if(isConstante($1) == 1){flag_error = 1;}
@@ -414,6 +430,14 @@ Exp :  LValue '=' Exp {
                         if($$ == -1){flag_error = 1;} 
                         $$ = cast_type($$, $6, getType($4));
                         if($$ == -1){flag_error = 1;}
+                        int addr[2]; 
+                        get_address($1, addr);
+                        switch (addr[1]) {
+                            case 0: fprintf(stdout, "    pop QWORD [rbp-%d]\n    push QWORD [rbp-%d]\n", addr[0], addr[0]); break;
+                            case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
+                            case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
+                            default: yyerror("impossible"); break;
+                        }
                     }
     |  LValue '=' NAME_DEFINE   {   if(isConstante($1) == 1){flag_error = 1;}
                                     $$ = lookup($1, 0); 
@@ -422,21 +446,83 @@ Exp :  LValue '=' Exp {
                                     if(type_macro_assign == -1){flag_error = 1;}
                                     check_types($$, type_macro_assign);
                                 }
-    |  EB {$$ = $1;}
+    |  EB 
     ; 
 
 
-EB  :  EB OR TB {$$ = INTEGER;}
+EB  :  EB 
+            {
+                if (check_types($1, INTEGER) == 0)
+                    fprintf(stderr, "Can only apply || to entier values\n"); 
+                fprintf(stdout, "    pop rax\n    cmp rax,0\n    jne go_end%d\n", $<intval>$=jump_label++);
+            }
+       OR TB 
+            {
+                if (check_types($1, $4) == 0)
+                    fprintf(stderr, "Can only apply || to entier values\n"); 
+                fprintf(stdout, "    pop rcx\n    mov rax,rcx\ngo_end%d:\n    push rax\n",$<intval>2);
+                $$ = INTEGER;
+            }
     |  TB {$$ = $1;}
     ;
-TB  :  TB AND FB {$$ = INTEGER;}
+TB  :  TB   { 
+                if (check_types($1, INTEGER) == 0)
+                    fprintf(stderr, "Can only apply && to entier values\n"); 
+                fprintf(stdout, "    pop rax\n    cmp rax,0\n    je go_end%d\n",$<intval>$=jump_label++);
+            }
+       AND FB
+            {
+                if (check_types($1, $4) == 0)
+                    fprintf(stderr, "Can only apply && to entier values\n"); 
+                fprintf(stdout, "    pop rcx\n    mov rax,rcx\ngo_end%d:\n    push rax\n",$<intval>2);          
+                $$ = INTEGER;
+            }
     |  FB {$$ = $1;}
     ;
 
-FB  :  FB EQ M {$$ = INTEGER;}
+FB  :  FB EQ M
+        {
+            if (check_types($1, $3) == 0)
+                fprintf(stderr, "Can only apply == to values of same type\n"); 
+            fprintf(stdout, "    pop rcx\n    pop rax\n    cmp rax,rcx\n    mov rax,0\n");
+            if (strcmp($2,"==") == 0){
+                fprintf(stdout, "    jne cond_eq%d\n",jump_label);
+            }
+            else if (strcmp($2,"!=") == 0){
+                fprintf(stdout, "    je cond_eq%d\n",jump_label);
+            }
+            fprintf(stdout, "    mov rax,1\ncond_eq%d:\n    push rax\n",jump_label++);
+            $$ = INTEGER;
+        } 
     |  M {$$ = $1;}
     ;
-M   :  M ORDER E {$$ = INTEGER;}
+M   :  M ORDER E {
+                if (check_types($1, $3) == 1)
+                    fprintf(stderr, "Can only apply >=, <=, > and < to entier values\n"); 
+                fprintf(stdout,"    pop rcx\n    pop rax\n    cmp rax, rcx\n    mov rax,1\n");
+                if (strcmp($2, ">") == 0) {
+                    fprintf(stdout,"    jg cond_ord%d\n",jump_label); 
+                    fprintf(stdout, "    mov rax,0\n");
+                }
+                else if (strcmp($2, "<=") == 0) {
+                    fprintf(stdout,"    jng cond_ord%d \n", jump_label);
+                    fprintf(stdout,"    je cond_ord%d \n", jump_label);
+                    fprintf(stdout,"    mov rax, 0 \n");
+                }
+                else if (strcmp($2, "<") == 0) {
+                    fprintf(stdout,"    mov rax, 0 \n");
+                    fprintf(stdout,"    jg cond_ord%d \n", jump_label);
+                    fprintf(stdout,"    je cond_ord%d \n", jump_label);
+                    fprintf(stdout,"    mov rax, 1 \n");
+                }
+                else if (strcmp($2, ">=") == 0) {
+                    fprintf(stdout,"    jg cond_ord%d \n", jump_label);
+                    fprintf(stdout,"    je cond_ord%d \n", jump_label);
+                    fprintf(stdout,"    mov rax, 0 \n");
+                }
+                fprintf(stdout, "cond_ord%d:\n    push rax\n",jump_label++);
+                $$ = INTEGER;
+            }
     |  E {$$ = $1;}
     ;
 E   :  E ADDSUB T   {
@@ -476,7 +562,6 @@ F   :  ADDSUB F {$$ = $2;}
                         case 0: fprintf(stdout, "    push QWORD [rbp-%d]\n", address[0]); break;
                         case 1: fprintf(stdout, "    push QWORD [globals+%d]\n", address[0]); break;
                         case 2: fprintf(stdout, "    push QWORD %d\n", address[0]); break;
-                        default: fprintf(stderr, "Impossible\n"); break;
                     }
 
     			}
