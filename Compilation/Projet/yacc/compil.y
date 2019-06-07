@@ -12,12 +12,15 @@ int flag_start = 1;
 int flag_return = 0; 
 int type_const = -1; 
 int type_var = -1;
-int type_define = -1;
-int type_macro_assign = -1;
 int jump_label = 0;
 int parameters = 0;
-int size_array = 0;
+int dimension_array = 0;
 int is_global_variable = 1;
+int is_const_variable = 1;
+int current_num_array = 0;
+int call_num_array = 0;
+int array_size[10000];
+int lvalue_called_is_array = 0;
 int *args = NULL;
 char name_function[MAXNAME];
 char name_called_function[MAXNAME];
@@ -83,9 +86,8 @@ char name_called_function[MAXNAME];
 %token <name_defineval> NAME_DEFINE
 %token <cast> CAST
 
-%type <intval> F Exp EB TB FB M E T NombreSigne Litteral LitteralDefine ListExp DeclInit TradIF FinTradIF DeclarateurTableau
+%type <intval> F Exp EB TB FB M E T NombreSigne Litteral ListExp DeclInit TradIF FinTradIF DeclarateurTableau
 %type <identval> LValue
-%type <reelval> ReelSigne LitteralReel
 
 %left ','
 %precedence ')'
@@ -93,30 +95,9 @@ char name_called_function[MAXNAME];
 
 %%
 
-Prog: DeclInclude DeclDefine DeclConsts DeclVars DeclFoncts {print_end();}
+Prog: DeclConsts DeclVars DeclFoncts {print_end();}
     ;
 
-DeclInclude:
-        DeclInclude INCLUDE ENTETE
-    |
-    ;
-
-DeclDefine:
-        DeclDefine DEFINE NAME_DEFINE LitteralDefine    {
-                                                            addMacro($3, type_define, $4, .0);
-                                                        }
-    |   DeclDefine DEFINE NAME_DEFINE LitteralReel {addMacro($3, type_define, 0, $4);}                                               
-    |   DeclDefine DEFINE error LitteralDefine
-    |   DeclDefine error NAME_DEFINE LitteralDefine
-    |
-    ;
-
-LitteralDefine:
-       NUM {type_define = INTEGER; $$ = $1;}
-    |  CARACTERE {type_define = CHAR; $$ = $1;}
-    
-LitteralReel : ReelSigne {type_define = REAL; $$ = $1;}
-    ;
 
 DeclConsts:
        DeclConsts CONST ListConst ';' 
@@ -131,19 +112,8 @@ ListConst:
        											flag_error = 1;
        										}
        									}
-    |  ListConst ',' IDENT '=' ReelSigne {
-                                            type_const = REAL;
-                                            if(addConst($3, type_const, 0, $5) == 0){
-                                                flag_error = 1;
-                                            }
-                                        }
     |  IDENT '=' Litteral               {
                                             if(addConst($1, type_const, $3, .0) == 0){
-                                                flag_error = 1;
-                                            }
-                                        }
-    |  IDENT '=' ReelSigne              {   type_const = REAL;
-                                            if(addConst($1, type_const, 0, $3) == 0){
                                                 flag_error = 1;
                                             }
                                         }
@@ -157,11 +127,6 @@ Litteral:
 NombreSigne:
        NUM {$$ = $1;}
     |  ADDSUB NUM {if($1 == '-'){$$ = -($2);}}
-    ;
-
-ReelSigne:
-       FLOAT {$$ = $1;}
-    |  ADDSUB FLOAT {if($1 == '-') $$ = -($2);}
     ;
 
 DeclVars:
@@ -183,9 +148,15 @@ Declarateur:
 					if(addVar($1, type_var, 0, 0, .0) == 0){
 						flag_error = 1;
 					}
-                    fprintf(stdout, "     push QWORD 0\n");
+                    if(is_global_variable == 0)
+                        fprintf(stdout, "     push QWORD 0\n");
 				}
-    |  IDENT DeclarateurTableau {size_array = $2;}
+    |  IDENT DeclarateurTableau {
+                                    dimension_array = $2;
+                                    if(dimension_array == 1){
+                                        addTab($1, type_var, array_size[0]);
+                                    }
+                                }
     |  error DeclarateurTableau
     ;
 
@@ -221,9 +192,9 @@ DeclInit:
 	;
 
 DeclarateurTableau:
-	   '[' NUM ']' {$$ = 1;}
+	   '[' NUM ']' {$$ = 1; array_size[current_num_array] = $2; current_num_array++;}
     |  '[' error ']' {$$ = 0;}
-    |   DeclarateurTableau '[' NUM ']' {$$ = $1 + 1;}
+    |   DeclarateurTableau '[' NUM ']' {$$ = $1 + 1; array_size[current_num_array] = $3; current_num_array++;}
 	|   DeclarateurTableau '[' error ']' {$$ = 0;}
 	;
 
@@ -247,8 +218,11 @@ EnTeteFonct:
                             is_global_variable = 0;
                             char vars[64][64]; 
                             long vals[64];
+                            char consts[64][64];
+                            long cvals[64];
                             get_globals_var(vars, vals);
-                            print_start(get_globals_size(), vars, vals);
+                            get_globals_const(consts, cvals);
+                            print_start(get_globals_vars_size(), get_globals_const_size(), vars, vals, consts, cvals);
                             flag_start = 0;
                         }
                         fprintf(stdout, "%s:\n    push rbp\n    mov rbp, rsp\n", $2);
@@ -269,8 +243,11 @@ EnTeteFonct:
                             is_global_variable = 0;
                             char vars[64][64]; 
                             long vals[64];
+                            char consts[64][64];
+                            long cvals[64];
                             get_globals_var(vars, vals);
-                            print_start(get_globals_size(), vars, vals);
+                            get_globals_const(consts, cvals);
+                            print_start(get_globals_vars_size(), get_globals_const_size(), vars, vals, consts, cvals);
                             flag_start = 0;
                         }
                         fprintf(stdout, "%s:\n    push rbp\n    mov rbp, rsp\n", $2);
@@ -424,22 +401,42 @@ FinELSE :
 
 
 Exp :  LValue '=' Exp {
-                        if(isConstante($1) == 1){flag_error = 1;}
-                        $$ = lookup($1, 0); 
-                        if($$ == -1){flag_error = 1;} 
-                        $$ = cast_type($$, $3, 0);
-                        if($$ == -1){flag_error = 1;}
-                        if(globale_variable($1) == 1){
-                            fprintf(stdout, "    mov QWORD [%s], QWORD %d\n", $1, $3);
-                        }
-                        else{
-                            int addr[2]; 
+                        if(lvalue_called_is_array == 1){
+                            $$ = lookup($1, 1);
+                            check_types($$, $3);
+                            int addr[2];
                             get_address($1, addr);
                             switch (addr[1]) {
-                                case 0: fprintf(stdout, "    pop QWORD [rbp-%d]\n    push QWORD [rbp-%d]\n", addr[0], addr[0]); break;
-                                case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
+                                case 0: fprintf(stdout, "    pop rcx\n    pop rax\n    mov rbx,8\n    imul rbx\n");
+                                        fprintf(stdout, "mov rbx,rbp\n    add rax,%d\n    sub rbx,rax\n    mov [rbx], rcx\n    push QWORD [rbx]\n", addr[0]); break;
+                                case 1: fprintf(stdout, "    pop rcx\n    pop rbx\n    mov [globals+rbx*8+%d], rcx\n    push QWORD [globals+rbx*8+%d]\n", addr[0], addr[0]); break;
                                 case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
                                 default: yyerror("impossible"); break;
+                            }
+                        }
+                        else{
+                            if(isConstante($1) == 1){flag_error = 1;}
+                            $$ = lookup($1, 0); 
+                            if($$ == -1){flag_error = 1;} 
+                            $$ = cast_type($$, $3, 0);
+                            if($$ == -1){flag_error = 1;}
+                            if(globale_variable($1) == 1){
+                                int addr[2]; 
+                                get_address($1, addr);
+                                fprintf(stdout, "    pop rdx\n    mov QWORD [%s], QWORD rdx\n    push QWORD rdx\n", $1);
+                            }
+                            else if(globale_const($1) == 1){
+                                fprintf(stderr, " %s is a const variable near line %d\n", $1, line_num);
+                            }
+                            else{
+                                int addr[2]; 
+                                get_address($1, addr);
+                                switch (addr[1]) {
+                                    case 0: fprintf(stdout, "    pop QWORD [rbp-%d]\n    push QWORD [rbp-%d]\n", addr[0], addr[0]); break;
+                                    //case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
+                                    case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
+                                    default: yyerror("impossible"); break;
+                                }
                             }
                         }
                     }
@@ -453,18 +450,11 @@ Exp :  LValue '=' Exp {
                         get_address($1, addr);
                         switch (addr[1]) {
                             case 0: fprintf(stdout, "    pop QWORD [rbp-%d]\n    push QWORD [rbp-%d]\n", addr[0], addr[0]); break;
-                            case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
+                            //case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
                             case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
                             default: yyerror("impossible"); break;
                         }
                     }
-    |  LValue '=' NAME_DEFINE   {   if(isConstante($1) == 1){flag_error = 1;}
-                                    $$ = lookup($1, 0); 
-                                    if($$ == -1){flag_error = 1;}
-                                    type_macro_assign = lookup($3, 0); 
-                                    if(type_macro_assign == -1){flag_error = 1;}
-                                    check_types($$, type_macro_assign);
-                                }
     |  EB 
     ; 
 
@@ -516,7 +506,7 @@ FB  :  FB EQ M
     |  M {$$ = $1;}
     ;
 M   :  M ORDER E {
-                if (check_types($1, $3) == 1)
+                if(check_types($1, $3) == 0)
                     fprintf(stderr, "Can only apply >=, <=, > and < to entier values\n"); 
                 fprintf(stdout,"    pop rcx\n    pop rax\n    cmp rax, rcx\n    mov rax,1\n");
                 if (strcmp($2, ">") == 0) {
@@ -589,7 +579,10 @@ F   :  ADDSUB F
     					flag_error = 1;
                     }
                     if(globale_variable($1) == 1){
-                            fprintf(stdout, "    push QWORD [%s]\n", $1);
+                        fprintf(stdout, "    push QWORD [%s]\n", $1);
+                    }
+                    else if(globale_const($1) == 1){
+                        fprintf(stdout, "    push QWORD %s\n", $1);
                     }
                     else{                       
                         int address[2]; 
@@ -597,7 +590,7 @@ F   :  ADDSUB F
                             flag_error = 1; 
                         switch(address[1]){
                             case 0: fprintf(stdout, "    push QWORD [rbp-%d]\n", address[0]); break;
-                            case 1: fprintf(stdout, "    push QWORD [globals+%d]\n", address[0]); break;
+                            //case 1: fprintf(stdout, "    push QWORD [globals+%d]\n", address[0]); break;
                             case 2: fprintf(stdout, "    push QWORD %d\n", address[0]); break;
                         }
                     }
@@ -618,9 +611,20 @@ F   :  ADDSUB F
                     }
 
     			}
-    |  NAME_DEFINE {if(($$ = lookup($1, 0)) == -1){flag_error = 1;}}
+    |  LValue
+                {   
+                    if(lvalue_called_is_array == 1){
+                        $$ = lookup($1, 1); int addr[2]; get_address($1, addr);
+                        switch (addr[1]) {
+                            case 0: fprintf(stdout, "    pop rax\n    mov rbx,8\n    imul rbx\n    mov rbx,rbp\n");
+                                    fprintf(stdout, "add rax,%d\n   sub rbx,rax\n    push QWORD [rbx]\n", addr[0]); break;
+                            //case 1: fprintf(stdout, "    pop rbx\n    push QWORD [globals+rbx*8+%d]\n", addr[0]); break;
+                            case 2: fprintf(stderr, "%s is not an array near line %d\n", $1, line_num); break;
+                            default: yyerror("impossible"); break;
+                        }
+                    }
+                }
     |  NUM {$$ = INTEGER; fprintf(stdout, "    push QWORD %d\n", $1);}
-    |  FLOAT {$$ = REAL;}
     |  CARACTERE {$$ = CHAR; fprintf(stdout, "    push QWORD %d\n", $1);}
     |  IDENT   
                 {
@@ -650,11 +654,18 @@ F   :  ADDSUB F
     ;
 
 LValue:
-       IDENT Tableau {strcpy($$, $1);}
+       IDENT 
+       {call_num_array = 0; lvalue_called_is_array = 0;} 
+       Tableau      {
+                        strcpy($$, $1);
+                        if(call_num_array >= 1){
+                            lvalue_called_is_array = 1;
+                        }
+                    }
     ;
 
 Tableau: 
-	  '[' Exp ']' Tableau
+	  '[' Exp ']' Tableau {call_num_array++;}
 	| '[' error ']' Tableau
 	|
 	;
@@ -667,12 +678,12 @@ Arguments:
 ListExp:
        ListExp ',' Exp  {
                             
-                            if (!check_types(get_arg_type(name_called_function, *args), $3))
+                            if (check_types(get_arg_type(name_called_function, *args), $3) == 0)
                                 fprintf(stderr, "%d argument type does not match the expected type\n", (*args));
                             (*args)++;
                         }
     |  Exp      {
-                    if (!check_types(get_arg_type(name_called_function, *args), $1))
+                    if (check_types(get_arg_type(name_called_function, *args), $1) == 0)
                        fprintf(stderr, "%d argument type does not match the expected type\n", (*args));
                     (*args)++; 
                 }

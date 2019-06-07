@@ -1,13 +1,24 @@
+const constante = 3;
+const constante2 = 6;
 int je_suis_un_connard = 0; 
+int bouh; 
 
-int sum(int a, int b){
-    return a + b;
+
+int sum(int a){
+    return constante + a;
 }
 
+
 int main(void){
-    int sum = 0;
-    je_suis_un_connard = 1;
-    print(je_suis_un_connard);
-    print(sum(je_suis_un_connard, 10));
+    const constante2 = 10;
+    const constante = 5;
+    int res; 
+    int i = 0;
+    int tab[5];
+    tab[0] = constante + constante2;
+    while(i < 5){
+        print(tab[i]); 
+        i = i + 1;
+    }
     return 0;
 }

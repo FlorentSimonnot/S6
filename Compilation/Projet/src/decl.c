@@ -188,6 +188,36 @@ int addMacro(const char name[], int type, int value, float valueFloat){
     return 1;
 }
 
+void addTab(const char name[], int type, int size){
+    int i;
+
+    if (size <= 0){
+        fprintf(stderr, "Invalid tab size %d near line %d\n", size, line_num);
+    }
+    
+    checkName(name);
+
+    if (symbol_table->STsize >= symbol_table->STmax) {
+        symbol_table->STmax *= 2;
+        if (NULL == (symbol_table->STtable = realloc(symbol_table->STtable, symbol_table->STmax * sizeof(STentry)))){
+            fprintf(stderr, "Allocation error on realloc STtablee\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+    i = symbol_table->STsize;
+    strcpy(symbol_table->STtable[i].name, name);
+    symbol_table->STtable[i].type = type;
+    symbol_table->STtable[i].size = size;
+    symbol_table->STtable[i].address = symbol_table->current_stack_address+8;
+    symbol_table->STsize++;
+    for (i = 0; i < size; i++){
+        symbol_table->current_stack_address += 8;
+        if (symbol_table->next != NULL){
+            fprintf(stdout, "    push QWORD 0\n");
+        }
+    }
+}
+
 static int checkNameFun(const char name[]){
     int i;
     for (i = 0; i < symbol_table->STsize; i++) {
@@ -245,6 +275,21 @@ void displayTable(){
         }
         curs = curs->next;
     }
+}
+
+int isTab(const char name[]){
+    int i;
+    STStackCel * curs = symbol_table;
+
+    while (curs != NULL){
+        for (i = 0; i < curs->STsize; i++){
+            if(strcmp(name, curs->STtable[i].name) == 0 && curs->STtable[i].size >= 1){
+                return 1;
+            }
+        }
+        curs = curs->next;
+    } 
+    return 0;
 }
 
 int isConstante(const char name[]){
@@ -316,7 +361,7 @@ int lookup(const char name[], int is_tab){
 
     while (curs != NULL){
         for (i = 0; i < curs->STsize; i++){
-            if (!strcmp(curs->STtable[i].name, name)){
+            if (strcmp(curs->STtable[i].name, name) == 0){
                 if (is_tab != (curs->STtable[i].size > 0)){
                     fprintf(stderr, "Invalid use of variable %s near line %d\n", name, line_num);
                     exit(EXIT_FAILURE);
@@ -325,7 +370,7 @@ int lookup(const char name[], int is_tab){
             }
         }
         for (i = 0; i < curs->Csize; i++){
-            if (!strcmp(curs->Ctable[i].name, name)){
+            if (strcmp(curs->Ctable[i].name, name) == 0){
                 return curs->Ctable[i].type;
             }
         }
@@ -477,6 +522,26 @@ int get_arg_type(const char name[], int i_arg){
     return -1;
 }
 
+int get_globals_vars_size(){
+    STStackCel * curs = symbol_table;
+    if (curs == NULL)
+        return 0;
+    while (curs->next != NULL){
+        curs = curs->next;
+    }
+    return curs->STsize;
+}
+
+int get_globals_const_size(){
+    STStackCel *curs = symbol_table;
+    if (curs == NULL)
+        return 0;
+    while (curs->next != NULL){
+        curs = curs->next;
+    }
+    return curs->Csize;
+}
+
 int get_globals_size(){
     STStackCel * curs = symbol_table;
     if (curs == NULL)
@@ -498,6 +563,21 @@ int get_globals_var(char vars[64][64], long vals[64]){
     for(i = 0; i < curs->STsize; i++){
         strcpy(vars[i], curs->STtable[i].name); 
         vals[i] = curs->STtable[i].value;
+    }
+    return 1;
+}
+
+int get_globals_const(char consts[64][64], long vals[64]){
+    STStackCel * curs = symbol_table;
+    int i = 0;
+    if (curs == NULL)
+        return 0;
+    while (curs->next != NULL){
+        curs = curs->next;
+    }
+    for(i = 0; i < curs->Csize; i++){
+        strcpy(consts[i], curs->Ctable[i].name); 
+        vals[i] = curs->Ctable[i].value;
     }
     return 1;
 }
@@ -560,11 +640,38 @@ int globale_variable(char name[64]){
     int i = 0;
     if (curs == NULL)
         return 0;
+    /*Table actuelle*/
+    for(i = 0; i < curs->STsize; i++){
+        if(strcmp(curs->STtable[i].name, name) == 0)
+            return 0;
+    }
     while (curs->next != NULL){
         curs = curs->next;
     }
+    /*Table des variables globales*/
     for(i = 0; i < curs->STsize; i++){
         if(strcmp(curs->STtable[i].name, name) == 0)
+            return 1;
+    }
+    return 0; 
+}
+
+int globale_const(char name[64]){
+    STStackCel * curs = symbol_table;
+    int i = 0;
+    if (curs == NULL)
+        return 0;
+    /*Table actuelle*/
+    for(i = 0; i < curs->Csize; i++){
+        if(strcmp(curs->Ctable[i].name, name) == 0)
+            return 0;
+    }
+    while (curs->next != NULL){
+        curs = curs->next;
+    }
+    /*Tables des globales */
+    for(i = 0; i < curs->Csize; i++){
+        if(strcmp(curs->Ctable[i].name, name) == 0)
             return 1;
     }
     return 0; 
@@ -579,7 +686,7 @@ void get_func_call_name(char name[]){
         strcpy(name, cs->name);
 }
 
-int * get_func_i_arg(){
+int *get_func_i_arg(){
     if (cs != NULL)
         return &(cs->i_arg);
     return NULL;

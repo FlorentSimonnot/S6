@@ -160,11 +160,15 @@ int addConst(const char name[], int type, int value, float valueFloat);
 
 int addMacro(const char name[], int type, int value, float valueFloat);
 
+void addTab(const char name[], int type, int size);
+
 int addFun(const char name[], int type);
 
 void addArg(char name[], int type); 
 
 int isConstante(const char name[]);
+
+int isTab(const char name[]);
 
 void displayTable();
 
@@ -226,9 +230,13 @@ int * get_func_i_arg();
 
 void check_nargs(const char name[], int nb);
 
+int get_globals_vars_size();
+int get_globals_const_size();
 int get_globals_var(char vars[64][64], long vals[64]);
+int get_globals_const(char consts[64][64], long vals[64]);
 
 int globale_variable(char name[64]);
+int globale_const(char name[64]);
 
 /**
  * \fn void freeStack()

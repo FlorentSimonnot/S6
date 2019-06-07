@@ -31,18 +31,23 @@ void option_parsing(int argc, char **argv){
     }
 }
 
-void print_start(int globals_size, char vars[64][64], long vals[64]){
+void print_start(int globals_vars_size, int globals_const_size, char vars[64][64], long vals[64], char consts[64][64], long cvals[64]){
     int i; 
     fprintf(stdout, "extern printf\n\n");
     fprintf(stdout, "extern scanf\n\n");
-    if (globals_size > 0){
+    /*if (globals_vars_size > 0){
         fprintf(stdout, "section .bss\n");
-        fprintf(stdout, "    globals resb %d\n\n", globals_size);
-    }
-    if (globals_size > 0){
+        fprintf(stdout, "    globals resb %d\n\n", globals_vars_size);
+    }*/
+    if (globals_vars_size > 0){
         fprintf(stdout, "section .data\n");
-        for(i = 0; i < globals_size/8; i++){
+        for(i = 0; i < globals_vars_size; i++){
             fprintf(stdout, "    %s dq %ld\n", vars[i], vals[i]);
+        }
+    }
+    if(globals_const_size > 0){
+        for(i = 0; i < globals_const_size; i++){
+            fprintf(stdout, "    %s equ %ld\n", consts[i], cvals[i]);
         }
     }
     //fprintf(stdout, "section .data\n");

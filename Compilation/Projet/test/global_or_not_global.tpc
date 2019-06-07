@@ -1,0 +1,19 @@
+const un = 1; 
+const deux = 3; 
+int global1 = 1; 
+int global2 = 10; 
+
+int magie(int a, int b){
+    print(global1);
+    return (global2 + a)%b-un+global1;
+}
+
+int main(void){
+    int a = 2, b = 6, c; 
+    c = magie(a, b); 
+    print(c == 0);
+    global1 = 10;
+    print(magie(a, b) == 9);
+
+    return 0;
+}
