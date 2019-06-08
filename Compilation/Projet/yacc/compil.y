@@ -4,7 +4,6 @@
 #include "../header/decl.h"
 #include "../header/input-output.h"
 
-/*COMMIT*/
 int yylex(void);
 void yyerror(char* s);
 int flag_error = 0;
@@ -21,9 +20,12 @@ int current_num_array = 0;
 int call_num_array = 0;
 int array_size[10000];
 int lvalue_called_is_array = 0;
+int num_array_called[10000];
+int dim_array_called = 0;
 int *args = NULL;
 char name_function[MAXNAME];
 char name_called_function[MAXNAME];
+char name_called_array[MAXNAME];
 %}
 
 %union{
@@ -151,11 +153,15 @@ Declarateur:
                     if(is_global_variable == 0)
                         fprintf(stdout, "     push QWORD 0\n");
 				}
-    |  IDENT DeclarateurTableau {
-                                    dimension_array = $2;
-                                    if(dimension_array == 1){
-                                        addTab($1, type_var, array_size[0]);
-                                    }
+    |  IDENT    {   int j; 
+                    for(j = 0; j < 1000; j++){
+                        array_size[j] = 0;
+                    }
+                    current_num_array = 0;
+                }
+        DeclarateurTableau {
+                                    dimension_array = $3;
+                                    addTab($1, type_var, array_size, dimension_array, is_global_variable); 
                                 }
     |  error DeclarateurTableau
     ;
@@ -220,9 +226,13 @@ EnTeteFonct:
                             long vals[64];
                             char consts[64][64];
                             long cvals[64];
+                            char arrays[MAXNAME][MAXNAME];
+                            int dimensions[MAXNAME]; 
+                            int *size_par_dim[MAXNAME];
                             get_globals_var(vars, vals);
                             get_globals_const(consts, cvals);
-                            print_start(get_globals_vars_size(), get_globals_const_size(), vars, vals, consts, cvals);
+                            get_globals_array(arrays, dimensions, size_par_dim);
+                            print_start(get_globals_vars_size(), get_globals_const_size(), get_globals_array_size(), vars, vals, consts, cvals, arrays, dimensions, size_par_dim);
                             flag_start = 0;
                         }
                         fprintf(stdout, "%s:\n    push rbp\n    mov rbp, rsp\n", $2);
@@ -245,9 +255,13 @@ EnTeteFonct:
                             long vals[64];
                             char consts[64][64];
                             long cvals[64];
+                            char arrays[MAXNAME][MAXNAME];
+                            int dimensions[MAXNAME]; 
+                            int *size_par_dim[MAXNAME];
                             get_globals_var(vars, vals);
                             get_globals_const(consts, cvals);
-                            print_start(get_globals_vars_size(), get_globals_const_size(), vars, vals, consts, cvals);
+                            get_globals_array(arrays, dimensions, size_par_dim);
+                            print_start(get_globals_vars_size(), get_globals_const_size(), get_globals_array_size(), vars, vals, consts, cvals, arrays, dimensions, size_par_dim);
                             flag_start = 0;
                         }
                         fprintf(stdout, "%s:\n    push rbp\n    mov rbp, rsp\n", $2);
@@ -355,14 +369,15 @@ Instr:
                             case 2: fprintf(stderr, "Assignment to a const variable impossible\n"); break;
                             default: fprintf(stderr, "Impossible\n"); break;
                         }
-                        fprintf(stdout, "    call _reade\n");
+                        fprintf(stdout, "    call _readc\n");
                     }
     |  PRINT '(' Exp ')' ';'  {
                                         switch ($3) {
                                             case INTEGER: fprintf(stdout, "    pop rsi\n    call _print_ent\n"); break;
                                             case LONG: fprintf(stdout, "    pop rsi\n    call _print_long\n"); break;
                                             case CHAR: fprintf(stdout, "    pop rsi\n    call _print_car\n"); break;
-                                            case VOIDTYPE: yyerror("Can't print void value"); break;
+                                            case VOIDTYPE: fprintf(stderr, "Can't print void value"); break;
+                                            default : fprintf(stderr, "Error\n");
                                         }
                                     }
     |  IF '(' Exp TradIF ')' Instr FinTradIF
@@ -402,41 +417,38 @@ FinELSE :
 
 Exp :  LValue '=' Exp {
                         if(lvalue_called_is_array == 1){
-                            $$ = lookup($1, 1);
-                            check_types($$, $3);
-                            int addr[2];
-                            get_address($1, addr);
-                            switch (addr[1]) {
-                                case 0: fprintf(stdout, "    pop rcx\n    pop rax\n    mov rbx,8\n    imul rbx\n");
-                                        fprintf(stdout, "mov rbx,rbp\n    add rax,%d\n    sub rbx,rax\n    mov [rbx], rcx\n    push QWORD [rbx]\n", addr[0]); break;
-                                case 1: fprintf(stdout, "    pop rcx\n    pop rbx\n    mov [globals+rbx*8+%d], rcx\n    push QWORD [globals+rbx*8+%d]\n", addr[0], addr[0]); break;
-                                case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
-                                default: yyerror("impossible"); break;
+                            if(globale_array($1)){
+                                $$ = lookup($1, 1);
+                                check_types($$, $3);
+                                if(dim_array_called >= 1){
+                                    fprintf(stdout, "   pop rdx\n      mov QWORD [%s+rbx], QWORD rdx\n     push 1\n", $1);      
+                                }
+                            }
+                            else{
+                                $$ = lookup($1, 1);
+                                check_types($$, $3);
+                                int addr[2];
+                                get_address($1, addr);
+                                if(addr[1] == 3){
+                                    //fprintf(stdout, "    pop rdx\nmov rbx, rbp\n      add rax, %d\n      sub rbx, rax\n      mov QWORD [rbx], rdx\n     push QWORD [rbx]\n", addr[0]);
+                                }
                             }
                         }
                         else{
                             if(isConstante($1) == 1){flag_error = 1;}
                             $$ = lookup($1, 0); 
-                            if($$ == -1){flag_error = 1;} 
+                            if($$ == -1){
+                                flag_error = 1;
+                            } 
                             $$ = cast_type($$, $3, 0);
-                            if($$ == -1){flag_error = 1;}
+                            if($$ == -1){
+                                flag_error = 1;
+                            }
                             if(globale_variable($1) == 1){
-                                int addr[2]; 
-                                get_address($1, addr);
                                 fprintf(stdout, "    pop rdx\n    mov QWORD [%s], QWORD rdx\n    push QWORD rdx\n", $1);
                             }
                             else if(globale_const($1) == 1){
                                 fprintf(stderr, " %s is a const variable near line %d\n", $1, line_num);
-                            }
-                            else{
-                                int addr[2]; 
-                                get_address($1, addr);
-                                switch (addr[1]) {
-                                    case 0: fprintf(stdout, "    pop QWORD [rbp-%d]\n    push QWORD [rbp-%d]\n", addr[0], addr[0]); break;
-                                    //case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
-                                    case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
-                                    default: yyerror("impossible"); break;
-                                }
                             }
                         }
                     }
@@ -450,9 +462,8 @@ Exp :  LValue '=' Exp {
                         get_address($1, addr);
                         switch (addr[1]) {
                             case 0: fprintf(stdout, "    pop QWORD [rbp-%d]\n    push QWORD [rbp-%d]\n", addr[0], addr[0]); break;
-                            //case 1: fprintf(stdout, "    pop QWORD [globals+%d]\n    push QWORD [globals+%d]\n", addr[0], addr[0]); break;
                             case 2: fprintf(stderr, "%s is a const variable near line %d\n", $1, line_num); break;
-                            default: yyerror("impossible"); break;
+                            default: flag_error = 1; fprintf(stderr, "Impossible\n"); break;
                         }
                     }
     |  EB 
@@ -491,8 +502,10 @@ TB  :  TB   {
 
 FB  :  FB EQ M
         {
-            if (check_types($1, $3) == 0)
+            if (check_types($1, $3) == 0){
                 fprintf(stderr, "Can only apply == to values of same type\n"); 
+                flag_error = 1;
+            }
             fprintf(stdout, "    pop rcx\n    pop rax\n    cmp rax,rcx\n    mov rax,0\n");
             if (strcmp($2,"==") == 0){
                 fprintf(stdout, "    jne cond_eq%d\n",jump_label);
@@ -590,7 +603,6 @@ F   :  ADDSUB F
                             flag_error = 1; 
                         switch(address[1]){
                             case 0: fprintf(stdout, "    push QWORD [rbp-%d]\n", address[0]); break;
-                            //case 1: fprintf(stdout, "    push QWORD [globals+%d]\n", address[0]); break;
                             case 2: fprintf(stdout, "    push QWORD %d\n", address[0]); break;
                         }
                     }
@@ -613,14 +625,17 @@ F   :  ADDSUB F
     			}
     |  LValue
                 {   
+                    $$ = lookup($1, 1);
                     if(lvalue_called_is_array == 1){
-                        $$ = lookup($1, 1); int addr[2]; get_address($1, addr);
-                        switch (addr[1]) {
-                            case 0: fprintf(stdout, "    pop rax\n    mov rbx,8\n    imul rbx\n    mov rbx,rbp\n");
-                                    fprintf(stdout, "add rax,%d\n   sub rbx,rax\n    push QWORD [rbx]\n", addr[0]); break;
-                            //case 1: fprintf(stdout, "    pop rbx\n    push QWORD [globals+rbx*8+%d]\n", addr[0]); break;
-                            case 2: fprintf(stderr, "%s is not an array near line %d\n", $1, line_num); break;
-                            default: yyerror("impossible"); break;
+                        if(globale_array($1) == 1){
+                            fprintf(stdout, "    push QWORD [%s+rbx]\n", $1);
+                        }
+                        else{
+                            int addr[2]; 
+                            get_address($1, addr);
+                            if(addr[1] == 3){
+                                //fprintf(stdout, "mov rbx, rbp\n      add rax, %d\n      sub rbx, rax\n      mov QWORD [rbx], rdx\n     push QWORD [rbx]\n", addr[0]);
+                            }
                         }
                     }
                 }
@@ -655,17 +670,43 @@ F   :  ADDSUB F
 
 LValue:
        IDENT 
-       {call_num_array = 0; lvalue_called_is_array = 0;} 
+       {
+            call_num_array = 0; 
+            lvalue_called_is_array = 0; 
+            dim_array_called = 0; 
+            strcpy(name_called_array, $1);
+        } 
        Tableau      {
                         strcpy($$, $1);
+                        if(dim_array_called > get_dimensions(name_called_array)){
+                            fprintf(stderr, "%sError : %s%s is an array of dimension %d on line %d\n", RED, DEFAULT, $1, get_dimensions($1), line_num);
+                            flag_error = 1;
+                        }
+                        if(dim_array_called < get_dimensions(name_called_array)){
+                            fprintf(stderr, "%sError : %s%s is an array of dimension %d but you get %d dimensions on line %d\n", RED, DEFAULT, $1, get_dimensions($1), dim_array_called, line_num);
+                            flag_error = 1;
+                        }
                         if(call_num_array >= 1){
                             lvalue_called_is_array = 1;
+                        }
+                        int i; 
+                        if(globale_array(name_called_array) == 1){
+                            for(i = 1; i < dim_array_called; i++)
+                                fprintf(stdout, "    pop rdx\n");
+                        }
+                        else{
+                            for(i = 0; i < dim_array_called; i++)
+                                fprintf(stdout, "    pop rdx\n");
                         }
                     }
     ;
 
 Tableau: 
-	  '[' Exp ']' Tableau {call_num_array++;}
+	  '[' Exp ']' Tableau   {   dim_array_called++; 
+                                call_num_array++;
+                                if(dim_array_called == get_dimensions(name_called_array) && globale_array(name_called_array) == 1)
+                                    fprintf(stdout, "    push QWORD %d\n    pop rax\n      imul QWORD [__size___tab__]\n     pop rbx\n     imul rbx\n     sub rax, QWORD [__size___tab__]\n    mov QWORD rbx, QWORD rax\n", dim_array_called); 
+                            }
 	| '[' error ']' Tableau
 	|
 	;

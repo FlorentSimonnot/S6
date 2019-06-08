@@ -1,0 +1,8 @@
+int main(void){
+    int tab[5][3]; 
+
+    tab[1][1] = 10;
+    print(tab[1][1]);
+
+    return 0;
+}

@@ -2,18 +2,15 @@ const un = 1;
 const deux = 3; 
 int global1 = 1; 
 int global2 = 10; 
-
-int magie(int a, int b){
-    print(global1);
-    return (global2 + a)%b-un+global1;
-}
+int global3;
+int tab[5];
+int tab2[2][2];
+int tab3[1][2][3];
 
 int main(void){
-    int a = 2, b = 6, c; 
-    c = magie(a, b); 
-    print(c == 0);
-    global1 = 10;
-    print(magie(a, b) == 9);
-
+    tab2[0][1] = 4;
+    print(tab2[0][1]);
+    tab3[0][1][2] = 19;
+    print(tab3[0][1][2]);
     return 0;
 }

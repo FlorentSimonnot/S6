@@ -50,7 +50,6 @@ typedef struct {
     float valueFloat;   //To verify the symbol Table
 }STentry;
 
-
 /**
  * \struct CONSTentry
  * \brief define a struct for a constante.
@@ -83,14 +82,31 @@ typedef struct{
    int Mmax; 
 }Mtable;
 
+typedef struct{
+    char name[MAXNAME];
+    int type; 
+    int address;
+    int dimension; 
+    int *size_par_dim; 
+}Arrayentry;
+
+typedef struct{
+    Arrayentry *Arraytable; 
+    int Asize; 
+    int Amax; 
+}ArrayTab;
+
 /* Table des symboles - PILE */
 typedef struct cel {
     STentry *STtable;          /* table des variables */
     CONSTentry *Ctable;        /* table des constantes */
+    Arrayentry *Atable;
     int STmax;                 /* taille max de la table des variables */
     int STsize;                /* taille courante de la table des variables */
     int Cmax;                  /* taille max de la table des constantes */
     int Csize;                 /* taille courante de la table des constantes */
+    int Amax; 
+    int Asize; 
     int current_stack_address; /* adresse de la variable dans la pile */
     struct cel *next;          /* prochaine table dans la pile */
 } STStackCel, *STStack;
@@ -160,7 +176,7 @@ int addConst(const char name[], int type, int value, float valueFloat);
 
 int addMacro(const char name[], int type, int value, float valueFloat);
 
-void addTab(const char name[], int type, int size);
+void addTab(const char name[], int type, int *size, int dimension, int is_global);
 
 int addFun(const char name[], int type);
 
@@ -171,6 +187,8 @@ int isConstante(const char name[]);
 int isTab(const char name[]);
 
 void displayTable();
+
+void displayArray();
 
 void displayConst();
 
@@ -232,11 +250,16 @@ void check_nargs(const char name[], int nb);
 
 int get_globals_vars_size();
 int get_globals_const_size();
+int get_globals_array_size(); 
+
 int get_globals_var(char vars[64][64], long vals[64]);
 int get_globals_const(char consts[64][64], long vals[64]);
+int get_globals_array(char array[64][64], int dimension[64], int *size_par_dim[64]); 
 
 int globale_variable(char name[64]);
 int globale_const(char name[64]);
+int globale_array(char name[64]);
+int get_dimensions(char name[MAXNAME]);
 
 /**
  * \fn void freeStack()

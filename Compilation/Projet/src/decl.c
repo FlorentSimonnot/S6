@@ -8,6 +8,7 @@
 
 STStack symbol_table = NULL;
 CStack cs = NULL;
+ArrayTab array_table; 
 Mtable macro_table;
 Ftable  function_table;
 extern int line_num;
@@ -52,10 +53,16 @@ void createStack() {
         fprintf(stderr, "Allocation error\n");
         exit(EXIT_FAILURE);        
     }
+    if (NULL == (new_cell->Atable = (Arrayentry*)malloc(MAXNBSYMBOL*sizeof(Arrayentry)))){
+        fprintf(stderr, "Allocation error\n");
+        exit(EXIT_FAILURE);        
+    }
     new_cell->STmax = MAXNBSYMBOL;
     new_cell->STsize = 0;
     new_cell->Cmax = MAXNBSYMBOL;
     new_cell->Csize = 0;
+    new_cell->Amax = MAXNBSYMBOL;
+    new_cell->Asize = 0;
     new_cell->next = symbol_table;
     new_cell->current_stack_address = 0;
     symbol_table = new_cell;
@@ -91,6 +98,12 @@ static int checkName(const char name[]){
     for (i = 0; i < symbol_table->Csize; i++){
         if (strcmp(symbol_table->Ctable[i].name, name) == 0) {
             fprintf(stderr, "\033[31mError : \033[0mSemantic error, redefinition of variable %s near line %d\n", name, line_num);
+        	return 0;
+        }
+    }
+    for (i = 0; i < symbol_table->Asize; i++){
+        if (strcmp(symbol_table->Atable[i].name, name) == 0) {
+            fprintf(stderr, "\033[31mError : \033[0mSemantic error, redefinition of array %s near line %d\n", name, line_num);
         	return 0;
         }
     }
@@ -188,32 +201,40 @@ int addMacro(const char name[], int type, int value, float valueFloat){
     return 1;
 }
 
-void addTab(const char name[], int type, int size){
-    int i;
+void addTab(const char name[], int type, int *size, int dimension, int is_global){
+    int i, j, k;
+    if (size == NULL){
+        fprintf(stderr, "Invalid tab size %d near line %d\n", 0, line_num);
+    }
 
-    if (size <= 0){
-        fprintf(stderr, "Invalid tab size %d near line %d\n", size, line_num);
+    if (dimension <= 0){
+        fprintf(stderr, "Invalid tab dimension %d near line %d\n", dimension, line_num);
     }
     
     checkName(name);
 
-    if (symbol_table->STsize >= symbol_table->STmax) {
-        symbol_table->STmax *= 2;
-        if (NULL == (symbol_table->STtable = realloc(symbol_table->STtable, symbol_table->STmax * sizeof(STentry)))){
-            fprintf(stderr, "Allocation error on realloc STtablee\n");
+    if (symbol_table->Asize >= symbol_table->Amax) {
+        symbol_table->Amax *= 2;
+        if (NULL == (symbol_table->Atable = realloc(symbol_table->Atable, symbol_table->Amax * sizeof(Arrayentry)))){
+            fprintf(stderr, "Allocation error on realloc Arraytable\n");
             exit(EXIT_FAILURE);
         }
     }
-    i = symbol_table->STsize;
-    strcpy(symbol_table->STtable[i].name, name);
-    symbol_table->STtable[i].type = type;
-    symbol_table->STtable[i].size = size;
-    symbol_table->STtable[i].address = symbol_table->current_stack_address+8;
-    symbol_table->STsize++;
-    for (i = 0; i < size; i++){
-        symbol_table->current_stack_address += 8;
-        if (symbol_table->next != NULL){
-            fprintf(stdout, "    push QWORD 0\n");
+    i = symbol_table->Asize;
+    strcpy(symbol_table->Atable[i].name, name);
+    symbol_table->Atable[i].type = type;
+    symbol_table->Atable[i].size_par_dim = (int *) malloc(sizeof(int) * dimension);
+    symbol_table->Atable[i].dimension = dimension; 
+    for(j = 0; j < dimension; j++)
+        symbol_table->Atable[i].size_par_dim[j] = size[j];
+    symbol_table->Atable[i].address = symbol_table->current_stack_address+8;
+    symbol_table->Asize++;
+    for (j = 0; j < dimension; j++){
+        for(k = 0; k < size[j]; k++){
+            symbol_table->current_stack_address += (j*8) + (k*8);
+            if (symbol_table->next != NULL){
+                fprintf(stdout, "    push QWORD 0\n");
+            }
         }
     }
 }
@@ -275,6 +296,24 @@ void displayTable(){
         }
         curs = curs->next;
     }
+}
+
+void displayArray(){
+    int i;
+    STStackCel * curs = symbol_table;
+
+    fprintf(stderr, "\n=====================TABLE DES TABLEAUX================\n\n");
+
+    while (curs != NULL){
+        for (i = 0; i < curs->Asize; i++){
+            if(curs->Atable[i].type == INTEGER || curs->Atable[i].type == LONG)
+                fprintf(stderr, "%s %d %d \n", curs->Atable[i].name, curs->Atable[i].type, curs->Atable[i].address);
+            else if(curs->Atable[i].type == CHAR)
+                fprintf(stderr, "%s %d %d \n", curs->Atable[i].name, curs->Atable[i].type, curs->Atable[i].address);
+        }
+        curs = curs->next;
+    }
+    fprintf(stderr, "\n");
 }
 
 int isTab(const char name[]){
@@ -355,6 +394,7 @@ void displayFunTable(){
     }
 }
 
+
 int lookup(const char name[], int is_tab){
     int i;
     STStackCel * curs = symbol_table;
@@ -372,6 +412,11 @@ int lookup(const char name[], int is_tab){
         for (i = 0; i < curs->Csize; i++){
             if (strcmp(curs->Ctable[i].name, name) == 0){
                 return curs->Ctable[i].type;
+            }
+        }
+        for (i = 0; i < curs->Asize; i++){
+            if (strcmp(curs->Atable[i].name, name) == 0){
+                return curs->Atable[i].type;
             }
         }
         curs = curs->next;
@@ -489,6 +534,14 @@ int get_address(const char *name, int address[2]){
                 return 0;
             }
         }
+        /*Array */
+        for (i = 0; i < curs->Asize; i++){
+            if (strcmp(curs->Atable[i].name, name) == 0){
+                address[0] = curs->Atable[i].address;
+                address[1] = 3;
+                return 0;
+            }
+        }
         curs = curs->next;
     }
     return -1;
@@ -542,6 +595,16 @@ int get_globals_const_size(){
     return curs->Csize;
 }
 
+int get_globals_array_size(){
+    STStackCel *curs = symbol_table;
+    if (curs == NULL)
+        return 0;
+    while (curs->next != NULL){
+        curs = curs->next;
+    }
+    return curs->Asize;
+}
+
 int get_globals_size(){
     STStackCel * curs = symbol_table;
     if (curs == NULL)
@@ -582,15 +645,65 @@ int get_globals_const(char consts[64][64], long vals[64]){
     return 1;
 }
 
+int get_globals_array(char array[64][64], int dimension[64], int *size_par_dim[64]){
+    STStackCel * curs = symbol_table;
+    int i = 0, j = 0;
+    if (curs == NULL)
+        return 0;
+    while (curs->next != NULL){
+        curs = curs->next;
+    }
+    for(i = 0; i < curs->Asize; i++){
+        strcpy(array[i], curs->Atable[i].name); 
+        dimension[i] = curs->Atable[i].dimension;
+        size_par_dim[i] = curs->Atable[i].size_par_dim; 
+    }
+    return 1;
+}
+
+int get_dimensions(char name[MAXNAME]){
+    int i;
+    STStackCel *curs = symbol_table;
+
+    if (curs == NULL)
+        return 0;
+    if(globale_array(name) == 1){
+        while (curs->next != NULL){
+                curs = curs->next;
+        }
+        for(i = 0; i < curs->Asize; i++){
+            if(strcmp(curs->Atable[i].name, name) == 0)
+                return curs->Atable[i].dimension;
+        }
+    }   
+    else{
+        while (curs->next != NULL){
+            for(i = 0; i < curs->Asize; i++){
+                if(strcmp(curs->Atable[i].name, name) == 0)
+                    return curs->Atable[i].dimension;
+            }
+                curs = curs->next;
+        }
+    } 
+    return -1;
+}
+
 void remove_st_cell() {
-    int i, j;
-    //printf("%d\n", symbol_table->STsize);
+    int i, j, k, m;
     for (i = 0; i < symbol_table->STsize && symbol_table->next != NULL; i++){
         for (j = 0; j < symbol_table->STtable[i].size; j++){
             fprintf(stdout, "    pop rbx\n");
         }
         if (symbol_table->STtable[i].size == 0){
             fprintf(stdout, "    pop rbx\n");
+        }
+    }
+    for(m = 0; m < symbol_table->Asize && symbol_table->next != NULL; m++){
+
+        for (j = 0; j < symbol_table->Atable[m].dimension; j++){
+            for(k = 0; k < symbol_table->Atable[m].size_par_dim[j]; k++){
+                fprintf(stdout, "    pop rbx\n");
+            }
         }
     }
     if (symbol_table->next != NULL)
@@ -672,6 +785,27 @@ int globale_const(char name[64]){
     /*Tables des globales */
     for(i = 0; i < curs->Csize; i++){
         if(strcmp(curs->Ctable[i].name, name) == 0)
+            return 1;
+    }
+    return 0; 
+}
+
+int globale_array(char name[64]){
+    STStackCel * curs = symbol_table;
+    int i = 0;
+    if (curs == NULL)
+        return 0;
+    /*Table actuelle*/
+    for(i = 0; i < curs->Asize; i++){
+        if(strcmp(curs->Atable[i].name, name) == 0)
+            return 0;
+    }
+    while (curs->next != NULL){
+        curs = curs->next;
+    }
+    /*Tables des globales */
+    for(i = 0; i < curs->Asize; i++){
+        if(strcmp(curs->Atable[i].name, name) == 0)
             return 1;
     }
     return 0; 

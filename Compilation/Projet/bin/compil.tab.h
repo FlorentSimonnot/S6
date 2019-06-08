@@ -81,7 +81,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 29 "yacc/compil.y" /* yacc.c:1909  */
+#line 31 "yacc/compil.y" /* yacc.c:1909  */
 
 	char *typeval;
 	int intval; 

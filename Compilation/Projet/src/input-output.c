@@ -31,14 +31,10 @@ void option_parsing(int argc, char **argv){
     }
 }
 
-void print_start(int globals_vars_size, int globals_const_size, char vars[64][64], long vals[64], char consts[64][64], long cvals[64]){
-    int i; 
+void print_start(int globals_vars_size, int globals_const_size, int globals_array_size, char vars[64][64], long vals[64], char consts[64][64], long cvals[64], char array[64][64], int dimension[64], int *size_par_dim[64]){
+    int i, j, k; 
     fprintf(stdout, "extern printf\n\n");
     fprintf(stdout, "extern scanf\n\n");
-    /*if (globals_vars_size > 0){
-        fprintf(stdout, "section .bss\n");
-        fprintf(stdout, "    globals resb %d\n\n", globals_vars_size);
-    }*/
     if (globals_vars_size > 0){
         fprintf(stdout, "section .data\n");
         for(i = 0; i < globals_vars_size; i++){
@@ -50,9 +46,19 @@ void print_start(int globals_vars_size, int globals_const_size, char vars[64][64
             fprintf(stdout, "    %s equ %ld\n", consts[i], cvals[i]);
         }
     }
+    for(i = 0; i < globals_array_size; i++){
+        fprintf(stdout, "    %s dq ", array[i]);
+        for(j = 0; j <= dimension[i]; j++){
+            for(k = 0; k < size_par_dim[i][j]; k++){
+                fprintf(stdout, "0, ");
+            }
+        }
+        fprintf(stdout, "\n");
+    }
+    fprintf(stdout, "   __size___tab__ dq 8\n");
     //fprintf(stdout, "section .data\n");
     fprintf(stdout, "    format_ent db \"%%d\", 10, 0\n");
-    fprintf(stdout, "    format_long db \"%%d\", 10, 0\n");
+    fprintf(stdout, "    format_long db \"%%ld\", 10, 0\n");
     fprintf(stdout, "    format_sent db \"%%d\\n\", 10, 0\n\n");
     fprintf(stdout, "section .text\n\n");
     fprintf(stdout, "global _start\n\n");
@@ -85,7 +91,7 @@ void print_start(int globals_vars_size, int globals_const_size, char vars[64][64
     fprintf(stdout, "    mov rax, 0\n");
     fprintf(stdout, "    mov rdi, format_sent\n");
     fprintf(stdout, "    call scanf\n");
-    fprintf(stdout, "    ret\n\n");
+    fprintf(stdout, "    int 80h\n\n");
     fprintf(stdout, "_start:\n    call main\n    jmp _end\n\n");
 }
 
