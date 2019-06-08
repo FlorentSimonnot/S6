@@ -2,12 +2,14 @@ int main(void){
 	
 	int a, b, c; 
 	char un, deux, trois; 
+	long ll, lll; 
 
 	a = 1; 
 	un = 'a'; 
+	ll = a;
 
 	a = (int) un;
-	un = (char) a; 
+	ll = (long) a; 
 
 	return 0; 
 }

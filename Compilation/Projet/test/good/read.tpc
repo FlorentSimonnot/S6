@@ -1,0 +1,11 @@
+int main(void){
+    char letter; 
+    int res;
+
+    readc(letter); 
+    print(letter);
+    res = letter;
+    print(res);
+
+    return 0;
+}

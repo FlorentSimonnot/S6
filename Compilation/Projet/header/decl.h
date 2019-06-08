@@ -260,6 +260,7 @@ int globale_variable(char name[64]);
 int globale_const(char name[64]);
 int globale_array(char name[64]);
 int get_dimensions(char name[MAXNAME]);
+int* get_size_par_dim(char name[MAXNAME]);
 
 /**
  * \fn void freeStack()

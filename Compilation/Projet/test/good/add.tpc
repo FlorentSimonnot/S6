@@ -1,10 +1,13 @@
 int main(void){
 	int a = 2; 
+	int res;
 	char b = 'b'; 
 	long c = 200000;
+	long resl; 
 
-	int res = a + b; 
-	long res2 = c + a; 
+	res = a + b;
+
+	resl = c + a; 
 
 
 	return 0; 

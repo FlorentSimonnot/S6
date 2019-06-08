@@ -322,7 +322,7 @@ int isTab(const char name[]){
 
     while (curs != NULL){
         for (i = 0; i < curs->STsize; i++){
-            if(strcmp(name, curs->STtable[i].name) == 0 && curs->STtable[i].size >= 1){
+            if(strcmp(name, curs->Atable[i].name) == 0){
                 return 1;
             }
         }
@@ -359,8 +359,6 @@ void displayConst(){
                 fprintf(stderr, "%s %d %d\n", curs->Ctable[i].name, curs->Ctable[i].type, curs->Ctable[i].value);
             else if(curs->Ctable[i].type == CHAR)
                 fprintf(stderr, "%s %d %c\n", curs->Ctable[i].name, curs->Ctable[i].type, curs->Ctable[i].value);
-            else if(curs->Ctable[i].type == REAL)
-                fprintf(stderr, "%s %d %f\n", curs->Ctable[i].name, curs->Ctable[i].type, curs->Ctable[i].valueFloat);
         }
         curs = curs->next;
     }
@@ -402,10 +400,6 @@ int lookup(const char name[], int is_tab){
     while (curs != NULL){
         for (i = 0; i < curs->STsize; i++){
             if (strcmp(curs->STtable[i].name, name) == 0){
-                if (is_tab != (curs->STtable[i].size > 0)){
-                    fprintf(stderr, "Invalid use of variable %s near line %d\n", name, line_num);
-                    exit(EXIT_FAILURE);
-                }
                 return curs->STtable[i].type;
             }
         }
@@ -686,6 +680,33 @@ int get_dimensions(char name[MAXNAME]){
         }
     } 
     return -1;
+}
+
+int* get_size_par_dim(char name[MAXNAME]){
+    int i;
+    STStackCel *curs = symbol_table;
+
+    if (curs == NULL)
+        return 0;
+    if(globale_array(name) == 1){
+        while (curs->next != NULL){
+                curs = curs->next;
+        }
+        for(i = 0; i < curs->Asize; i++){
+            if(strcmp(curs->Atable[i].name, name) == 0)
+                return curs->Atable[i].size_par_dim;
+        }
+    }   
+    else{
+        while (curs->next != NULL){
+            for(i = 0; i < curs->Asize; i++){
+                if(strcmp(curs->Atable[i].name, name) == 0)
+                    return curs->Atable[i].size_par_dim;
+            }
+                curs = curs->next;
+        }
+    } 
+    return NULL;
 }
 
 void remove_st_cell() {

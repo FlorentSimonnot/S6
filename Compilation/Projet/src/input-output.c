@@ -82,16 +82,16 @@ void print_start(int globals_vars_size, int globals_const_size, int globals_arra
     fprintf(stdout, "    call printf WRT ..plt\n");
     fprintf(stdout, "    ret\n\n");
     fprintf(stdout, "_readc:\n");
-    fprintf(stdout, "    mov rax, 0\n");
-    fprintf(stdout, "    mov rdi, 0\n");
+    fprintf(stdout, "    push 0\n    mov rax, 0\n");
+    fprintf(stdout, "    mov rdi, 0\n    mov rsi, rsp\n");
     fprintf(stdout, "    mov rdx, 1\n");
-    fprintf(stdout, "    call scanf\n");
+    fprintf(stdout, "    syscall\n   pop rax\n");
     fprintf(stdout, "    ret\n\n");
     fprintf(stdout, "_reade:\n");
     fprintf(stdout, "    mov rax, 0\n");
     fprintf(stdout, "    mov rdi, format_sent\n");
     fprintf(stdout, "    call scanf\n");
-    fprintf(stdout, "    int 80h\n\n");
+    fprintf(stdout, "    pop rax\n  ret\n\n");
     fprintf(stdout, "_start:\n    call main\n    jmp _end\n\n");
 }
 

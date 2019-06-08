@@ -1,0 +1,1470 @@
+
+---------GOOD------------
+
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 2
+     push QWORD 0
+    push QWORD 737214562
+    push QWORD 200000
+     push QWORD 0
+    push QWORD [rbp-8]
+    push QWORD [rbp-24]
+    pop rcx
+    pop rax
+    add rax, rcx
+    push rax
+    pop QWORD [rbp-16]
+    push QWORD [rbp-16]
+    pop rcx
+    push QWORD [rbp-32]
+    push QWORD [rbp-8]
+    pop rcx
+    pop rax
+    add rax, rcx
+    push rax
+    pop QWORD [rbp-40]
+    push QWORD [rbp-40]
+    pop rcx
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/good/add.tpc  :  0
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+     push QWORD 0
+     push QWORD 0
+     push QWORD 0
+     push QWORD 0
+     push QWORD 0
+     push QWORD 0
+     push QWORD 0
+     push QWORD 0
+    push QWORD 1
+    pop QWORD [rbp-8]
+    push QWORD [rbp-8]
+    pop rcx
+    push QWORD 97
+    pop QWORD [rbp-32]
+    push QWORD [rbp-32]
+    pop rcx
+    push QWORD [rbp-8]
+    pop QWORD [rbp-56]
+    push QWORD [rbp-56]
+    pop rcx
+    push QWORD [rbp-32]
+    pop QWORD [rbp-8]
+    push QWORD [rbp-8]
+    pop rcx
+    push QWORD [rbp-8]
+    pop QWORD [rbp-56]
+    push QWORD [rbp-56]
+    pop rcx
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/good/cast.tpc  :  0
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+func1:
+    push rbp
+    mov rbp, rsp
+    push QWORD [rbp+24]
+    push QWORD [rbp+16]
+    push QWORD 0
+    pop rax
+    jmp fin_func1
+fin_func1:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/good/function.tpc  :  0
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 5
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/good/perfect_cast  :  0
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 5
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/good/perfect_cast.tpc  :  0
+test/good/test.tpc  :  139
+Erreur syntax error near line 1 
+extern printf
+
+extern scanf
+
+section .data
+    somme dq 0
+    produit dq 0
+    difference dq 0
+    quotient dq 0
+    reste dq 0
+    resultat dq 0
+    letter dq 0
+    digit dq 0
+    punct dq 0
+    number equ 3
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 12
+    pop rdx
+    mov QWORD [somme], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD 24
+    pop rdx
+    mov QWORD [produit], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD 24
+    push QWORD 12
+    pop rcx
+    pop rax
+    mov rdx,0
+    idiv rcx
+    push rax
+    pop rdx
+    mov QWORD [quotient], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD [produit]
+    push QWORD [quotient]
+    pop rcx
+    pop rax
+    add rax, rcx
+    push rax
+    pop rdx
+    mov QWORD [somme], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD [somme]
+    push QWORD 1
+    pop rcx
+    pop rax
+    sub rax, rcx
+    push rax
+    pop rdx
+    mov QWORD [difference], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD [somme]
+    push QWORD [somme]
+    pop rcx
+    pop rax
+    imul rcx
+    push rax
+    pop rdx
+    mov QWORD [produit], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD [somme]
+    push QWORD [produit]
+    pop rcx
+    pop rax
+    add rax, rcx
+    push rax
+    pop rdx
+    mov QWORD [reste], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD [somme]
+    pop rax
+     mov rcx, -1
+    imul rcx
+   push rax
+    push QWORD [produit]
+    pop rcx
+    pop rax
+    add rax, rcx
+    push rax
+    push QWORD [somme]
+    push QWORD [reste]
+    pop rcx
+    pop rax
+    add rax, rcx
+    push rax
+    pop rcx
+    pop rax
+    mov rdx,0
+    idiv rcx
+    push rax
+    push QWORD 5
+    pop rcx
+    pop rax
+    mov rdx,0
+    idiv rcx
+    push rdx
+    pop rdx
+    mov QWORD [produit], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD [letter]
+    pop rcx
+    push QWORD number
+    pop rsi
+    call _print_ent
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/good/type.tpc  :  1
+
+---------BAD-------------
+
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+     push QWORD 0
+    push QWORD 2
+     push QWORD 0
+    push QWORD [rbp-16]
+    pop rcx
+Erreur Function is non-void and should return a value near line 6 
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/assign_constante  :  1
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+     push QWORD 0
+    push QWORD 2
+     push QWORD 0
+    push QWORD [rbp-16]
+    pop rcx
+Erreur Function is non-void and should return a value near line 5 
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/assign_constante.tpc  :  1
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 1
+     push QWORD 0
+    push QWORD [rbp-8]
+    pop QWORD [rbp-16]
+    push QWORD [rbp-16]
+    pop rcx
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/int_in_char  :  1
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 1
+     push QWORD 0
+    push QWORD [rbp-8]
+    pop QWORD [rbp-16]
+    push QWORD [rbp-16]
+    pop rcx
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/int_in_char.tpc  :  1
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+     push QWORD 0
+     push QWORD 0
+    push QWORD [rbp-16]
+    pop QWORD [rbp-8]
+    push QWORD [rbp-8]
+    pop rcx
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/long_in_int  :  1
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+     push QWORD 0
+     push QWORD 0
+    push QWORD [rbp-16]
+    pop QWORD [rbp-8]
+    push QWORD [rbp-8]
+    pop rcx
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/long_in_int.tpc  :  1
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+     push QWORD 0
+     push QWORD 0
+    mov rsi, rbp
+    sub rsi, 8
+    call _readc
+    mov rsi, rbp
+    sub rsi, 16
+    call _reade
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/reade_vs_readc  :  1
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+     push QWORD 0
+     push QWORD 0
+    mov rsi, rbp
+    sub rsi, 16
+    call _readc
+    mov rsi, rbp
+    sub rsi, 16
+    call _reade
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/reade_vs_readc.tpc  :  1
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+func1:
+    push rbp
+    mov rbp, rsp
+     push QWORD 0
+     push QWORD 0
+Erreur Function is non-void and should return a value near line 3 
+fin_func1:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 3
+     push QWORD 0
+     push QWORD 0
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/redefine.tpc  :  1
+extern printf
+
+extern scanf
+
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 0
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbp
+    ret
+
+main:
+    push rbp
+    mov rbp, rsp
+    push QWORD 1
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/redefine_function.tpc  :  0
+extern printf
+
+extern scanf
+
+section .data
+    r1 dq 0
+    be dq 0
+    se dq 0
+    cacahu dq 0
+    r2 dq 0
+    r3 dq 0
+    r4 dq 0
+    r5 dq 0
+    caractere dq 0
+    caractere2 dq 0
+    caractere3 dq 0
+   __size___tab__ dq 8
+    format_ent db "%d", 10, 0
+    format_long db "%ld", 10, 0
+    format_sent db "%d\n", 10, 0
+
+section .text
+
+global _start
+
+_print_car:
+    mov rax, 1
+    push rsi
+    mov rdi, 1
+    mov rsi, rsp
+    mov rdx, 1
+    syscall
+    pop rsi
+    ret
+
+_print_ent:
+    mov rdi, format_ent
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_print_long:
+    mov rdi, format_long
+    mov rax, 0
+    call printf WRT ..plt
+    ret
+
+_readc:
+    mov rax, 0
+    mov rdi, 0
+    mov rdx, 1
+    call scanf
+    ret
+
+_reade:
+    mov rax, 0
+    mov rdi, format_sent
+    call scanf
+    int 80h
+
+_start:
+    call main
+    jmp _end
+
+main:
+    push rbp
+    mov rbp, rsp
+     push QWORD 0
+    push QWORD 12
+    pop QWORD [rbp-8]
+    push QWORD [rbp-8]
+    pop rcx
+    push QWORD 24
+    pop rdx
+    mov QWORD [r2], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD [rbp-8]
+    push QWORD [r2]
+    pop rcx
+    pop rax
+    add rax, rcx
+    push rax
+    pop rdx
+    mov QWORD [be], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD 46
+    pop rdx
+    mov QWORD [caractere], QWORD rdx
+    push QWORD rdx
+    pop rcx
+    push QWORD 3
+    pop QWORD [rbp-8]
+    push QWORD [rbp-8]
+    pop rcx
+    push QWORD [be]
+    pop rax
+    jmp fin_main
+fin_main:
+    pop rbx
+    pop rbp
+    ret
+
+_end:
+    mov rdi, rax
+    mov rax, 60
+    syscall
+test/bad/variable_not_declared.tpc  :  1
